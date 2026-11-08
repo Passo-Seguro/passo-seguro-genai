@@ -32,13 +32,13 @@ autorais.
 **Busca:** recall@1 = [ ] e recall@3 = [ ] nas 40 respondíveis. [Se houve revisão dos trechos
 porque recall@3 ficou abaixo de 0,8, conte o que mudou.]
 
-**Limiar:** [valor]. ![curva](../avaliacao/curva_limiar.png)
+**Limiar:** [valor]. ![curva](../avaliacao/resultados/curva_limiar.png)
 [Justificativa em 2–3 frases: equilíbrio entre acerto e recusa, escolhido no dev; por que a
 varredura passou de 0,8 com o e5.]
 
 ## 05. Performance das três configurações
 
-[Tabela de `avaliacao/placar.md`]
+[Tabela de `avaliacao/resultados/placar.md`]
 
 Critério de julgamento: [resumo de `avaliacao/criterio.md`].
 
@@ -55,7 +55,7 @@ Treino do LoRA: [n] exemplos ([n]% recusas), [épocas], perda de validação [ ]
 
 ## 06. Os cinco erros
 
-[Conteúdo de `avaliacao/cinco_erros.md`: pergunta, saída, causa, correção.]
+[Conteúdo de `avaliacao/resultados/cinco_erros.md`: pergunta, saída, causa, correção.]
 
 ## 07. Conclusão técnica e links
 
