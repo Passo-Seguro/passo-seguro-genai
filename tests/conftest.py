@@ -1,4 +1,5 @@
 import json
+import zlib
 import sys
 from pathlib import Path
 
@@ -37,7 +38,7 @@ class EmbeddingsFalsas:
         v = np.zeros(256, dtype=np.float32)
         for p in normalizar(texto).replace(".", " ").replace(",", " ").split():
             if len(p) > 3:
-                v[hash(p) % 256] += 1
+                v[zlib.crc32(p.encode()) % 256] += 1
         n = np.linalg.norm(v)
         return v / n if n else v
 
@@ -82,6 +83,6 @@ class LLMFalso:
 @pytest.fixture
 def config():
     c = Config()
-    c.limiar = 0.2
+    c.limiar = 0.05  # embeddings falsos dão scores baixos; o teste de recusa por limiar usa 0.99
     c.top_k = 2
     return c
