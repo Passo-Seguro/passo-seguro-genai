@@ -585,7 +585,7 @@ de novo).
 ### 7.7 Notebooks e entrega
 
 Os notebooks `01_base` a `05_placar` rodam os mesmos scripts e são entregues com as saídas
-salvas. O relatório segue o modelo de [`docs/relatorio.md`](docs/relatorio.md). Antes do push:
+salvas. O relatório da entrega está em [`docs/relatorio.md`](docs/relatorio.md). Antes do push:
 
 ```powershell
 python -m pytest -q
@@ -894,8 +894,10 @@ Ollama (`Modelfile`, `Modelfile.gguf`, `passo-seguro-lora-q4_K_M.gguf`).
 
 ## 12. Links
 
+- Relatório: [`docs/relatorio.md`](docs/relatorio.md)
+- API no ar: https://assistente-production-307b.up.railway.app (seção 6.1)
+- Modelo (GGUF Q4_K_M): [release `modelo-v1`](https://github.com/Passo-Seguro/passo-seguro-genai/releases/tag/modelo-v1)
 - Vídeo: _link (pode ser o do pitch)_
-- Adapter LoRA: _link do Hugging Face, se publicado_
 
 ### Repositórios do projeto
 - Principal: [passo-seguro](https://github.com/Passo-Seguro/passo-seguro)
