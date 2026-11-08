@@ -1,0 +1,21 @@
+# Imagem do Railway (deploy/Dockerfile.railway, 6.92GB): Ollama + passo-seguro-lora (Q4_K_M) + API, tudo em CPU, configuração C
+
+$ GET /saude
+{"status":"ok","erro":null,"config":"C","modelo":"passo-seguro-lora","limiar":0.17,"trechos":82}
+
+$ POST /assistente {"pergunta":"Quem tem prioridade na faixa de pedestre?"}
+{"resposta":"Os pedestres têm prioridade na faixa destinada à livre circulação de pedestres, que é a faixa livre.","fontes":[{"titulo":"Código de Trânsito Brasileiro (Lei nº 9.503/1997), Art. 70","url":"https://www.planalto.gov.br/ccivil_03/leis/l9503compilado.htm"}],"confianca":0.85,"recusou":false} [HTTP 200 em 4.434138s]
+
+$ POST /assistente {"pergunta":"moto andando na calçada pra fugir do trânsito, é proibido?"}
+{"resposta":"Sim, o Código de Trânsito proíbe a circulação da motocicleta em calçadas e passeios.","fontes":[{"titulo":"Código de Trânsito Brasileiro (Lei nº 9.503/1997), Art. 68","url":"https://www.planalto.gov.br/ccivil_03/leis/l9503compilado.htm"}],"confianca":0.92,"recusou":false} [HTTP 200 em 4.097460s]
+
+$ POST /assistente {"pergunta":"Qual a melhor ação para investir este mês?"}
+{"resposta":"Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.","fontes":[],"confianca":0.0,"recusou":true} [HTTP 200 em 0.547461s]
+
+# log do container
+common_fit_params: successfully fit params to free device memory
+time=2026-11-08T19:19:41.207Z level=INFO source=images.go:431 msg="template selection" model=registry.ollama.ai/library/passo-seguro-lora:latest selected=go_template renderer="" parser="" go_template="[completion tools]" chat_template="[tools completion]" harmony=null renderer_parser=null
+{"evento": "pronto", "config": "C", "limiar": 0.17, "modelo": "passo-seguro-lora"}
+{"evento": "resposta", "nivel_recusa": null, "json_valido": true, "citacoes_invalidas": 0, "score_max": 0.9568890333175659, "ms": 4432, "recusou": false, "n_fontes": 1}
+{"evento": "resposta", "nivel_recusa": null, "json_valido": true, "citacoes_invalidas": 0, "score_max": 0.2918134033679962, "ms": 4095, "recusou": false, "n_fontes": 1}
+{"evento": "resposta", "nivel_recusa": "busca", "json_valido": true, "citacoes_invalidas": 0, "score_max": 0.055041566491127014, "ms": 545, "recusou": true, "n_fontes": 0}

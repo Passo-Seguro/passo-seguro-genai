@@ -36,7 +36,7 @@ Ficha Técnica: [README do repositório principal](https://github.com/Passo-Segu
 |---|---|
 | Tarefa | Responder dúvidas de pedestres de São Paulo sobre calçadas, travessias e como reclamar, citando a fonte, em JSON. |
 | Por que importa | Reclamar de calçada hoje é confuso: o pedestre não sabe se o problema é do dono do imóvel, da Prefeitura ou de uma concessionária, nem qual serviço do 156 usar. |
-| Modelo | Qwen2.5-1.5B-Instruct (Apache 2.0), quantizado em 4 bits, rodando no Ollama |
+| Modelo | Qwen2.5-1.5B-Instruct (Apache 2.0), quantizado em Q4_K_M, rodando no Ollama |
 | Especialização | LoRA (rank 16, alpha 32) com 324 exemplos (28% recusas), revisados exemplo a exemplo (revisão feita por IA, a conferir: [`treino/revisao_ia.json`](treino/revisao_ia.json)) |
 | Busca | `intfloat/multilingual-e5-base` + FAISS (10 candidatos) → reranker `mmarco-mMiniLMv2` → top-3; limiar 0,17 escolhido no dev |
 | Saída | JSON validado (Pydantic): `{"resposta", "fontes", "confianca", "recusou"}` |
@@ -99,37 +99,44 @@ O placar compara três configurações: **A** (modelo sem contexto), **B** (RAG 
 
 ### Placar (45 perguntas de teste)
 
-Gerado por `avaliacao/avaliar.py` ([`avaliacao/placar.md`](avaliacao/placar.md)). O critério de
-julgamento está em [`avaliacao/criterio.md`](avaliacao/criterio.md).
+Gerado pelo notebook `05_placar.ipynb` (`avaliacao/avaliar.py`), em
+[`avaliacao/resultados/placar.md`](avaliacao/resultados/placar.md). O critério de julgamento está
+em [`avaliacao/criterio.md`](avaliacao/criterio.md). As três configurações usam o mesmo
+Qwen2.5-1.5B quantizado em Q4_K_M e o mesmo contexto da busca.
 
 | Configuração | Exatidão | Citação correta | Alucinação | Recusa correta (não consta) | Recusa indevida | JSON válido | Latência |
 |---|---|---|---|---|---|---|---|
-| A — modelo sem contexto | 23% | 0% | 100% | 0% | 0% | 100% | 0,29 s |
-| B — RAG simples | **50%** | 67% | **29%** | 80% | 20% | 100% | 0,32 s |
-| C — RAG + LoRA | pendente | | | | | | |
+| A — modelo sem contexto | 23% | 0% | 100% | 0% | 0% | 100% | 0,30 s |
+| B — RAG simples | **43%** | 50% | 36% | 80% | 23% | 98% | 0,35 s |
+| **C — RAG + LoRA (no ar)** | 40% | **53%** | **29%** | **87%** | 23% | **100%** | **0,23 s** |
 
-| Registro | A exatidão | B exatidão | B recusa indevida |
-|---|---|---|---|
-| formal (17 perguntas) | 33% | 67% | 0% |
-| informal (28 perguntas) | 17% | 39% | 33% |
+| Registro | A exatidão | B exatidão | C exatidão | B alucinação | C alucinação | B recusa indevida | C recusa indevida |
+|---|---|---|---|---|---|---|---|
+| formal (17 perguntas) | 33% | 67% | 67% | 47% | **24%** | 0% | 8% |
+| informal (28 perguntas) | 17% | 28% | 22% | 29% | 32% | 39% | 33% |
 
-![placar](docs/prints/07_placar_ab.png)
+![placar](docs/prints/07_placar_abc.png)
 
-- **A → B (efeito do RAG):** a exatidão mais que dobra e a alucinação cai de 100% para 29%. Sem
-  contexto, o modelo nunca cita fonte válida. O custo são 20% de recusas indevidas.
-- **Formal × informal:** as recusas indevidas aparecem só nas perguntas informais (33%): o
-  reranker dá notas baixas a "tá", "pra" e "a gente". É o maior ponto de melhoria, porque o
-  pedestre fala assim.
-- **C está pendente:** o LoRA foi treinado (seção 9.5), mas o Ollama 0.40 não importa o modelo
-  Qwen2 em safetensors. Falta a conversão para GGUF com o llama.cpp (seção 11).
+- **A → B (efeito do RAG):** a exatidão quase dobra e a alucinação cai de 100% para 36%. Sem
+  contexto, o modelo nunca cita uma fonte válida. O custo são 23% de recusas indevidas.
+- **B → C (efeito do LoRA):** a exatidão fica praticamente igual. A diferença de 3 pontos está
+  dentro da variação entre execuções: B variou de 43% a 50% e C de 37% a 40% em três rodadas.
+  Mas C alucina menos, recusa melhor o que não está na base, devolve JSON válido sempre e é mais
+  rápido. Nas perguntas formais, a alucinação cai à metade. O LoRA ensinou formato, citação e
+  recusa, mas não acrescentou conhecimento: os erros que vêm da busca continuam.
+- **Formal × informal:** as perguntas informais acertam bem menos e concentram as recusas
+  indevidas, porque o reranker dá notas baixas a "tá", "pra" e "a gente". É o maior ponto de
+  melhoria, porque o pedestre fala assim.
+- **Configuração escolhida: C** (`CONFIG_VENCEDORA=C`). Empata com B em exatidão e é mais segura.
 
-> ⚠️ **Falha grave conhecida:** na configuração B, "carro na calçada pode?" recebe "Sim, o carro
-> pode estar na calçada…", o contrário do CTB (arts. 181 e 193). A busca trouxe a cartilha e o
-> art. 68 no lugar do art. 181, e o modelo base inventou a permissão. **Não coloque a
-> configuração B em produção sem resolver isso.**
+> ⚠️ **Falha grave conhecida (B e C):** "carro na calçada pode?" recebe uma resposta errada nas
+> duas configurações. B responde "Sim, o carro pode estar na calçada…"; C responde "Sim" e fala de
+> bicicleta. A busca traz a cartilha e o art. 68 no lugar dos arts. 181 e 193 do CTB, então nenhum
+> dos dois modelos tem o trecho certo. **Corrija a busca para essa pergunta (ex.: expansão de
+> consulta "carro" → "estacionar veículo / transitar com veículo") antes de colocar em produção.**
 
 Os cinco erros reais, com causa e correção, estão em
-[`avaliacao/cinco_erros.md`](avaliacao/cinco_erros.md).
+[`avaliacao/resultados/cinco_erros.md`](avaliacao/resultados/cinco_erros.md).
 
 ### Busca
 
@@ -188,8 +195,8 @@ python -m pip install --upgrade pip
 # cu130 exige driver NVIDIA 580 ou mais novo; com driver antigo use .../whl/cu126.
 pip install torch --index-url https://download.pytorch.org/whl/cu130
 
-pip install -r requirements-dev.txt        # RAG, avaliação, API, notebooks, testes
-pip install -r requirements-treino.txt     # só para treinar o LoRA
+pip install -r requirements/dev.txt         # RAG, avaliação, API, notebooks, testes
+pip install -r requirements/treino.txt      # só para treinar o LoRA
 copy .env.exemplo .env
 
 ollama pull qwen2.5:1.5b-instruct          # modelo base, ~1 GB
@@ -209,43 +216,43 @@ os dois têm de ser o mesmo modelo. Cuidado: o Qwen2.5-3B **não** é Apache.
 
 ### 6.1 Subir o serviço
 
-> Enquanto o modelo da configuração C não estiver no Ollama, suba com `CONFIG_VENCEDORA=B`. Com C
-> sem o modelo, toda pergunta que passa do limiar cai na resposta de contingência.
+> A configuração C precisa do modelo `passo-seguro-lora` no Ollama (seção 7.5). Sem ele, toda
+> pergunta que passa do limiar cai na resposta de contingência; nesse caso, use `CONFIG_VENCEDORA=B`.
 
 **Local:**
 
 ```powershell
 .venv\Scripts\Activate.ps1
-$env:ASSISTENTE_TOKEN="token-local"; $env:CONFIG_VENCEDORA="B"
+$env:ASSISTENTE_TOKEN="token-local"; $env:CONFIG_VENCEDORA="C"
 uvicorn api.app:app --port 8002
 ```
 
 **Docker, só a API** (o Ollama fica no host):
 
 ```powershell
-docker build -f api/Dockerfile -t ghcr.io/passo-seguro/passo-seguro-genai:local .
-docker run --rm -p 8002:8000 -e ASSISTENTE_TOKEN=token-local -e CONFIG_VENCEDORA=B `
+docker build -f deploy/Dockerfile.api -t ghcr.io/passo-seguro/passo-seguro-genai:local .
+docker run --rm -p 8002:8000 -e ASSISTENTE_TOKEN=token-local -e CONFIG_VENCEDORA=C `
   -e OLLAMA_URL=http://host.docker.internal:11434 ghcr.io/passo-seguro/passo-seguro-genai:local
 ```
 
 **Docker Compose** (Ollama e API juntos):
 
 ```powershell
-docker compose up --build
-docker compose exec ollama ollama pull qwen2.5:1.5b-instruct
-docker compose exec ollama ollama create passo-seguro-lora -f /modelos/Modelfile.gguf
+docker compose -f deploy/docker-compose.yml up --build
+docker compose -f deploy/docker-compose.yml exec ollama ollama pull qwen2.5:1.5b-instruct
+docker compose -f deploy/docker-compose.yml exec ollama ollama create passo-seguro-lora -f /modelos/Modelfile.gguf
 ```
 
 **Railway** (imagem única com Ollama + modelo GGUF + API; é onde o Terraform da Júlia espera o
 assistente, em `assistente_url` e `assistente_token`):
 
 ```powershell
-docker build -f Dockerfile.railway -t passo-seguro-assistente .
+docker build -f deploy/Dockerfile.railway -t passo-seguro-assistente .
 docker run --rm -p 8000:8000 -e ASSISTENTE_TOKEN=troque passo-seguro-assistente
 ```
 
-No Railway, crie um serviço a partir deste repositório com `Dockerfile.railway` e defina
-`ASSISTENTE_TOKEN`. Ele precisa de uns 3 GB de RAM; se faltar, use `MODELO_EMBEDDINGS`
+No Railway, crie um serviço a partir deste repositório, aponte o Dockerfile com a variável
+`RAILWAY_DOCKERFILE_PATH=deploy/Dockerfile.railway` e defina `ASSISTENTE_TOKEN`. Ele precisa de uns 3 GB de RAM; se faltar, use `MODELO_EMBEDDINGS`
 `intfloat/multilingual-e5-small` (exige reindexar). O `.gguf` não vai para o git: faça o build na
 sua máquina com `railway up` ou publique a imagem no GHCR. Passe a URL e o token para a Júlia pôr
 no `terraform.tfvars`.
@@ -427,7 +434,7 @@ python scripts/02_fatiar.py           # trechos por artigo/seção, 300 a 500 to
 
 ```powershell
 python scripts/03_indexar.py          # embeddings e5 -> base/indice/
-python scripts/04_avaliar_busca.py    # recall@1/@3 e limiar -> avaliacao/limiar.json, curva_limiar.png
+python scripts/04_avaliar_busca.py    # recall@1/@3 e limiar -> avaliacao/limiar.json, resultados/curva_limiar.png
 ```
 
 O limiar é escolhido no dev pelo melhor equilíbrio entre acerto nas respondíveis e recusa correta
@@ -456,7 +463,8 @@ python scripts/09_exportar_ollama.py                  # cria passo-seguro-lora n
 - Se a perda de validação subir na última época, use `--epocas 2`.
 - Sem GPU NVIDIA: abra `notebooks/04_lora.ipynb` no Google Colab (GPU T4), envie `treino/` e
   `src/`, rode as células e baixe `modelos/mesclado/` de volta.
-- **Ollama 0.40 ou mais novo:** o `09` falha (seção 11). Converta com o llama.cpp.
+- **Ollama 0.40 ou mais novo:** o `09` falha, porque a importação de safetensors não suporta Qwen2.
+  Converta com o llama.cpp (seção 11, primeira linha da tabela), como foi feito em 08/11.
 - Plano B, se o LoRA não funcionar: [`docs/plano-b-agente.md`](docs/plano-b-agente.md).
 
 ### 7.6 Placar e cinco erros
@@ -465,10 +473,10 @@ python scripts/09_exportar_ollama.py                  # cria passo-seguro-lora n
 python avaliacao/avaliar.py --split dev            # ensaio
 python avaliacao/avaliar.py                        # oficial: 45 perguntas × A, B, C
 python avaliacao/avaliar.py --configs A B          # só algumas configurações
-python scripts/10_erros.py --config C              # candidatos para avaliacao/cinco_erros.md
+python scripts/10_erros.py --config B              # candidatos para avaliacao/resultados/cinco_erros.md
 ```
 
-Saem `avaliacao/placar.csv`, `placar.md`, `placar_por_registro.csv` e `saidas/*.jsonl`. Confira o
+Saem em `avaliacao/resultados/`: `placar.csv`, `placar.md`, `placar_por_registro.csv` e `saidas/*.jsonl`. Confira o
 julgamento automático em `revisao_manual.csv` (preencha `correta_manual` onde discordar e rode
 de novo).
 
@@ -533,7 +541,7 @@ relatório em [`docs/execucao/relatorio_testes.html`](docs/execucao/relatorio_te
 API no container ([`api_assistente_docker.txt`](docs/execucao/api_assistente_docker.txt)), busca
 ([`04_avaliar_busca_reranker.txt`](docs/execucao/04_avaliar_busca_reranker.txt)), geração no dev
 ([`05_geracao_B_dev.txt`](docs/execucao/05_geracao_B_dev.txt)) e placar
-([`avaliacao/placar.md`](avaliacao/placar.md)).
+([`avaliacao/resultados/placar.md`](avaliacao/resultados/placar.md)).
 
 ## 9. Registro da execução de 08/11/2026
 
@@ -546,11 +554,11 @@ Tudo o que foi rodado na máquina da seção 4, em ordem. As saídas reais estã
 | Base | ✅ | 82 trechos; bug do Anexo Único corrigido |
 | Busca | ⚠️ | recall@3 0,775 (meta 0,8) |
 | Geração | ✅ | JSON válido em 100% |
-| LoRA | ⚠️ | treinado; revisão feita por IA; não importado no Ollama |
-| Placar | ⚠️ | A e B; C pendente |
+| LoRA | ✅ | treinado e importado no Ollama (Q4_K_M via llama.cpp); revisão dos exemplos feita por IA, a conferir |
+| Placar | ✅ | A 23% · B 43% · C 40% de exatidão; C escolhida (menos alucinação, mais recusas corretas) |
 | Cinco erros | ✅ | causa e correção (configuração B) |
-| API | ✅ | local e Docker |
-| Notebooks | ✅ | 01 a 04 com saídas; 05 depende de C |
+| API | ✅ | local, Docker e imagem completa do Railway (config C) |
+| Notebooks | ✅ | 01 a 05 executados e salvos com as saídas |
 
 ### 9.1 Ambiente
 
@@ -616,37 +624,67 @@ PPUC dispensa de executar, não de manter; quem autoriza bicicleta no passeio).
 **Treino:** rodado pelo notebook `04_lora.ipynb` (números na seção 3). O `transformers` 5.x
 removeu `warmup_ratio`; o `08` agora calcula `warmup_steps`.
 
-**Exportação para o Ollama — bloqueada.** O Ollama 0.40 não aceita mais `--quantize q4_K_M` ao
-importar safetensors, e a importação passa pelo motor MLX, que não suporta Qwen2
-(`unsupported MLX architecture`). Falta converter com o llama.cpp (seção 11). O modelo mesclado
-está em `modelos/mesclado/` (fora do git). O `09` ganhou `--quantize`.
+**Exportação para o Ollama.** O Ollama 0.40 não aceita mais `--quantize q4_K_M` ao importar
+safetensors, e a importação passa pelo motor MLX, que não suporta Qwen2
+(`unsupported MLX architecture`). A conversão foi feita com o **llama.cpp oficial** (build
+`b12207`, do `ggml-org`):
+
+1. `convert_hf_to_gguf.py modelos/mesclado --outtype f16` → `mesclado-f16.gguf` (3,1 GB);
+2. `llama-quantize ... Q4_K_M` → `modelos/passo-seguro-lora-q4_K_M.gguf` (**986 MB**, o mesmo tamanho
+   e a mesma quantização do `qwen2.5:1.5b-instruct`, para a comparação no placar ser justa);
+3. `ollama create passo-seguro-lora -f modelos/Modelfile.gguf`, com o template de chat do modelo base.
+
+O conversor precisou de `sentencepiece` e `protobuf` (`pip install sentencepiece protobuf`).
 
 ### 9.6 API e container
 
 | Ambiente | Evidência |
 |---|---|
 | Local, config B | [`api_assistente_local.txt`](docs/execucao/api_assistente_local.txt) |
-| Docker (`api/Dockerfile`) | [`api_assistente_docker.txt`](docs/execucao/api_assistente_docker.txt): saúde 200, 401, resposta com CTB art. 70, healthcheck `healthy` |
+| Docker (`deploy/Dockerfile.api`) | [`api_assistente_docker.txt`](docs/execucao/api_assistente_docker.txt): saúde 200, 401, resposta com CTB art. 70, healthcheck `healthy` |
+| Railway (`deploy/Dockerfile.railway`), config C | [`api_assistente_railway.txt`](docs/execucao/api_assistente_railway.txt): Ollama + `passo-seguro-lora` + API num container só, em CPU; ~4 s por resposta |
 
 - **Imagem de 11,7 GB → 3,96 GB:** o `pip --prefix` puxava o torch CUDA; corrigido com
-  `PYTHONPATH` e um `.dockerignore`. Com o reranker embutido, a imagem tem 4,83 GB.
+  `PYTHONPATH` e um `.dockerignore` próprio. Com o reranker embutido, a imagem tem 4,83 GB.
 - **Erro fora do contrato:** corpo fora de UTF-8 voltava `{"detail": ...}`; agora volta 400
   `{codigo: "requisicao_invalida", mensagem}`.
+- **Imagem do Railway de 15,2 GB → 6,9 GB:** a base `ollama/ollama` traz 4,6 GB de bibliotecas de
+  GPU (CUDA 12/13, MLX) que o Railway não usa. O Dockerfile agora copia só o binário e as
+  bibliotecas de CPU para uma base Ubuntu 24.04.
+
+![railway](docs/prints/10_container_railway.png)
+
+No teste do container do Railway, as respostas mostram os limites atuais de C: na pergunta da faixa
+de pedestre, ele misturou a "faixa livre" da calçada com a faixa de travessia; na da moto, acertou
+a resposta, mas citou o art. 68 em vez do 193.
 
 ## 10. Estrutura do repositório
 
 ```
-notebooks/   01_base, 02_busca, 03_geracao, 04_lora, 05_placar (com saídas salvas)
-base/        fontes.yaml, brutos/ (textos oficiais + URL e data de acesso), trechos.jsonl, indice/
-avaliacao/   teste.jsonl (60 perguntas), criterio.md, avaliar.py, placar.*, saidas/, cinco_erros.md
-treino/      treino_bruto.jsonl, treino.jsonl, revisao_ia.json, estatisticas.md, treino_lora.json
-src/passo_genai/  base, busca (e5 + reranker), prompts, gerador, avaliacao, esquemas, professor
-scripts/     00 a 10, na ordem das fases
-api/         FastAPI do POST /assistente, Dockerfile, entrypoint do Railway
-tests/       contrato da API, geração, busca, avaliação, fatiamento
-modelos/     fora do git: lora-adapter/, mesclado/ (~3 GB), Modelfile, .gguf do Ollama
-docs/        relatorio.md, plano-b-agente.md, execucao/ (saídas reais), prints/
+passo-seguro-genai/
+├── README.md
+├── .env.exemplo              variáveis de ambiente (copie para .env)
+│
+├── src/passo_genai/          código: base, busca (e5 + reranker), prompts, gerador, avaliacao, esquemas, professor
+├── api/                      app.py — FastAPI do POST /assistente
+├── scripts/                  00 a 10, na ordem das fases
+├── notebooks/                01_base, 02_busca, 03_geracao, 04_lora, 05_placar (com saídas salvas)
+├── tests/                    contrato da API, geração, busca, avaliação, fatiamento
+│
+├── base/                     base de conhecimento: fontes.yaml, brutos/, trechos.jsonl, indice/
+├── treino/                   exemplos do LoRA: treino_bruto, treino, revisao_ia.json, estatisticas
+├── avaliacao/                teste.jsonl (60 perguntas), criterio.md, avaliar.py, limiar.json
+│   └── resultados/           gerados: placar.*, saidas/, cinco_erros.md, erros_candidatos.md, busca.json, curva_limiar.png
+├── modelos/                  fora do git: lora-adapter/, mesclado/, *.gguf, Modelfile (só o Modelfile.gguf vai para o git)
+│
+├── deploy/                   Dockerfile.api, Dockerfile.railway, docker-compose.yml, entrypoint.sh (+ .dockerignore de cada um)
+├── requirements/             base.txt (RAG/API), dev.txt (+ testes e notebooks), treino.txt (LoRA), api.txt (imagem Docker)
+└── docs/                     relatorio.md, plano-b-agente.md, execucao/ (saídas reais), prints/
 ```
+
+Os builds Docker usam a raiz do repositório como contexto (`docker build -f deploy/<arquivo> .`);
+cada Dockerfile tem o seu `.dockerignore` ao lado (`deploy/<arquivo>.dockerignore`), que deixa
+entrar só o que a imagem precisa.
 
 `modelos/` só guarda arquivos gerados: `lora-adapter/` (o adapter, que pode ser publicado no
 Hugging Face), `mesclado/` (base + adapter em safetensors, entrada da conversão) e os arquivos do
@@ -661,7 +699,7 @@ Ollama (`Modelfile`, `Modelfile.gguf`, `passo-seguro-lora-q4_K_M.gguf`).
 | `09_exportar_ollama.py`: `unsupported --quantize "q4_K_M"` ou `unsupported MLX architecture` | Ollama 0.40+. Converta com o llama.cpp: `python convert_hf_to_gguf.py modelos/mesclado --outtype f16 --outfile modelos/mesclado-f16.gguf`, depois `llama-quantize modelos/mesclado-f16.gguf modelos/passo-seguro-lora-q4_K_M.gguf Q4_K_M`, e crie o modelo com `FROM ./passo-seguro-lora-q4_K_M.gguf` e o template do base |
 | `SFTConfig ... unexpected keyword argument 'warmup_ratio'` | transformers 5.x; já corrigido no `08` |
 | API devolve 400 `requisicao_invalida` com acento | o cliente mandou o corpo fora de UTF-8 (comum no `curl.exe`); use `Invoke-RestMethod` ou `--data-binary @arquivo.json` |
-| Imagem Docker com mais de 10 GB | confira o `.dockerignore` e o `PYTHONPATH` no estágio `deps` do `api/Dockerfile` |
+| Imagem Docker com mais de 10 GB | confira o `deploy/Dockerfile.api.dockerignore` e o `PYTHONPATH` no estágio `deps` do `deploy/Dockerfile.api` |
 | Toda pergunta cai na contingência | `CONFIG_VENCEDORA=C` sem o modelo `passo-seguro-lora` no Ollama: use B ou importe o modelo |
 
 ## 12. Links

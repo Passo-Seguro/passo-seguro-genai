@@ -9,7 +9,7 @@ Classifica cada erro pela causa provável (o diagnóstico final é seu, lendo o 
                        (confira se a informação estava em outra parte -pN do artigo)
     modelo_inventou    citou fonte fora dos recuperados, ou respondeu uma "não consta"
     json_quebrou       saída inválida duas vezes
-Gera avaliacao/erros_candidatos.md (todos) e avaliacao/cinco_erros.md (modelo para preencher).
+Gera avaliacao/resultados/erros_candidatos.md (todos) e avaliacao/resultados/cinco_erros.md (modelo para preencher).
 """
 
 import argparse
@@ -19,7 +19,7 @@ from collections import Counter
 
 import _comum  # noqa: F401
 from passo_genai.busca import acertou
-from passo_genai.config import AVALIACAO, Config
+from passo_genai.config import RESULTADOS, Config
 
 
 def causa(l: dict, limiar: float) -> str | None:
@@ -45,7 +45,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default="C")
     args = ap.parse_args()
-    arq = AVALIACAO / "saidas" / f"{args.config}.jsonl"
+    arq = RESULTADOS / "saidas" / f"{args.config}.jsonl"
     if not arq.exists():
         print(f"{arq} não existe. Rode avaliacao/avaliar.py.")
         return 1
@@ -59,7 +59,7 @@ def main() -> int:
         md += [f"## {l['id']} — {c}", f"- **Pergunta:** {l['pergunta']}", f"- **Esperado:** {l['esperado']} (`{l['trecho_esperado']}`)",
                f"- **Saída:** {l['resposta']}", f"- **Fontes citadas:** {l['fontes']} · recusou={l['recusou']} · nível={l['nivel_recusa']}",
                f"- **Recuperados:** {l['recuperados']}", ""]
-    (AVALIACAO / "erros_candidatos.md").write_text("\n".join(md), encoding="utf-8")
+    (RESULTADOS / "erros_candidatos.md").write_text("\n".join(md), encoding="utf-8")
     modelo = ["# Cinco erros reais (Fase 7)", "",
               "Escolha 5 erros DIFERENTES em `erros_candidatos.md`, de preferência com causas variadas.", ""]
     escolhidos, vistos = [], set()
@@ -73,10 +73,10 @@ def main() -> int:
                    f"- **Causa:** {c.replace('_', ' ')} — [explique olhando os trechos recuperados]",
                    "- **Correção proposta:** [ex.: trecho menor/maior, sobreposição, mais exemplos de recusa no LoRA, "
                    "ajuste do limiar, sinônimo informal na base]", ""]
-    if not (AVALIACAO / "cinco_erros.md").exists():
-        (AVALIACAO / "cinco_erros.md").write_text("\n".join(modelo), encoding="utf-8")
-        print("avaliacao/cinco_erros.md criado (preencha causa e correção).")
-    print(f"{len(erros)} erros: {dict(cont)} -> avaliacao/erros_candidatos.md")
+    if not (RESULTADOS / "cinco_erros.md").exists():
+        (RESULTADOS / "cinco_erros.md").write_text("\n".join(modelo), encoding="utf-8")
+        print("avaliacao/resultados/cinco_erros.md criado (preencha causa e correção).")
+    print(f"{len(erros)} erros: {dict(cont)} -> avaliacao/resultados/erros_candidatos.md")
     return 0
 
 

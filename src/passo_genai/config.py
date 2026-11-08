@@ -16,6 +16,7 @@ TESTE = AVALIACAO / "teste.jsonl"
 TREINO = RAIZ / "treino"
 MODELOS = RAIZ / "modelos"
 ARQ_LIMIAR = AVALIACAO / "limiar.json"
+RESULTADOS = AVALIACAO / "resultados"  # placar, saídas, erros (gerados pelos scripts)
 
 MENSAGEM_RECUSA = (
     "Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, "

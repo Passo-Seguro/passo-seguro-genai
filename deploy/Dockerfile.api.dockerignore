@@ -1,6 +1,8 @@
 *
 !src/
 !api/
+!requirements/api.txt
+!deploy/entrypoint.sh
 !base/trechos.jsonl
 !base/indice/
 !avaliacao/limiar.json

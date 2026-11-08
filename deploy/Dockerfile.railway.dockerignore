@@ -1,0 +1,11 @@
+*
+!src/
+!api/
+!requirements/api.txt
+!deploy/entrypoint.sh
+!base/trechos.jsonl
+!base/indice/
+!avaliacao/limiar.json
+!modelos/passo-seguro-lora-q4_K_M.gguf
+!modelos/Modelfile.gguf
+**/__pycache__

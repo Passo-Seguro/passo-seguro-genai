@@ -1,3 +1,0 @@
-config,n,exatidao,citacao_correta,taxa_alucinacao,recusa_correta_nao_consta,recusa_indevida,json_valido,latencia_media_s
-A — modelo sem contexto,45,0.233,0.0,1.0,0.0,0.0,1.0,0.29
-B — RAG simples,45,0.5,0.667,0.289,0.8,0.2,1.0,0.32

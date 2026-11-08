@@ -10,7 +10,7 @@
    O limiar escolhido maximiza a média das duas taxas (acurácia balanceada) no split DEV
    (as 45 de teste não são usadas para escolher nada). A curva das 60 também vai para o
    gráfico, só para o relatório.
-Saídas: avaliacao/busca.json, avaliacao/limiar.json, avaliacao/curva_limiar.png
+Saídas: avaliacao/limiar.json (usado pela API), avaliacao/resultados/busca.json e curva_limiar.png
 """
 
 import json
@@ -22,7 +22,7 @@ import _comum  # noqa: F401
 from _comum import titulo
 from passo_genai.avaliacao import carregar_teste
 from passo_genai.busca import Buscador, acertou
-from passo_genai.config import ARQ_LIMIAR, AVALIACAO
+from passo_genai.config import ARQ_LIMIAR, RESULTADOS
 
 
 def curva(itens, resultados, limiares):
@@ -72,9 +72,9 @@ def main() -> int:
     print(melhor)
     print(f"faixa de scores observada: {lo:.3f} a {hi:.3f}")
 
-    AVALIACAO.mkdir(exist_ok=True)
+    RESULTADOS.mkdir(parents=True, exist_ok=True)
     ARQ_LIMIAR.write_text(json.dumps({"limiar": melhor["limiar"], "escolhido_em": "dev", **melhor}, indent=2), encoding="utf-8")
-    (AVALIACAO / "busca.json").write_text(json.dumps({"recall": rel, "falhas": falhas, "curva_dev": pontos_dev,
+    (RESULTADOS / "busca.json").write_text(json.dumps({"recall": rel, "falhas": falhas, "curva_dev": pontos_dev,
                                                       "curva_todas": pontos_todas}, indent=2, ensure_ascii=False), encoding="utf-8")
     try:
         import matplotlib
@@ -96,8 +96,8 @@ def main() -> int:
         ax.legend(fontsize=8, loc="lower left")
         ax.grid(alpha=0.3)
         fig.tight_layout()
-        fig.savefig(AVALIACAO / "curva_limiar.png", dpi=150)
-        print(f"gráfico: {AVALIACAO / 'curva_limiar.png'}")
+        fig.savefig(RESULTADOS / "curva_limiar.png", dpi=150)
+        print(f"gráfico: {RESULTADOS / 'curva_limiar.png'}")
     except ImportError:
         print("(matplotlib não instalado: sem gráfico)")
     print(f"\nlimiar salvo em {ARQ_LIMIAR}. Próximo: python scripts/05_testar_geracao.py")

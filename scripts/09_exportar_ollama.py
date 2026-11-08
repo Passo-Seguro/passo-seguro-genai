@@ -7,7 +7,7 @@
 2. `ollama create passo-seguro-lora --quantize q4_K_M -f modelos/Modelfile` (lê os safetensors
    de modelos/mesclado/ e quantiza na mesma precisão do modelo base; comparação justa no placar).
 3. Copia o GGUF gerado pelo Ollama para modelos/passo-seguro-lora-q4_K_M.gguf, que é o arquivo
-   que vai para o container do assistente (Dockerfile.railway).
+   que vai para o container do assistente (deploy/Dockerfile.railway).
 
 Se o seu Ollama não importar safetensors (versão antiga), use o llama.cpp:
     git clone https://github.com/ggml-org/llama.cpp && pip install -r llama.cpp/requirements.txt

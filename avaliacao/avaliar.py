@@ -8,11 +8,11 @@
 
 Mesma máquina, mesma busca (feita uma vez e reaproveitada em B e C), mesmo limiar, mesma
 temperatura. Saídas em avaliacao/:
-    saidas/<config>.jsonl      saída bruta de cada pergunta (para os 5 erros e a revisão)
-    placar.csv                 uma linha por configuração, com as métricas de criterio.md
-    placar_por_registro.csv    as mesmas métricas separadas em formal × informal (viés)
-    revisao_manual.csv         coluna correta_manual (1/0) para corrigir o julgamento automático
-    placar.md                  tabela pronta para o README/relatório
+    resultados/saidas/<config>.jsonl      saída bruta de cada pergunta (para os 5 erros e a revisão)
+    resultados/placar.csv                 uma linha por configuração, com as métricas de criterio.md
+    resultados/placar_por_registro.csv    as mesmas métricas separadas em formal × informal (viés)
+    resultados/revisao_manual.csv         coluna correta_manual (1/0) para corrigir o julgamento automático
+    resultados/placar.md                  tabela pronta para o README/relatório
 """
 
 import argparse
@@ -27,7 +27,7 @@ sys.path.insert(0, str(RAIZ / "src"))
 
 from passo_genai.avaliacao import carregar_teste, julgar, resumir, salvar_jsonl  # noqa: E402
 from passo_genai.busca import Buscador  # noqa: E402
-from passo_genai.config import AVALIACAO, Config  # noqa: E402
+from passo_genai.config import RESULTADOS, Config  # noqa: E402
 from passo_genai.gerador import Assistente, LLMIndisponivel  # noqa: E402
 
 NOMES = {"A": "A — modelo sem contexto", "B": "B — RAG simples", "C": "C — RAG + LoRA"}
@@ -36,7 +36,7 @@ METRICAS = ["exatidao", "citacao_correta", "taxa_alucinacao", "recusa_correta_na
 
 
 def ler_revisao() -> dict:
-    arq = AVALIACAO / "revisao_manual.csv"
+    arq = RESULTADOS / "revisao_manual.csv"
     if not arq.exists():
         return {}
     with open(arq, encoding="utf-8") as f:
@@ -87,7 +87,7 @@ def main() -> int:
         except LLMIndisponivel as e:
             print(f"\n{NOMES[c]}: Ollama indisponível ou modelo ausente ({e}). Pulando.")
             continue
-        salvar_jsonl(AVALIACAO / "saidas" / f"{c}{'_dev' if args.split == 'dev' else ''}.jsonl", linhas)
+        salvar_jsonl(RESULTADOS / "saidas" / f"{c}{'_dev' if args.split == 'dev' else ''}.jsonl", linhas)
         res = resumir(linhas)
         placar.append({"config": NOMES[c], **res})
         print(f"\n{json.dumps(res, ensure_ascii=False)}")
@@ -96,11 +96,11 @@ def main() -> int:
     if not placar:
         return 1
     sufixo = "" if args.split == "teste" else "_dev"
-    with open(AVALIACAO / f"placar{sufixo}.csv", "w", newline="", encoding="utf-8") as f:
+    with open(RESULTADOS / f"placar{sufixo}.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=["config", "n", *METRICAS])
         w.writeheader()
         w.writerows(placar)
-    with open(AVALIACAO / f"placar_por_registro{sufixo}.csv", "w", newline="", encoding="utf-8") as f:
+    with open(RESULTADOS / f"placar_por_registro{sufixo}.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=["config", "registro", "n", *METRICAS])
         w.writeheader()
         for c in args.configs:
@@ -108,7 +108,7 @@ def main() -> int:
                 sel = [l for l in todas if l["config"] == c and l["registro"] == reg]
                 if sel:
                     w.writerow({"config": NOMES[c], "registro": reg, **resumir(sel)})
-    arq_rev = AVALIACAO / f"revisao_manual{sufixo}.csv"
+    arq_rev = RESULTADOS / f"revisao_manual{sufixo}.csv"
     if not arq_rev.exists():
         with open(arq_rev, "w", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(f, fieldnames=["config", "id", "pergunta", "esperado", "resposta", "correta_automatica", "correta_manual"])
@@ -131,9 +131,9 @@ def main() -> int:
            "Interpretação (2–3 frases por diferença): onde o LoRA ganhou, onde não ganhou e por quê; "
            "o efeito do RAG sobre a alucinação; o custo em recusas indevidas; formal × informal "
            f"(ver placar_por_registro{sufixo}.csv)."]
-    (AVALIACAO / f"placar{sufixo}.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+    (RESULTADOS / f"placar{sufixo}.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n" + "\n".join(md))
-    print(f"\nSaídas em {AVALIACAO}. Próximo: python scripts/10_erros.py")
+    print(f"\nSaídas em {RESULTADOS}. Próximo: python scripts/10_erros.py")
     return 0
 
 

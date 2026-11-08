@@ -1,27 +1,26 @@
 # Cinco erros reais (Fase 7)
 
 Os erros são da **configuração B** (RAG simples, `qwen2.5:1.5b-instruct`) no placar oficial das 45
-perguntas de teste ([`saidas/B.jsonl`](saidas/B.jsonl)), escolhidos entre os 20 de
-[`erros_candidatos.md`](erros_candidatos.md) para cobrir causas diferentes. A configuração C
-(LoRA) ainda não entrou no placar: ver o [README](../README.md#95-lora), seção 9.5.
+perguntas de teste, executado pelo notebook `05_placar.ipynb` ([`saidas/B.jsonl`](saidas/B.jsonl)).
+Foram escolhidos entre os candidatos de [`erros_candidatos.md`](erros_candidatos.md) para cobrir
+causas diferentes. No fim, a seção "E a configuração C?" mostra o que o LoRA mudou nesses casos.
 
 O score é o do reranker (`mmarco-mMiniLMv2`), entre 0 e 1. O limiar é 0,17.
 
-## Erro 1 (r03): resposta incompleta citando trechos que não a sustentam
+## Erro 1 (r03): respondeu com o artigo certo, mas sem citar a fonte
 
 - **Pergunta:** moto andando na calçada pra fugir do trânsito, é proibido?
 - **Recuperados:** `ctb-art68` (0,29), **`ctb-art193`** (0,14), `ctb-art254` (0,10)
-- **Saída:** "Sim, é proibido transitar com moto em calçadas, passeios, passarelas, ciclovias […]",
-  citando os **três** trechos recuperados.
-- **Causa:** a busca acertou: o art. 193 estava no contexto. O modelo copiou a lista de lugares,
-  mas deixou de fora o que o pedestre precisa saber (infração gravíssima, multa multiplicada por
-  três). Também citou em bloco tudo o que recebeu, inclusive os arts. 68 e 254, que não tratam de
-  veículo na calçada. Por isso o julgamento marca "não exata" e conta alucinação. A classificação
-  automática ("trecho mal cortado") não descreve bem esse erro. Numa execução anterior, a mesma
-  pergunta saiu com `fontes` vazio.
-- **Correção:** é exatamente o que o LoRA treina: os 233 exemplos de resposta citam só o trecho
-  de origem e trazem a penalidade quando ela existe. No prompt, dá para pedir "cite apenas os
-  trechos que sustentam a resposta".
+- **Saída:** "Sim, transitando com o veículo em calçadas, passeios, passarelas, ciclovias […]", com
+  `fontes: []`.
+- **Causa:** a busca acertou: o art. 193 estava no contexto. O modelo base copiou a lista de
+  lugares, mas não preencheu `fontes` e deixou de fora o que o pedestre precisa saber (infração
+  gravíssima, multa multiplicada por três). Sem fonte, o produto transforma a resposta em recusa e
+  o julgamento conta alucinação. O comportamento varia entre execuções: numa delas, o mesmo
+  modelo citou em bloco os três trechos, inclusive os arts. 68 e 254, que não tratam de veículo na
+  calçada. A classificação automática ("trecho mal cortado") não descreve bem esse erro.
+- **Correção:** é o que o LoRA treina: os exemplos de resposta citam só o trecho de origem. **Na
+  configuração C, esta pergunta saiu correta**, citando só o `ctb-art193`.
 
 ## Erro 2 (r06): a busca não achou o valor da multa, e o modelo inventou um
 
@@ -58,9 +57,8 @@ O score é o do reranker (`mmarco-mMiniLMv2`), entre 0 e 1. O limiar é 0,17.
 
 - **Pergunta:** Quantos dias a Prefeitura leva para consertar uma calçada pública?
 - **Recuperados:** `sp-subpref-calcadas-s01-p4` (0,60), `sp-dec59671-art32` (0,55), `sp-subpref-calcadas-s01-p2` (0,11)
-- **Saída:** "A Prefeitura tem 30 dias para regularizar a calçada pública após a reforma. Se o
-  serviço não for feito nesse prazo, a empresa pode ter sua permissão de prestação de serviços
-  suspensa.", citando `sp-subpref-calcadas-s01-p2`.
+- **Saída:** "A Prefeitura tem prazo de 30 dias para regularizar a calçada pública após a reforma
+  ou intervenção das concessionárias […]", citando `sp-subpref-calcadas-s01-p2` e `sp-dec59671-art32`.
 - **Causa:** a base não tem prazo de conserto pela Prefeitura. O único "30 dias" do contexto está
   no art. 32, e é o prazo **do responsável pelo imóvel**, contado do corte de uma árvore. A
   "suspensão da permissão" é da concessionária (página da Subprefeitura). O modelo juntou dois
@@ -83,6 +81,19 @@ O score é o do reranker (`mmarco-mMiniLMv2`), entre 0 e 1. O limiar é 0,17.
   Enel, Comgás → concessionária; buraco, cano, obra → intervenção) antes da busca, ou um trecho de
   "perguntas frequentes" na base com essa linguagem. Exemplos de treino com esse vocabulário
   também ajudam o LoRA a responder quando o trecho vem.
+
+## E a configuração C (RAG + LoRA)?
+
+| Erro | B | C |
+|---|---|---|
+| 1 (r03) | sem fonte | **correta**, citando só o art. 193 |
+| 2 (r06) | inventou R$ 10/m² | não inventou valor, mas também não respondeu "de quanto" (conta como alucinação) |
+| 3 (r08) | recusa pelo limiar | igual: o limiar age antes do modelo |
+| 4 (n03) | inventou prazo de 30 dias | inventou o mesmo prazo, atribuído à concessionária |
+| 5 (r11) | recusa pelo limiar | igual: o limiar age antes do modelo |
+
+O LoRA resolve o que é de geração (citação, valor inventado), mas não o que é de busca e de
+limiar (erros 3 e 5) nem a mistura de dois trechos parecidos (erro 4).
 
 ## Resumo
 

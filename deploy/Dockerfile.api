@@ -1,10 +1,10 @@
 # Serviço POST /assistente (sem o LLM: ele chama o Ollama em OLLAMA_URL).
 # Build a partir da RAIZ do repositório:
-#   docker build -f api/Dockerfile -t ghcr.io/passo-seguro/passo-seguro-genai:local .
+#   docker build -f deploy/Dockerfile.api -t ghcr.io/passo-seguro/passo-seguro-genai:local .
 FROM python:3.12-slim AS deps
 ENV PIP_NO_CACHE_DIR=1 PIP_DISABLE_PIP_VERSION_CHECK=1
 RUN pip install --prefix=/install torch --index-url https://download.pytorch.org/whl/cpu
-COPY api/requirements.txt .
+COPY requirements/api.txt requirements.txt
 # PYTHONPATH faz o pip enxergar o torch CPU de /install; sem ele, o sentence-transformers puxa o torch CUDA (+6 GB)
 RUN PYTHONPATH=/install/lib/python3.12/site-packages pip install --prefix=/install -r requirements.txt
 
