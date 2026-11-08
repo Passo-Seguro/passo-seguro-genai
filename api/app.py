@@ -28,8 +28,13 @@ sys.path.insert(0, str(RAIZ / "src"))
 
 from fastapi import FastAPI, Request  # noqa: E402
 from fastapi.exceptions import RequestValidationError  # noqa: E402
-from fastapi.responses import JSONResponse, PlainTextResponse  # noqa: E402
+from fastapi.responses import JSONResponse as _JSONResponse, PlainTextResponse  # noqa: E402
 from starlette.exceptions import HTTPException as StarletteHTTPException  # noqa: E402
+
+
+class JSONResponse(_JSONResponse):
+    # sem o charset, o Invoke-RestMethod do Windows PowerShell 5.1 lê o corpo como latin-1 ("calÃ§ada")
+    media_type = "application/json; charset=utf-8"
 
 from passo_genai.avaliacao import normalizar  # noqa: E402
 from passo_genai.config import Config  # noqa: E402
@@ -75,7 +80,8 @@ def criar_app(assistente: Assistente | None = None, token: str | None = None, co
 
     @asynccontextmanager
     async def ciclo(app):
-        logging.basicConfig(level=os.getenv("NIVEL_LOG", "INFO"), format="%(message)s")
+        # stdout: o Railway (e outros) marca tudo o que sai no stderr como erro
+        logging.basicConfig(level=os.getenv("NIVEL_LOG", "INFO"), format="%(message)s", stream=sys.stdout)
         if estado["assistente"] is None:
             try:
                 from passo_genai.busca import Buscador
@@ -93,7 +99,8 @@ def criar_app(assistente: Assistente | None = None, token: str | None = None, co
             log.warning(json.dumps({"evento": "sem_token", "aviso": "ASSISTENTE_TOKEN vazio: endpoint sem autenticação"}))
         yield
 
-    app = FastAPI(title="Passo Seguro — Assistente", version="1.0.0", lifespan=ciclo, redoc_url=None)
+    app = FastAPI(title="Passo Seguro — Assistente", version="1.0.0", lifespan=ciclo, redoc_url=None,
+                  default_response_class=JSONResponse)
 
     @app.exception_handler(StarletteHTTPException)
     async def _http(request, exc):
