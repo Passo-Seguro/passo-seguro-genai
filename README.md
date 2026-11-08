@@ -54,12 +54,13 @@ flowchart LR
 
 | Fonte | Formato | Licença | Trechos |
 |---|---|---|---|
-| Código de Trânsito Brasileiro (Lei 9.503/1997) | HTML | Ato oficial (domínio público) | – |
-| Lei Brasileira de Inclusão (Lei 13.146/2015) | HTML | Ato oficial (domínio público) | – |
-| Lei municipal 15.442/2011 | HTML | Ato oficial (domínio público) | – |
-| Decreto municipal 59.671/2020 | HTML | Ato oficial (domínio público) | – |
-| Subprefeituras: calçadas e serviços do 156 | HTML | Publicação oficial da Prefeitura | – |
-| Cartilha de Calçadas 2023 (SMPED) | PDF | Publicação oficial da Prefeitura | – |
+| Código de Trânsito Brasileiro (Lei 9.503/1997) | HTML | Ato oficial (domínio público) | 18 |
+| Lei Brasileira de Inclusão (Lei 13.146/2015) | HTML | Ato oficial (domínio público) | 11 |
+| Lei municipal 15.442/2011 | HTML | Ato oficial (domínio público) | 11 |
+| Decreto municipal 59.671/2020 | HTML | Ato oficial (domínio público) | 16 |
+| Subprefeituras: calçadas e serviços do 156 | HTML | Publicação oficial da Prefeitura | 10 |
+| Cartilha de Calçadas 2023 (SMPED) | PDF | Publicação oficial da Prefeitura | 16 |
+| **Total** | | | **82** |
 
 A NBR 9050 fica fora da base: é norma da ABNT, protegida por direito autoral.
 
@@ -83,7 +84,7 @@ O passo a passo completo, no VS Code e com treino na sua GPU, está em
 **[PASSO_A_PASSO.md](PASSO_A_PASSO.md)**. Resumo:
 
 ```bash
-pip install torch --index-url https://download.pytorch.org/whl/cu124
+pip install torch --index-url https://download.pytorch.org/whl/cu130
 pip install -r requirements-dev.txt -r requirements-treino.txt
 ollama pull qwen2.5:1.5b-instruct
 python scripts/01_baixar_base.py && python scripts/02_fatiar.py      # Fase 2

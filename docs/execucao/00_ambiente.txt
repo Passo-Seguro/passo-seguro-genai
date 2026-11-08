@@ -1,0 +1,26 @@
+
+=== Python ===
+3.12.10
+
+=== GPU ===
+NVIDIA GeForce RTX 4080: 16.0 GB, CUDA 13.0, bf16=True
+
+=== Pacotes ===
+ok    pydantic 2.14.3
+ok    httpx 0.28.1
+ok    bs4 4.15.0
+ok    pypdf 7.0.0
+ok    sentence_transformers 6.2.0
+ok    faiss 1.15.1
+ok    pandas 3.1.1
+ok    matplotlib 3.11.2
+ok    transformers 5.22.2
+ok    peft 0.21.2
+ok    trl 1.17.1
+ok    datasets 5.1.0
+ok    fastapi 0.162.2
+
+=== Ollama ===
+Ollama no ar em http://localhost:11434. Modelos: ['qwen2.5:1.5b-instruct']
+  ok  qwen2.5:1.5b-instruct
+  FALTA passo-seguro-lora

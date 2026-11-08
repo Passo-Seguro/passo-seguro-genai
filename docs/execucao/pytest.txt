@@ -1,0 +1,31 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- ./.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: ./
+plugins: anyio-4.16.0, platformdirs-4.14.5
+collecting ... collected 22 items
+
+tests/test_api.py::test_resposta_no_contrato PASSED                      [  4%]
+tests/test_api.py::test_llm_fora_do_ar_responde_contingencia_200 PASSED  [  9%]
+tests/test_api.py::test_token PASSED                                     [ 13%]
+tests/test_api.py::test_pergunta_vazia_ou_longa_422 PASSED               [ 18%]
+tests/test_api.py::test_log_nao_tem_o_texto_da_pergunta PASSED           [ 22%]
+tests/test_api.py::test_cache_de_perguntas_repetidas PASSED              [ 27%]
+tests/test_avaliacao.py::test_conjunto_de_teste_tem_a_forma_do_guia PASSED [ 31%]
+tests/test_avaliacao.py::test_acertou_por_prefixo PASSED                 [ 36%]
+tests/test_avaliacao.py::test_criterio_sem_acento PASSED                 [ 40%]
+tests/test_avaliacao.py::test_julgar_resposta_certa_com_fonte PASSED     [ 45%]
+tests/test_avaliacao.py::test_julgar_fonte_inventada_e_alucinacao PASSED [ 50%]
+tests/test_avaliacao.py::test_julgar_nao_consta PASSED                   [ 54%]
+tests/test_avaliacao.py::test_config_a_sem_fonte_valida_conta_como_alucinacao PASSED [ 59%]
+tests/test_avaliacao.py::test_resumir PASSED                             [ 63%]
+tests/test_base.py::test_divide_por_artigo_e_tira_texto_revogado PASSED  [ 68%]
+tests/test_base.py::test_janelas_com_sobreposicao PASSED                 [ 72%]
+tests/test_gerador.py::test_recusa_pela_busca_nao_chama_o_modelo PASSED  [ 77%]
+tests/test_gerador.py::test_resposta_valida_vira_contrato_com_titulo_e_url PASSED [ 81%]
+tests/test_gerador.py::test_json_invalido_tenta_de_novo_e_depois_recusa PASSED [ 86%]
+tests/test_gerador.py::test_json_invalido_na_primeira_e_valido_na_segunda PASSED [ 90%]
+tests/test_gerador.py::test_citacao_fora_dos_recuperados_vira_recusa_no_produto PASSED [ 95%]
+tests/test_gerador.py::test_config_c_usa_o_modelo_lora_e_a_sem_contexto PASSED [100%]
+
+============================= 22 passed in 7.94s ==============================

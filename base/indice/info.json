@@ -1,0 +1,6 @@
+{
+  "modelo_embeddings": "intfloat/multilingual-e5-base",
+  "n_trechos": 82,
+  "dim": 768,
+  "criado_em": "2026-11-08T16:43:11+00:00"
+}

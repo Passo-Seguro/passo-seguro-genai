@@ -40,7 +40,9 @@ python -m venv .venv
 python -m pip install --upgrade pip
 
 # PyTorch COM CUDA primeiro (senão o pip instala a versão só-CPU):
-pip install torch --index-url https://download.pytorch.org/whl/cu124
+pip install torch --index-url https://download.pytorch.org/whl/cu130
+# cu130 exige driver NVIDIA 580 ou mais novo; com driver antigo use .../whl/cu126.
+# (o índice cu124 parou no torch 2.6: o pip troca por uma versão só-CPU mais nova.)
 
 pip install -r requirements-dev.txt        # RAG, avaliação, API, notebooks, testes
 pip install -r requirements-treino.txt     # LoRA (transformers, peft, trl, bitsandbytes)
