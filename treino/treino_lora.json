@@ -1,0 +1,19 @@
+{
+  "modelo_hf": "Qwen/Qwen2.5-1.5B-Instruct",
+  "rank": 16,
+  "alpha": 32,
+  "epocas": 3,
+  "lr": 0.0002,
+  "batch_efetivo": 16,
+  "qlora_4bit": false,
+  "n_treino": 292,
+  "n_validacao": 32,
+  "perda_treino_final": 0.15464303493499756,
+  "perda_validacao_por_epoca": [
+    0.21849969029426575,
+    0.18601424992084503,
+    0.1826254427433014
+  ],
+  "duracao_min": 13.0,
+  "gpu": "NVIDIA GeForce RTX 4080"
+}

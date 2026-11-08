@@ -1,0 +1,2522 @@
+{
+  "recall": {
+    "dev": {
+      "n": 10,
+      "recall@1": 0.4,
+      "recall@3": 0.6
+    },
+    "todas": {
+      "n": 40,
+      "recall@1": 0.475,
+      "recall@3": 0.775
+    }
+  },
+  "falhas": [
+    [
+      "r01",
+      "o carro tá em cima da calçada, pode isso?",
+      "ctb-art181",
+      [
+        "sp-cartilha-calcadas-s04-p1",
+        "sp-cartilha-calcadas-s01-p1",
+        "sp-dec59671-art10-p1"
+      ]
+    ],
+    [
+      "r06",
+      "se o dono não arrumar a calçada ele leva multa? de quanto?",
+      "sp-lei15442-anexo|sp-lei15442-art15",
+      [
+        "sp-subpref-calcadas-s01-p4",
+        "sp-subpref-calcadas-s01-p2",
+        "sp-dec59671-art1-p1"
+      ]
+    ],
+    [
+      "r07",
+      "Qual é o prazo para regularizar a calçada depois da intimação?",
+      "sp-lei15442-art11",
+      [
+        "sp-dec59671-art32-p1",
+        "sp-subpref-calcadas-s01-p4",
+        "sp-lei15442-art14-p1"
+      ]
+    ],
+    [
+      "r09",
+      "quanto de espaço livre tem que ter na calçada pra gente passar?",
+      "sp-dec59671-art4|sp-lei15442-art8",
+      [
+        "sp-cartilha-calcadas-s05-p1",
+        "sp-cartilha-calcadas-s02-p1",
+        "sp-dec59671-art24-p1"
+      ]
+    ],
+    [
+      "r12",
+      "a raiz da árvore levantou a calçada, o dono é obrigado a consertar?",
+      "sp-dec59671-art32",
+      [
+        "sp-dec59671-art34-p1",
+        "sp-subpref-calcadas-s01-p4",
+        "sp-dec59671-art1-p1"
+      ]
+    ],
+    [
+      "r17",
+      "na minha rua não tem calçada, por onde eu ando?",
+      "ctb-art68",
+      [
+        "sp-subpref-calcadas-s01-p2",
+        "sp-subpref-calcadas-s01-p4",
+        "sp-cartilha-calcadas-s01-p1"
+      ]
+    ],
+    [
+      "r21",
+      "de quem é a responsabilidade pela segurança do pedestre no trânsito?",
+      "ctb-art29",
+      [
+        "sp-subpref-calcadas-s01-p2",
+        "ctb-art68-p1",
+        "sp-subpref-calcadas-s01-p1"
+      ]
+    ],
+    [
+      "r26",
+      "E se a calçada danificada for de uma praça ou prédio público?",
+      "sp-subpref-servicos156",
+      [
+        "sp-subpref-calcadas-s01-p2",
+        "sp-subpref-calcadas-s01-p4",
+        "sp-dec59671-art1-p1"
+      ]
+    ],
+    [
+      "r34",
+      "a rampa da garagem do vizinho deixou a calçada torta, pode isso?",
+      "sp-dec59671-art10",
+      [
+        "sp-cartilha-calcadas-s04-p1",
+        "sp-cartilha-calcadas-s05-p1",
+        "sp-dec59671-art1-p1"
+      ]
+    ]
+  ],
+  "curva_dev": [
+    {
+      "limiar": 0.0,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.0,
+      "equilibrio": 0.3
+    },
+    {
+      "limiar": 0.005,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.0,
+      "equilibrio": 0.3
+    },
+    {
+      "limiar": 0.01,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.0,
+      "equilibrio": 0.3
+    },
+    {
+      "limiar": 0.015,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.0,
+      "equilibrio": 0.3
+    },
+    {
+      "limiar": 0.02,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.0,
+      "equilibrio": 0.3
+    },
+    {
+      "limiar": 0.025,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.0,
+      "equilibrio": 0.3
+    },
+    {
+      "limiar": 0.03,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.0,
+      "equilibrio": 0.3
+    },
+    {
+      "limiar": 0.035,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.0,
+      "equilibrio": 0.3
+    },
+    {
+      "limiar": 0.04,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.0,
+      "equilibrio": 0.3
+    },
+    {
+      "limiar": 0.045,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.0,
+      "equilibrio": 0.3
+    },
+    {
+      "limiar": 0.05,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.2,
+      "equilibrio": 0.4
+    },
+    {
+      "limiar": 0.055,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.4,
+      "equilibrio": 0.5
+    },
+    {
+      "limiar": 0.06,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.065,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.07,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.075,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.08,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.085,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.09,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.095,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.1,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.105,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.11,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.115,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.12,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.125,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.13,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.135,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.14,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.145,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.15,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.155,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.16,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.6
+    },
+    {
+      "limiar": 0.165,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.17,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.175,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.18,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.185,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.19,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.195,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.2,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.205,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.21,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.215,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.22,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.225,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.23,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.235,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.24,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.245,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.25,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.255,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.26,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.265,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.27,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.8
+    },
+    {
+      "limiar": 0.275,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.28,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.285,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.29,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.295,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.3,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.305,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.31,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.315,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.32,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.325,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.33,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.335,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.34,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.345,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.35,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.355,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.36,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.365,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.37,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.375,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.38,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.385,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.39,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.395,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.4,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.405,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.41,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.415,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.42,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.425,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.43,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.435,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.44,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.445,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.45,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.455,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.46,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.465,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.47,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.475,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.48,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.485,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.49,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.495,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.5,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.505,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.51,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.515,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.52,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.525,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.53,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.535,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.54,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.545,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.55,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.555,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.56,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.565,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.57,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.575,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.58,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.585,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.59,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.595,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.6,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.605,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.61,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.615,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.62,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.625,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.63,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.635,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.64,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.645,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.65,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.655,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.66,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.665,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.67,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.675,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.68,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.685,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.69,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.695,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.7,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.705,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.71,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.715,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.72,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.725,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.73,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.735,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.74,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.745,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.75,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.755,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.76,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.765,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.77,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.775,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.78,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.785,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.79,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.795,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.8,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.805,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.81,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.815,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.82,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.825,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.83,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.835,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.84,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.845,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.85,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.855,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.86,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.865,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.87,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.875,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.88,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.885,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.89,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.895,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.9,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.905,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.91,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.915,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.92,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.925,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.93,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.935,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.94,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.945,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.95,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.955,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.96,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.965,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.97,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.975,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.98,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.985,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.99,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.995,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 1.0,
+      "acerto_respondiveis": 0.0,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.5
+    }
+  ],
+  "curva_todas": [
+    {
+      "limiar": 0.0,
+      "acerto_respondiveis": 0.775,
+      "recusa_correta_nao_consta": 0.0,
+      "equilibrio": 0.388
+    },
+    {
+      "limiar": 0.005,
+      "acerto_respondiveis": 0.75,
+      "recusa_correta_nao_consta": 0.05,
+      "equilibrio": 0.4
+    },
+    {
+      "limiar": 0.01,
+      "acerto_respondiveis": 0.75,
+      "recusa_correta_nao_consta": 0.05,
+      "equilibrio": 0.4
+    },
+    {
+      "limiar": 0.015,
+      "acerto_respondiveis": 0.725,
+      "recusa_correta_nao_consta": 0.05,
+      "equilibrio": 0.388
+    },
+    {
+      "limiar": 0.02,
+      "acerto_respondiveis": 0.725,
+      "recusa_correta_nao_consta": 0.05,
+      "equilibrio": 0.388
+    },
+    {
+      "limiar": 0.025,
+      "acerto_respondiveis": 0.7,
+      "recusa_correta_nao_consta": 0.1,
+      "equilibrio": 0.4
+    },
+    {
+      "limiar": 0.03,
+      "acerto_respondiveis": 0.7,
+      "recusa_correta_nao_consta": 0.15,
+      "equilibrio": 0.425
+    },
+    {
+      "limiar": 0.035,
+      "acerto_respondiveis": 0.7,
+      "recusa_correta_nao_consta": 0.2,
+      "equilibrio": 0.45
+    },
+    {
+      "limiar": 0.04,
+      "acerto_respondiveis": 0.7,
+      "recusa_correta_nao_consta": 0.25,
+      "equilibrio": 0.475
+    },
+    {
+      "limiar": 0.045,
+      "acerto_respondiveis": 0.7,
+      "recusa_correta_nao_consta": 0.25,
+      "equilibrio": 0.475
+    },
+    {
+      "limiar": 0.05,
+      "acerto_respondiveis": 0.7,
+      "recusa_correta_nao_consta": 0.3,
+      "equilibrio": 0.5
+    },
+    {
+      "limiar": 0.055,
+      "acerto_respondiveis": 0.7,
+      "recusa_correta_nao_consta": 0.35,
+      "equilibrio": 0.525
+    },
+    {
+      "limiar": 0.06,
+      "acerto_respondiveis": 0.7,
+      "recusa_correta_nao_consta": 0.4,
+      "equilibrio": 0.55
+    },
+    {
+      "limiar": 0.065,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.45,
+      "equilibrio": 0.562
+    },
+    {
+      "limiar": 0.07,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.45,
+      "equilibrio": 0.562
+    },
+    {
+      "limiar": 0.075,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.5,
+      "equilibrio": 0.588
+    },
+    {
+      "limiar": 0.08,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.5,
+      "equilibrio": 0.588
+    },
+    {
+      "limiar": 0.085,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.6,
+      "equilibrio": 0.637
+    },
+    {
+      "limiar": 0.09,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.65,
+      "equilibrio": 0.663
+    },
+    {
+      "limiar": 0.095,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.65,
+      "equilibrio": 0.663
+    },
+    {
+      "limiar": 0.1,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.65,
+      "equilibrio": 0.663
+    },
+    {
+      "limiar": 0.105,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.65,
+      "equilibrio": 0.663
+    },
+    {
+      "limiar": 0.11,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.65,
+      "equilibrio": 0.663
+    },
+    {
+      "limiar": 0.115,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.65,
+      "equilibrio": 0.663
+    },
+    {
+      "limiar": 0.12,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.65,
+      "equilibrio": 0.663
+    },
+    {
+      "limiar": 0.125,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.65,
+      "equilibrio": 0.663
+    },
+    {
+      "limiar": 0.13,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.65,
+      "equilibrio": 0.663
+    },
+    {
+      "limiar": 0.135,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.65,
+      "equilibrio": 0.663
+    },
+    {
+      "limiar": 0.14,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.65,
+      "equilibrio": 0.663
+    },
+    {
+      "limiar": 0.145,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.7,
+      "equilibrio": 0.688
+    },
+    {
+      "limiar": 0.15,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.7,
+      "equilibrio": 0.688
+    },
+    {
+      "limiar": 0.155,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.7,
+      "equilibrio": 0.688
+    },
+    {
+      "limiar": 0.16,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.7,
+      "equilibrio": 0.688
+    },
+    {
+      "limiar": 0.165,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.75,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.17,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.175,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.18,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.185,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.19,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.195,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.2,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.205,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.21,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.215,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.22,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.225,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.23,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.235,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.24,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.8,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.245,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.85,
+      "equilibrio": 0.762
+    },
+    {
+      "limiar": 0.25,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.85,
+      "equilibrio": 0.762
+    },
+    {
+      "limiar": 0.255,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.85,
+      "equilibrio": 0.762
+    },
+    {
+      "limiar": 0.26,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.788
+    },
+    {
+      "limiar": 0.265,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.788
+    },
+    {
+      "limiar": 0.27,
+      "acerto_respondiveis": 0.675,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.788
+    },
+    {
+      "limiar": 0.275,
+      "acerto_respondiveis": 0.65,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.775
+    },
+    {
+      "limiar": 0.28,
+      "acerto_respondiveis": 0.65,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.775
+    },
+    {
+      "limiar": 0.285,
+      "acerto_respondiveis": 0.65,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.775
+    },
+    {
+      "limiar": 0.29,
+      "acerto_respondiveis": 0.65,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.775
+    },
+    {
+      "limiar": 0.295,
+      "acerto_respondiveis": 0.625,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.762
+    },
+    {
+      "limiar": 0.3,
+      "acerto_respondiveis": 0.625,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.762
+    },
+    {
+      "limiar": 0.305,
+      "acerto_respondiveis": 0.625,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.762
+    },
+    {
+      "limiar": 0.31,
+      "acerto_respondiveis": 0.625,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.762
+    },
+    {
+      "limiar": 0.315,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.32,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.325,
+      "acerto_respondiveis": 0.6,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.75
+    },
+    {
+      "limiar": 0.33,
+      "acerto_respondiveis": 0.575,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.335,
+      "acerto_respondiveis": 0.575,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.34,
+      "acerto_respondiveis": 0.575,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.345,
+      "acerto_respondiveis": 0.575,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.35,
+      "acerto_respondiveis": 0.575,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.355,
+      "acerto_respondiveis": 0.575,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.36,
+      "acerto_respondiveis": 0.575,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.365,
+      "acerto_respondiveis": 0.575,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.37,
+      "acerto_respondiveis": 0.575,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.375,
+      "acerto_respondiveis": 0.575,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.38,
+      "acerto_respondiveis": 0.575,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.385,
+      "acerto_respondiveis": 0.575,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.39,
+      "acerto_respondiveis": 0.575,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.395,
+      "acerto_respondiveis": 0.55,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.4,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.405,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.41,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.415,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.42,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.425,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.43,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.435,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.44,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.445,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.45,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.455,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.46,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.465,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.47,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.475,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.48,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.485,
+      "acerto_respondiveis": 0.525,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.49,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.495,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.5,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.505,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.51,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.515,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.52,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.525,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.53,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.535,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.54,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.545,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.55,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.555,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.56,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.565,
+      "acerto_respondiveis": 0.5,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.57,
+      "acerto_respondiveis": 0.475,
+      "recusa_correta_nao_consta": 0.9,
+      "equilibrio": 0.688
+    },
+    {
+      "limiar": 0.575,
+      "acerto_respondiveis": 0.475,
+      "recusa_correta_nao_consta": 0.95,
+      "equilibrio": 0.712
+    },
+    {
+      "limiar": 0.58,
+      "acerto_respondiveis": 0.475,
+      "recusa_correta_nao_consta": 0.95,
+      "equilibrio": 0.712
+    },
+    {
+      "limiar": 0.585,
+      "acerto_respondiveis": 0.475,
+      "recusa_correta_nao_consta": 0.95,
+      "equilibrio": 0.712
+    },
+    {
+      "limiar": 0.59,
+      "acerto_respondiveis": 0.475,
+      "recusa_correta_nao_consta": 0.95,
+      "equilibrio": 0.712
+    },
+    {
+      "limiar": 0.595,
+      "acerto_respondiveis": 0.475,
+      "recusa_correta_nao_consta": 0.95,
+      "equilibrio": 0.712
+    },
+    {
+      "limiar": 0.6,
+      "acerto_respondiveis": 0.475,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.605,
+      "acerto_respondiveis": 0.475,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.61,
+      "acerto_respondiveis": 0.475,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.615,
+      "acerto_respondiveis": 0.475,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.738
+    },
+    {
+      "limiar": 0.62,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.625,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.63,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.635,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.64,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.645,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.65,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.655,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.66,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.665,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.67,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.675,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.68,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.685,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.69,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.695,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.7,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.705,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.71,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.715,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.72,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.725,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.73,
+      "acerto_respondiveis": 0.45,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.725
+    },
+    {
+      "limiar": 0.735,
+      "acerto_respondiveis": 0.425,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.713
+    },
+    {
+      "limiar": 0.74,
+      "acerto_respondiveis": 0.4,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.745,
+      "acerto_respondiveis": 0.4,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.7
+    },
+    {
+      "limiar": 0.75,
+      "acerto_respondiveis": 0.35,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.675
+    },
+    {
+      "limiar": 0.755,
+      "acerto_respondiveis": 0.35,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.675
+    },
+    {
+      "limiar": 0.76,
+      "acerto_respondiveis": 0.35,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.675
+    },
+    {
+      "limiar": 0.765,
+      "acerto_respondiveis": 0.35,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.675
+    },
+    {
+      "limiar": 0.77,
+      "acerto_respondiveis": 0.35,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.675
+    },
+    {
+      "limiar": 0.775,
+      "acerto_respondiveis": 0.35,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.675
+    },
+    {
+      "limiar": 0.78,
+      "acerto_respondiveis": 0.35,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.675
+    },
+    {
+      "limiar": 0.785,
+      "acerto_respondiveis": 0.35,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.675
+    },
+    {
+      "limiar": 0.79,
+      "acerto_respondiveis": 0.35,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.675
+    },
+    {
+      "limiar": 0.795,
+      "acerto_respondiveis": 0.35,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.675
+    },
+    {
+      "limiar": 0.8,
+      "acerto_respondiveis": 0.35,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.675
+    },
+    {
+      "limiar": 0.805,
+      "acerto_respondiveis": 0.325,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.662
+    },
+    {
+      "limiar": 0.81,
+      "acerto_respondiveis": 0.325,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.662
+    },
+    {
+      "limiar": 0.815,
+      "acerto_respondiveis": 0.325,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.662
+    },
+    {
+      "limiar": 0.82,
+      "acerto_respondiveis": 0.325,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.662
+    },
+    {
+      "limiar": 0.825,
+      "acerto_respondiveis": 0.325,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.662
+    },
+    {
+      "limiar": 0.83,
+      "acerto_respondiveis": 0.325,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.662
+    },
+    {
+      "limiar": 0.835,
+      "acerto_respondiveis": 0.325,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.662
+    },
+    {
+      "limiar": 0.84,
+      "acerto_respondiveis": 0.325,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.662
+    },
+    {
+      "limiar": 0.845,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.85,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.855,
+      "acerto_respondiveis": 0.3,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.65
+    },
+    {
+      "limiar": 0.86,
+      "acerto_respondiveis": 0.275,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.637
+    },
+    {
+      "limiar": 0.865,
+      "acerto_respondiveis": 0.275,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.637
+    },
+    {
+      "limiar": 0.87,
+      "acerto_respondiveis": 0.275,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.637
+    },
+    {
+      "limiar": 0.875,
+      "acerto_respondiveis": 0.275,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.637
+    },
+    {
+      "limiar": 0.88,
+      "acerto_respondiveis": 0.275,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.637
+    },
+    {
+      "limiar": 0.885,
+      "acerto_respondiveis": 0.275,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.637
+    },
+    {
+      "limiar": 0.89,
+      "acerto_respondiveis": 0.275,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.637
+    },
+    {
+      "limiar": 0.895,
+      "acerto_respondiveis": 0.25,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.625
+    },
+    {
+      "limiar": 0.9,
+      "acerto_respondiveis": 0.25,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.625
+    },
+    {
+      "limiar": 0.905,
+      "acerto_respondiveis": 0.25,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.625
+    },
+    {
+      "limiar": 0.91,
+      "acerto_respondiveis": 0.25,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.625
+    },
+    {
+      "limiar": 0.915,
+      "acerto_respondiveis": 0.25,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.625
+    },
+    {
+      "limiar": 0.92,
+      "acerto_respondiveis": 0.25,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.625
+    },
+    {
+      "limiar": 0.925,
+      "acerto_respondiveis": 0.25,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.625
+    },
+    {
+      "limiar": 0.93,
+      "acerto_respondiveis": 0.25,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.625
+    },
+    {
+      "limiar": 0.935,
+      "acerto_respondiveis": 0.25,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.625
+    },
+    {
+      "limiar": 0.94,
+      "acerto_respondiveis": 0.25,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.625
+    },
+    {
+      "limiar": 0.945,
+      "acerto_respondiveis": 0.25,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.625
+    },
+    {
+      "limiar": 0.95,
+      "acerto_respondiveis": 0.25,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.625
+    },
+    {
+      "limiar": 0.955,
+      "acerto_respondiveis": 0.225,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.613
+    },
+    {
+      "limiar": 0.96,
+      "acerto_respondiveis": 0.225,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.613
+    },
+    {
+      "limiar": 0.965,
+      "acerto_respondiveis": 0.225,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.613
+    },
+    {
+      "limiar": 0.97,
+      "acerto_respondiveis": 0.175,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.588
+    },
+    {
+      "limiar": 0.975,
+      "acerto_respondiveis": 0.175,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.588
+    },
+    {
+      "limiar": 0.98,
+      "acerto_respondiveis": 0.175,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.588
+    },
+    {
+      "limiar": 0.985,
+      "acerto_respondiveis": 0.175,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.588
+    },
+    {
+      "limiar": 0.99,
+      "acerto_respondiveis": 0.175,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.588
+    },
+    {
+      "limiar": 0.995,
+      "acerto_respondiveis": 0.125,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.562
+    },
+    {
+      "limiar": 1.0,
+      "acerto_respondiveis": 0.0,
+      "recusa_correta_nao_consta": 1.0,
+      "equilibrio": 0.5
+    }
+  ]
+}

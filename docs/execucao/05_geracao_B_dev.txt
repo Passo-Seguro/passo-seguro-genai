@@ -1,0 +1,150 @@
+
+================================================================================
+P: o carro tá em cima da calçada, pode isso?
+   top-3: [('sp-dec59671-art10-p1', 0.852), ('sp-cartilha-calcadas-s12-p2', 0.851), ('ctb-art193-p1', 0.851)]
+   recusa: busca  json_valido: True  tentativas: 0  0.2s
+R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+   fontes: []  confiança: 0.0
+   esperado: Não. Estacionar no passeio (calçada) é infração grave, com multa e remoção do veículo.  (ctb-art181)
+   julgamento: {'recusou': True, 'citacao_invalida': False, 'correta': False, 'citacao_correta': False, 'recusa_indevida': True, 'alucinacao': False}
+   contrato: {"resposta": "Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.", "fontes": [], "confianca": 0.0, "recusou": true}
+
+================================================================================
+P: quem tem que arrumar a calçada na frente de casa?
+   top-3: [('sp-subpref-calcadas-s01-p1', 0.873), ('sp-subpref-calcadas-s01-p5', 0.87), ('sp-subpref-calcadas-s01-p2', 0.851)]
+   recusa: None  json_valido: True  tentativas: 1  46.1s
+R: A responsabilidade pela manutenção das calçadas é do proprietário ou responsável pelo imóvel lindeiro a ela. Isso inclui você, munícipe, entidades privadas (comércios, condomínios entre outros) e organismos governamentais. A Prefeitura Municipal também é responsável por reformar calçadas nas vias estruturais e nas Rotas Estratégicas e de Segurança, conforme mencionado anteriormente.
+   fontes: ['sp-subpref-calcadas-s01-p2']  confiança: 1.0
+   esperado: O responsável pelo imóvel em frente (proprietário, possuidor ou condomínio) deve construir, manter e conservar a calçada ao longo da testada.  (sp-lei15442-art7|sp-dec59671-art34|sp-dec59671-art1)
+   julgamento: {'recusou': False, 'citacao_invalida': False, 'correta': True, 'citacao_correta': False, 'recusa_indevida': False, 'alucinacao': False}
+   contrato: {"resposta": "A responsabilidade pela manutenção das calçadas é do proprietário ou responsável pelo imóvel lindeiro a ela. Isso inclui você, munícipe, entidades privadas (comércios, condomínios entre outros) e organismos governamentais. A Prefeitura Municipal também é responsável por reformar calçad
+
+================================================================================
+P: Qual é o prazo para regularizar a calçada depois da intimação?
+   top-3: [('sp-dec59671-art32-p1', 0.876), ('sp-subpref-calcadas-s01-p4', 0.869), ('sp-dec59671-art35-p1', 0.861)]
+   recusa: None  json_valido: True  tentativas: 1  0.4s
+R: O prazo para regularizar a calçada após a intimação é de 30 dias, conforme o parágrafo único do artigo 32 do decreto municipal nº 59.671/2020.
+   fontes: ['sp-dec59671-art32-p1', 'sp-subpref-calcadas-s01-p4', 'sp-dec59671-art35-p1']  confiança: 1.0
+   esperado: 60 dias, improrrogáveis.  (sp-lei15442-art11)
+   julgamento: {'recusou': False, 'citacao_invalida': False, 'correta': False, 'citacao_correta': False, 'recusa_indevida': False, 'alucinacao': True}
+   contrato: {"resposta": "O prazo para regularizar a calçada após a intimação é de 30 dias, conforme o parágrafo único do artigo 32 do decreto municipal nº 59.671/2020.", "fontes": [{"titulo": "Decreto municipal nº 59.671/2020 (padronização das calçadas), Art. 32", "url": "http://legislacao.prefeitura.sp.gov.br
+
+================================================================================
+P: quanto de espaço livre tem que ter na calçada pra gente passar?
+   top-3: [('sp-cartilha-calcadas-s04-p1', 0.869), ('sp-subpref-calcadas-s01-p1', 0.866), ('sp-subpref-calcadas-s01-p5', 0.865)]
+   recusa: None  json_valido: True  tentativas: 1  0.7s
+R: A largura mínima da calçada deve ser de 1,20 metros (um metro e vinte centímetros). Essa medida é necessária para garantir a acessibilidade e a segurança dos pedestres, conforme estabelecido na Cartilha de Calçadas 2023 (SMPED/CPA, Prefeitura de São Paulo). Além disso, a calçada deve corresponder a no mínimo 50% (cinquenta por cento) da largura total da calçada, quando esta é maior que 2,40 metros (duas metros e quarenta centímetros). Isso é importante para facilitar a circulação de pessoas com deficiência ou mobilidade reduzida.
+   fontes: ['sp-cartilha-calcadas-s04-p1', 'sp-subpref-calcadas-s01-p1', 'sp-subpref-calcadas-s01-p5']  confiança: 1.0
+   esperado: A faixa livre deve ter no mínimo 1,20 m e, em calçadas com mais de 2,40 m, ocupar pelo menos metade da largura.  (sp-dec59671-art4|sp-lei15442-art8)
+   julgamento: {'recusou': False, 'citacao_invalida': False, 'correta': True, 'citacao_correta': False, 'recusa_indevida': False, 'alucinacao': False}
+   contrato: {"resposta": "A largura mínima da calçada deve ser de 1,20 metros (um metro e vinte centímetros). Essa medida é necessária para garantir a acessibilidade e a segurança dos pedestres, conforme estabelecido na Cartilha de Calçadas 2023 (SMPED/CPA, Prefeitura de São Paulo). Além disso, a calçada deve c
+
+================================================================================
+P: o pedestre tem prioridade na faixa?
+   top-3: [('ctb-art70-p1', 0.883), ('ctb-art71-p1', 0.867), ('ctb-art214-p1', 0.864)]
+   recusa: None  json_valido: True  tentativas: 1  5.2s
+R: Sim, os pedestres têm prioridade na faixa destinada a eles, exceto em locais com sinalização semafórica onde deverão ser respeitadas as disposições do Código de Trânsito Brasileiro.
+   fontes: ['ctb-art70-p1', 'ctb-art71-p1', 'ctb-art214-p1']  confiança: 1.0
+   esperado: Sim. Quem está atravessando na faixa tem prioridade, exceto onde há semáforo, que deve ser respeitado.  (ctb-art70)
+   julgamento: {'recusou': False, 'citacao_invalida': False, 'correta': True, 'citacao_correta': True, 'recusa_indevida': False, 'alucinacao': False}
+   contrato: {"resposta": "Sim, os pedestres têm prioridade na faixa destinada a eles, exceto em locais com sinalização semafórica onde deverão ser respeitadas as disposições do Código de Trânsito Brasileiro.", "fontes": [{"titulo": "Código de Trânsito Brasileiro (Lei nº 9.503/1997), Art. 70", "url": "https://ww
+
+================================================================================
+P: na minha rua não tem calçada, por onde eu ando?
+   top-3: [('sp-subpref-calcadas-s01-p5', 0.868), ('sp-subpref-calcadas-s01-p1', 0.857), ('sp-subpref-calcadas-s01-p2', 0.857)]
+   recusa: None  json_valido: True  tentativas: 2  1.7s
+R: A calçada é a porta de entrada da sua casa. Ela é o local onde você dá boas-vindas aos convidados, encontra conhecidos e demonstra respeito aos outros. É onde você pode circular de forma segura. Para garantir a segurança e a liberdade de circulação de todos os cidadãos, foram criadas normas para permitir o livre trânsito de pessoas, independentemente de sua deficiência, mobilidade ou não. Para saber se sua calçada está dentro dos padrões municipais, você pode consultar a Secretaria Municipal das Subprefeituras através do telefone 156 ou informar-se sobre a legislação específica para a sua Subprefeitura.
+   fontes: ['sp-subpref-calcadas-s01-p1', 'sp-subpref-calcadas-s01-p2']  confiança: 0.9
+   esperado: Pelos bordos da pista, em fila única, com prioridade sobre os veículos, exceto em locais proibidos pela sinalização.  (ctb-art68)
+   julgamento: {'recusou': False, 'citacao_invalida': False, 'correta': False, 'citacao_correta': False, 'recusa_indevida': False, 'alucinacao': True}
+   contrato: {"resposta": "A calçada é a porta de entrada da sua casa. Ela é o local onde você dá boas-vindas aos convidados, encontra conhecidos e demonstra respeito aos outros. É onde você pode circular de forma segura. Para garantir a segurança e a liberdade de circulação de todos os cidadãos, foram criadas n
+
+================================================================================
+P: O que é pessoa com mobilidade reduzida segundo a Lei Brasileira de Inclusão?
+   top-3: [('lbi-art53-p1', 0.894), ('lbi-art54-p1', 0.877), ('lbi-art61-p1', 0.873)]
+   recusa: None  json_valido: True  tentativas: 1  0.4s
+R: A pessoa com mobilidade reduzida é aquela que tem dificuldade para se locomover devido a uma condição física, como deficiência ou limitação de movimento, que afeta sua capacidade de se deslocar em ambientes domésticos, profissionais ou sociais.
+   fontes: ['lbi-art53-p1', 'lbi-art54-p1']  confiança: 1.0
+   esperado: Quem tem dificuldade de movimentação, permanente ou temporária, incluindo idoso, gestante, lactante, pessoa com criança de colo e obeso.  (lbi-art3)
+   julgamento: {'recusou': False, 'citacao_invalida': False, 'correta': False, 'citacao_correta': False, 'recusa_indevida': False, 'alucinacao': True}
+   contrato: {"resposta": "A pessoa com mobilidade reduzida é aquela que tem dificuldade para se locomover devido a uma condição física, como deficiência ou limitação de movimento, que afeta sua capacidade de se deslocar em ambientes domésticos, profissionais ou sociais.", "fontes": [{"titulo": "Lei Brasileira d
+
+================================================================================
+P: calçada quebrada na frente de uma casa, qual serviço eu peço no 156?
+   top-3: [('sp-subpref-calcadas-s01-p5', 0.852), ('sp-subpref-calcadas-s01-p1', 0.851), ('sp-dec59671-art34-p1', 0.849)]
+   recusa: busca  json_valido: True  tentativas: 0  0.0s
+R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+   fontes: []  confiança: 0.0
+   esperado: O serviço 'Calçada particular - denunciar calçada danificada ou inexistente'.  (sp-subpref-servicos156|sp156-calcada-particular)
+   julgamento: {'recusou': True, 'citacao_invalida': False, 'correta': False, 'citacao_correta': False, 'recusa_indevida': True, 'alucinacao': False}
+   contrato: {"resposta": "Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.", "fontes": [], "confianca": 0.0, "recusou": true}
+
+================================================================================
+P: A Prefeitura reforma alguma calçada?
+   top-3: [('sp-subpref-calcadas-s01-p3', 0.87), ('sp-subpref-calcadas-s01-p2', 0.869), ('sp-cartilha-calcadas-s01-p1', 0.867)]
+   recusa: None  json_valido: True  tentativas: 1  0.8s
+R: A Prefeitura de São Paulo reforma calçadas em locais estratégicos e prioritários, como escolas, bancos, correios, postos de saúde, paradas de embarque e desembarque de passageiros, conforme determinado pelo Programa Emergencial de Calçadas (PEC) e Lei Municipal nº 14.675, de 2008. Essas reformas são realizadas para garantir acessibilidade a todos os cidadãos, incluindo aqueles com deficiência ou mobilidade reduzida. A Prefeitura também reforma calçadas das edificações públicas municipais e das vias estruturais, como as rotas estratégicas e de segurança, que são determinadas pelo Plano Diretor e incluem principais serviços como escolas, hospitais, postos de saúde e paradas de embarque.
+   fontes: ['sp-subpref-calcadas-s01-p1', 'sp-subpref-calcadas-s01-p2', 'sp-cartilha-calcadas-s01-p1']  confiança: 1.0  CITAÇÃO INVÁLIDA: ['sp-subpref-calcadas-s01-p1']
+   esperado: Sim: as de prédios públicos municipais, das vias estruturais e das rotas estratégicas do Programa Emergencial de Calçadas; depois, a manutenção volta ao responsável pelo imóvel.  (sp-subpref-calcadas|sp-dec59671-art35|sp-lei15442-art7)
+   julgamento: {'recusou': False, 'citacao_invalida': True, 'correta': True, 'citacao_correta': True, 'recusa_indevida': False, 'alucinacao': True}
+   contrato: {"resposta": "A Prefeitura de São Paulo reforma calçadas em locais estratégicos e prioritários, como escolas, bancos, correios, postos de saúde, paradas de embarque e desembarque de passageiros, conforme determinado pelo Programa Emergencial de Calçadas (PEC) e Lei Municipal nº 14.675, de 2008. Essa
+
+================================================================================
+P: Mesas e cadeiras de bar podem ocupar a faixa livre?
+   top-3: [('sp-dec59671-art24-p1', 0.828), ('sp-lei15442-art8-p1', 0.825), ('sp-dec59671-art20-p2', 0.821)]
+   recusa: busca  json_valido: True  tentativas: 0  0.0s
+R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+   fontes: []  confiança: 0.0
+   esperado: Não. Mobiliário temporário, como mesas, cadeiras e toldos, fica na faixa de acesso, não na faixa livre.  (sp-dec59671-art4)
+   julgamento: {'recusou': True, 'citacao_invalida': False, 'correta': False, 'citacao_correta': False, 'recusa_indevida': True, 'alucinacao': False}
+   contrato: {"resposta": "Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.", "fontes": [], "confianca": 0.0, "recusou": true}
+
+================================================================================
+P: quanto custa reformar minha calçada?
+   top-3: [('sp-cartilha-calcadas-s07-p1', 0.845), ('sp-subpref-calcadas-s01-p4', 0.844), ('sp-subpref-calcadas-s01-p3', 0.843)]
+   recusa: busca  json_valido: True  tentativas: 0  0.0s
+R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+   fontes: []  confiança: 0.0
+   esperado: Recusa: a base não traz essa informação.  (None)
+   julgamento: {'recusou': True, 'citacao_invalida': False, 'recusa_correta': True, 'alucinacao': False}
+   contrato: {"resposta": "Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.", "fontes": [], "confianca": 0.0, "recusou": true}
+
+================================================================================
+P: Qual a melhor ação para investir este mês?
+   top-3: [('sp-subpref-calcadas-s02-p1', 0.802), ('lbi-art54-p1', 0.801), ('lbi-art61-p1', 0.797)]
+   recusa: busca  json_valido: True  tentativas: 0  0.0s
+R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+   fontes: []  confiança: 0.0
+   esperado: Recusa: a base não traz essa informação.  (None)
+   julgamento: {'recusou': True, 'citacao_invalida': False, 'recusa_correta': True, 'alucinacao': False}
+   contrato: {"resposta": "Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.", "fontes": [], "confianca": 0.0, "recusou": true}
+
+================================================================================
+P: patinete elétrico pode andar na calçada em SP?
+   top-3: [('sp-subpref-calcadas-s01-p3', 0.859), ('sp-subpref-calcadas-s01-p2', 0.848), ('sp-cartilha-calcadas-s08-p1', 0.848)]
+   recusa: busca  json_valido: True  tentativas: 0  0.0s
+R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+   fontes: []  confiança: 0.0
+   esperado: Recusa: a base não traz essa informação.  (None)
+   julgamento: {'recusou': True, 'citacao_invalida': False, 'recusa_correta': True, 'alucinacao': False}
+   contrato: {"resposta": "Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.", "fontes": [], "confianca": 0.0, "recusou": true}
+
+================================================================================
+P: Qual é o piso mais barato para fazer uma calçada?
+   top-3: [('sp-cartilha-calcadas-s07-p1', 0.847), ('sp-cartilha-calcadas-s06-p1', 0.842), ('sp-cartilha-calcadas-s11-p2', 0.84)]
+   recusa: busca  json_valido: True  tentativas: 0  0.0s
+R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+   fontes: []  confiança: 0.0
+   esperado: Recusa: a base não traz essa informação.  (None)
+   julgamento: {'recusou': True, 'citacao_invalida': False, 'recusa_correta': True, 'alucinacao': False}
+   contrato: {"resposta": "Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.", "fontes": [], "confianca": 0.0, "recusou": true}
+
+================================================================================
+P: Quanto tempo o 156 demora para responder uma solicitação?
+   top-3: [('sp-subpref-servicos156-s01-p4', 0.836), ('sp-subpref-servicos156-s01-p3', 0.826), ('sp-subpref-servicos156-s01-p2', 0.823)]
+   recusa: busca  json_valido: True  tentativas: 0  0.0s
+R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+   fontes: []  confiança: 0.0
+   esperado: Recusa: a base não traz essa informação.  (None)
+   julgamento: {'recusou': True, 'citacao_invalida': False, 'recusa_correta': True, 'alucinacao': False}
+   contrato: {"resposta": "Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.", "fontes": [], "confianca": 0.0, "recusou": true}

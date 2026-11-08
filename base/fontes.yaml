@@ -1,0 +1,104 @@
+# Fontes da base de conhecimento do assistente. SÓ textos públicos com licença clara.
+#
+# tipo:
+#   lei_html   página de lei/decreto (Planalto ou portal de legislação da Prefeitura); fatiada por artigo
+#   pagina     página de serviço/informação; fatiada por seção (títulos)
+#   pdf        cartilha/documento em PDF; fatiado por seção/página
+# artigos: lista de artigos a manter (os demais são descartados). Vazio = todos.
+#   Use "anexo" para manter o(s) anexo(s) da lei.
+# ativo: false = ainda não baixar (URL a conferir/preencher).
+#
+# Licença: textos de leis, decretos e atos oficiais não têm proteção de direito autoral no
+# Brasil (Lei 9.610/1998, art. 8º, IV). Páginas e cartilhas da Prefeitura são publicações
+# oficiais, mas não são "atos oficiais": confira os termos de uso do portal e cite a fonte.
+# FORA da base: NBR 9050 (norma da ABNT, protegida por direito autoral).
+#
+# O Planalto costuma bloquear downloads automáticos. Se o 01_baixar_base.py falhar, abra a URL
+# no navegador, "Salvar como... > Página da Web, somente HTML" em base/brutos/<id>.html e rode
+# de novo: o script usa o arquivo local.
+
+fontes:
+  - id: ctb
+    titulo: Código de Trânsito Brasileiro (Lei nº 9.503/1997)
+    url: https://www.planalto.gov.br/ccivil_03/leis/l9503compilado.htm
+    tipo: lei_html
+    licenca: Ato oficial (Lei 9.610/98, art. 8º, IV) — domínio público
+    # pedestre, calçada, bicicleta no passeio, competência do município e infrações ligadas
+    artigos: [24, 29, 59, 68, 69, 70, 71, 181, 193, 214, 254, 255]
+    ativo: true
+
+  - id: lbi
+    titulo: Lei Brasileira de Inclusão da Pessoa com Deficiência (Lei nº 13.146/2015)
+    url: https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13146.htm
+    tipo: lei_html
+    licenca: Ato oficial (Lei 9.610/98, art. 8º, IV) — domínio público
+    # definições e o capítulo da acessibilidade
+    artigos: [3, 53, 54, 55, 56, 57, 60, 61, 62]
+    ativo: true
+
+  - id: sp-lei15442
+    titulo: Lei municipal nº 15.442/2011 (limpeza de imóveis e passeios públicos), com alterações
+    url: http://legislacao.prefeitura.sp.gov.br/leis/lei-15442-de-09-de-setembro-de-2011
+    tipo: lei_html
+    licenca: Ato oficial (Lei 9.610/98, art. 8º, IV) — domínio público
+    artigos: [7, 8, 9, 10, "10-A", 11, 12, 14, 15, 17, anexo]
+    ativo: true
+
+  - id: sp-dec59671
+    titulo: Decreto municipal nº 59.671/2020 (padronização das calçadas)
+    url: http://legislacao.prefeitura.sp.gov.br/leis/decreto-59671-de-7-de-agosto-de-2020
+    tipo: lei_html
+    licenca: Ato oficial (Lei 9.610/98, art. 8º, IV) — domínio público
+    artigos: [1, 4, 10, 16, 17, 20, 24, 30, 32, 34, 35, 36, 37]
+    ativo: true
+
+  - id: sp-subpref-calcadas
+    titulo: "Subprefeituras — Calçadas: o direito de ir e vir começa na porta da nossa casa"
+    url: https://prefeitura.sp.gov.br/subprefeituras/w/noticias/36935
+    tipo: pagina
+    licenca: Publicação oficial da Prefeitura de São Paulo — conferir termos de uso do portal; citar a fonte
+    ativo: true
+
+  - id: sp-subpref-servicos156
+    titulo: Subprefeituras — Serviços do Portal 156
+    url: https://prefeitura.sp.gov.br/web/subprefeituras/w/pracas_de_atendimento/335674
+    tipo: pagina
+    licenca: Publicação oficial da Prefeitura de São Paulo — conferir termos de uso do portal; citar a fonte
+    ativo: true
+
+  - id: sp-cartilha-calcadas
+    titulo: Cartilha de Calçadas 2023 (SMPED/CPA, Prefeitura de São Paulo)
+    url: "https://www.prefeitura.sp.gov.br/cidade/secretarias/upload/pessoa_com_deficiencia/2023_08_11%20-%20Livreto%20Cartilha%20de%20Cal%C3%A7adas%202023%20-%20Vrs%20NOVA%20NORMA%20-%20V9.pdf"
+    tipo: pdf
+    licenca: Publicação oficial da Prefeitura de São Paulo — conferir termos de uso; citar a fonte
+    ativo: true
+
+  # Páginas do SP156 (carta de serviços) — abra https://sp156.prefeitura.sp.gov.br, busque o
+  # serviço, copie a URL da página de informação e troque `ativo` para true.
+  - id: sp156-calcada-particular
+    titulo: "SP156 — Calçada particular: denunciar calçada danificada ou inexistente"
+    url: PREENCHER
+    tipo: pagina
+    licenca: Publicação oficial da Prefeitura de São Paulo — conferir termos de uso; citar a fonte
+    ativo: false
+
+  - id: sp156-obstaculo
+    titulo: "SP156 — Acessibilidade: solicitar avaliação de obstáculo na calçada"
+    url: PREENCHER
+    tipo: pagina
+    licenca: Publicação oficial da Prefeitura de São Paulo — conferir termos de uso; citar a fonte
+    ativo: false
+
+  - id: sp156-entulho
+    titulo: "SP156 — Denunciar material de construção depositado em vias públicas"
+    url: PREENCHER
+    tipo: pagina
+    licenca: Publicação oficial da Prefeitura de São Paulo — conferir termos de uso; citar a fonte
+    ativo: false
+
+  - id: sp156-veiculo-calcada
+    titulo: "SP156 — Estacionamento irregular / veículo sobre a calçada (fiscalização)"
+    url: PREENCHER
+    tipo: pagina
+    licenca: Publicação oficial da Prefeitura de São Paulo — conferir termos de uso; citar a fonte
+    ativo: false

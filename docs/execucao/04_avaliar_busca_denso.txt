@@ -1,0 +1,28 @@
+
+=== Recall da busca (respondíveis) ===
+dev    n=10  recall@1=0.200  recall@3=0.200
+todas  n=40  recall@1=0.300  recall@3=0.600
+ATENÇÃO: recall@3 < 0,8. Revise o fatiamento antes de seguir (ver PASSO_A_PASSO.md, passo 4).
+  errou r01: esperado ctb-art181, veio ['sp-dec59671-art10-p1', 'sp-cartilha-calcadas-s12-p2', 'ctb-art193-p1']  — o carro tá em cima da calçada, pode isso?
+  errou r04: esperado sp-lei15442-art7|sp-dec59671-art34|sp-dec59671-art1, veio ['sp-subpref-calcadas-s01-p1', 'sp-subpref-calcadas-s01-p5', 'sp-subpref-calcadas-s01-p2']  — quem tem que arrumar a calçada na frente de casa?
+  errou r05: esperado sp-dec59671-art1|sp-lei15442-art10, veio ['sp-subpref-calcadas-s01-p1', 'sp-subpref-calcadas-s01-p5', 'sp-dec59671-art35-p1']  — Quem responde pela calçada em frente a um condomínio?
+  errou r06: esperado sp-lei15442-anexo|sp-lei15442-art15, veio ['sp-dec59671-art32-p1', 'sp-subpref-calcadas-s01-p1', 'sp-dec59671-art1-p1']  — se o dono não arrumar a calçada ele leva multa? de quanto?
+  errou r07: esperado sp-lei15442-art11, veio ['sp-dec59671-art32-p1', 'sp-subpref-calcadas-s01-p4', 'sp-dec59671-art35-p1']  — Qual é o prazo para regularizar a calçada depois da intimação?
+  errou r08: esperado sp-lei15442-art17, veio ['sp-lei15442-art10-p1', 'sp-dec59671-art34-p1', 'sp-dec59671-art1-p1']  — e se o dono nunca arrumar, a prefeitura faz a obra?
+  errou r09: esperado sp-dec59671-art4|sp-lei15442-art8, veio ['sp-cartilha-calcadas-s04-p1', 'sp-subpref-calcadas-s01-p1', 'sp-subpref-calcadas-s01-p5']  — quanto de espaço livre tem que ter na calçada pra gente passar?
+  errou r16: esperado ctb-art254, veio ['ctb-art214-p1', 'sp-lei15442-art8-p1', 'ctb-art181-p3']  — O pedestre pode ser multado?
+  errou r17: esperado ctb-art68, veio ['sp-subpref-calcadas-s01-p5', 'sp-subpref-calcadas-s01-p1', 'sp-subpref-calcadas-s01-p2']  — na minha rua não tem calçada, por onde eu ando?
+  errou r19: esperado ctb-art59|ctb-art255, veio ['sp-subpref-calcadas-s01-p5', 'ctb-art193-p1', 'sp-subpref-calcadas-s01-p1']  — bike pode andar na calçada?
+  errou r21: esperado ctb-art29, veio ['ctb-art71-p1', 'ctb-art68-p1', 'ctb-art69-p1']  — de quem é a responsabilidade pela segurança do pedestre no trânsito?
+  errou r22: esperado lbi-art3, veio ['lbi-art53-p1', 'lbi-art54-p1', 'lbi-art61-p1']  — O que é pessoa com mobilidade reduzida segundo a Lei Brasileira de Inclusão?
+  errou r25: esperado sp-subpref-servicos156|sp156-calcada-particular, veio ['sp-subpref-calcadas-s01-p5', 'sp-subpref-calcadas-s01-p1', 'sp-dec59671-art34-p1']  — calçada quebrada na frente de uma casa, qual serviço eu peço no 156?
+  errou r26: esperado sp-subpref-servicos156, veio ['sp-dec59671-art35-p1', 'sp-dec59671-art32-p1', 'sp-dec59671-art1-p1']  — E se a calçada danificada for de uma praça ou prédio público?
+  errou r33: esperado sp-dec59671-art4, veio ['sp-dec59671-art24-p1', 'sp-lei15442-art8-p1', 'sp-dec59671-art20-p2']  — Mesas e cadeiras de bar podem ocupar a faixa livre?
+  errou r36: esperado sp-dec59671-art4, veio ['sp-cartilha-calcadas-s03-p1', 'sp-cartilha-calcadas-s06-p1', 'sp-cartilha-calcadas-s04-p1']  — Qual a altura livre mínima sobre a calçada para placas e toldos?
+
+=== Limiar escolhido (split dev) ===
+{'limiar': 0.86, 'acerto_respondiveis': 0.2, 'recusa_correta_nao_consta': 1.0, 'equilibrio': 0.6}
+faixa de scores observada: 0.764 a 0.932
+gráfico: ./avaliacao\curva_limiar.png
+
+limiar salvo em ./avaliacao\limiar.json. Próximo: python scripts/05_testar_geracao.py

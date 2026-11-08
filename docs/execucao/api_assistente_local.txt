@@ -1,0 +1,43 @@
+# API /assistente local — configuração B, busca e5 + reranker mMiniLM, limiar 0,17
+
+$ GET /saude
+{"status":"ok","erro":null,"config":"B","modelo":"qwen2.5:1.5b-instruct","limiar":0.17,"trechos":82}
+
+$ POST /assistente sem token
+{"codigo":"nao_autenticado","mensagem":"Token ausente ou inválido."} [HTTP 401]
+
+$ POST /assistente {"pergunta":""}
+{"codigo":"dados_invalidos","mensagem":"Os dados enviados não são válidos.","detalhes":[{"campo":"pergunta","problema":"String should have at least 1 character"}]} [HTTP 422]
+
+$ POST /assistente corpo em latin-1 (acento fora de UTF-8)
+{"codigo":"requisicao_invalida","mensagem":"O corpo da requisição não é um JSON válido em UTF-8."} [HTTP 400]
+
+$ POST /assistente {"pergunta":"Quem tem prioridade na faixa de pedestre?"}
+{"resposta":"Os pedestres que estiverem atravessando a via sobre as faixas delimitadas para esse fim terão prioridade de passagem, exceto nos locais com sinalização semafórica, onde deverão ser respeitadas as disposições deste Código.","fontes":[{"titulo":"Código de Trânsito Brasileiro (Lei nº 9.503/1997), Art. 70","url":"https://www.planalto.gov.br/ccivil_03/leis/l9503compilado.htm"},{"titulo":"Decreto municipal nº 59.671/2020 (padronização das calçadas), Art. 4","url":"http://legislacao.prefeitura.sp.gov.br/leis/decreto-59671-de-7-de-agosto-de-2020"},{"titulo":"Código de Trânsito Brasileiro (Lei nº 9.503/1997), Art. 214","url":"https://www.planalto.gov.br/ccivil_03/leis/l9503compilado.htm"}],"confianca":1.0,"recusou":false} [HTTP 200 em 2.639112s]
+
+$ POST /assistente {"pergunta":"carro na calçada pode?"}
+{"resposta":"Sim, o carro pode estar na calçada, desde que respeite as normas de acessibilidade e segurança. A calçada deve ter largura mínima de 1,20 m e ser acessível para pessoas com deficiência. Além disso, deve estar em posição adjacente à guia, exceto em situações apertadas, mediante autorização da Subprefeitura. Em áreas com mais de 2,40 m de largura, a calçada deve corresponder a pelo menos 50% da largura total.","fontes":[{"titulo":"Cartilha de Calçadas 2023 (SMPED/CPA, Prefeitura de São Paulo)","url":"https://www.prefeitura.sp.gov.br/cidade/secretarias/upload/pessoa_com_deficiencia/2023_08_11%20-%20Livreto%20Cartilha%20de%20Cal%C3%A7adas%202023%20-%20Vrs%20NOVA%20NORMA%20-%20V9.pdf"},{"titulo":"Código de Trânsito Brasileiro (Lei nº 9.503/1997), Art. 68","url":"https://www.planalto.gov.br/ccivil_03/leis/l9503compilado.htm"}],"confianca":1.0,"recusou":false} [HTTP 200 em 0.599527s]
+
+$ POST /assistente {"pergunta":"quem tem que arrumar a calçada na frente de casa?"}
+{"resposta":"A responsabilidade pela manutenção e reforma da calçada na frente de casa é do proprietário ou responsável pelo imóvel lindeiro a ela. Isso inclui você, munícipe, entidades privadas (como comércios e condomínios) e organismos governamentais.","fontes":[{"titulo":"Subprefeituras — Calçadas: o direito de ir e vir começa na porta da nossa casa","url":"https://prefeitura.sp.gov.br/subprefeituras/w/noticias/36935"},{"titulo":"Decreto municipal nº 59.671/2020 (padronização das calçadas), Art. 1","url":"http://legislacao.prefeitura.sp.gov.br/leis/decreto-59671-de-7-de-agosto-de-2020"}],"confianca":1.0,"recusou":false} [HTTP 200 em 0.478165s]
+
+$ POST /assistente {"pergunta":"Qual a melhor ação para investir este mês?"}
+{"resposta":"Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.","fontes":[],"confianca":0.0,"recusou":true} [HTTP 200 em 0.030378s]
+
+$ POST /assistente {"pergunta":"carro na calçada pode?"}
+{"resposta":"Sim, o carro pode estar na calçada, desde que respeite as normas de acessibilidade e segurança. A calçada deve ter largura mínima de 1,20 m e ser acessível para pessoas com deficiência. Além disso, deve estar em posição adjacente à guia, exceto em situações apertadas, mediante autorização da Subprefeitura. Em áreas com mais de 2,40 m de largura, a calçada deve corresponder a pelo menos 50% da largura total.","fontes":[{"titulo":"Cartilha de Calçadas 2023 (SMPED/CPA, Prefeitura de São Paulo)","url":"https://www.prefeitura.sp.gov.br/cidade/secretarias/upload/pessoa_com_deficiencia/2023_08_11%20-%20Livreto%20Cartilha%20de%20Cal%C3%A7adas%202023%20-%20Vrs%20NOVA%20NORMA%20-%20V9.pdf"},{"titulo":"Código de Trânsito Brasileiro (Lei nº 9.503/1997), Art. 68","url":"https://www.planalto.gov.br/ccivil_03/leis/l9503compilado.htm"}],"confianca":1.0,"recusou":false} [HTTP 200 em 0.001272s]
+
+$ GET /metrics
+assistente_respostas_total{tipo="total"} 5
+assistente_respostas_total{tipo="recusas"} 1
+assistente_respostas_total{tipo="contingencias"} 0
+assistente_respostas_total{tipo="cache"} 1
+assistente_latencia_segundos{quantil="0.5"} 0.598
+assistente_latencia_segundos{quantil="0.95"} 2.638
+
+# log (uma linha por resposta, sem o texto da pergunta)
+{"evento": "pronto", "config": "B", "limiar": 0.17, "modelo": "qwen2.5:1.5b-instruct"}
+{"evento": "resposta", "nivel_recusa": null, "json_valido": true, "citacoes_invalidas": 0, "score_max": 0.956889271736145, "ms": 2638, "recusou": false, "n_fontes": 3}
+{"evento": "resposta", "nivel_recusa": null, "json_valido": true, "citacoes_invalidas": 0, "score_max": 0.4100004732608795, "ms": 598, "recusou": false, "n_fontes": 2}
+{"evento": "resposta", "nivel_recusa": null, "json_valido": true, "citacoes_invalidas": 0, "score_max": 0.27138927578926086, "ms": 477, "recusou": false, "n_fontes": 2}
+{"evento": "resposta", "nivel_recusa": "busca", "json_valido": true, "citacoes_invalidas": 0, "score_max": 0.055041562765836716, "ms": 29, "recusou": true, "n_fontes": 0}

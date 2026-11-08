@@ -1,0 +1,11 @@
+# Container ghcr.io/passo-seguro/passo-seguro-genai:local (4.83GB, torch CPU, e5 + reranker embutidos), Ollama no host
+
+$ GET /saude
+{"status":"ok","erro":null,"config":"B","modelo":"qwen2.5:1.5b-instruct","limiar":0.17,"trechos":82}
+
+$ POST /assistente sem token
+{"codigo":"nao_autenticado","mensagem":"Token ausente ou inválido."} [HTTP 401]
+
+$ POST /assistente {"pergunta":"Quem tem prioridade na faixa de pedestre?"}
+{"resposta":"Os pedestres que estiverem atravessando a via sobre as faixas delimitadas para esse fim terão prioridade de passagem, exceto nos locais com sinalização semafórica, onde deverão ser respeitadas as disposições deste Código.","fontes":[{"titulo":"Código de Trânsito Brasileiro (Lei nº 9.503/1997), Art. 70","url":"https://www.planalto.gov.br/ccivil_03/leis/l9503compilado.htm"},{"titulo":"Decreto municipal nº 59.671/2020 (padronização das calçadas), Art. 4","url":"http://legislacao.prefeitura.sp.gov.br/leis/decreto-59671-de-7-de-agosto-de-2020"},{"titulo":"Código de Trânsito Brasileiro (Lei nº 9.503/1997), Art. 214","url":"https://www.planalto.gov.br/ccivil_03/leis/l9503compilado.htm"}],"confianca":1.0,"recusou":false} [HTTP 200 em 1.208437s]
+healthcheck: healthy

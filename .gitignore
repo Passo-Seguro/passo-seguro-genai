@@ -224,3 +224,13 @@ __marimo__/
 *.tfstate
 *.tfstate.*
 secrets.h
+
+# --- Passo Seguro / genai ---
+.env
+modelos/*
+!modelos/.gitkeep
+!modelos/Modelfile.gguf
+treino/treino_bruto.jsonl.bak
+*.gguf
+*.safetensors
+!modelos/Modelfile.gguf
