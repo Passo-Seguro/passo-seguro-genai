@@ -1,0 +1,45 @@
+# Windows PowerShell 5.1.26100.9818 · 08/11/2026 17:52 · token omitido
+PS> $url = "https://assistente-production-307b.up.railway.app"; $token = "<ASSISTENTE_TOKEN>"
+PS> Invoke-RestMethod "$url/saude"
+status  : ok
+erro    : 
+config  : C
+modelo  : passo-seguro-lora
+limiar  : 0,17
+trechos : 82
+
+PS> $corpo = @{ pergunta = "Qual a largura mínima da faixa livre da calçada?" } | ConvertTo-Json
+PS> $s = Measure-Command { $r = Invoke-RestMethod -Method Post "$url/assistente" -Headers @{ Authorization = "Bearer $token" } -ContentType "application/json; charset=utf-8" -Body ([Text.Encoding]::UTF8.GetBytes($corpo)) }
+PS> "{0:N1} s" -f $s.TotalSeconds; $r | ConvertTo-Json -Depth 4
+6,2 s
+{
+    "resposta":  "A largura mínima da faixa livre é de 1,20m (um metro e vinte centímetros).",
+    "fontes":  [
+                   {
+                       "titulo":  "Decreto municipal nº 59.671/2020 (padronização das calçadas), Art. 24",
+                       "url":  "http://legislacao.prefeitura.sp.gov.br/leis/decreto-59671-de-7-de-agosto-de-2020"
+                   }
+               ],
+    "confianca":  0.83,
+    "recusou":  false
+}
+
+PS> $corpo = @{ pergunta = "Quem tem prioridade na faixa de pedestre?" } | ConvertTo-Json
+PS> $s = Measure-Command { $r = Invoke-RestMethod -Method Post "$url/assistente" -Headers @{ Authorization = "Bearer $token" } -ContentType "application/json; charset=utf-8" -Body ([Text.Encoding]::UTF8.GetBytes($corpo)) }
+PS> "{0:N1} s" -f $s.TotalSeconds; $r | ConvertTo-Json -Depth 4
+4,0 s
+{
+    "resposta":  "Os pedestres têm prioridade na faixa destinada à livre circulação de pedestres, que é a faixa livre.",
+    "fontes":  [
+                   {
+                       "titulo":  "Código de Trânsito Brasileiro (Lei nº 9.503/1997), Art. 70",
+                       "url":  "https://www.planalto.gov.br/ccivil_03/leis/l9503compilado.htm"
+                   }
+               ],
+    "confianca":  0.85,
+    "recusou":  false
+}
+
+PS> try { Invoke-RestMethod -Method Post "$url/assistente" -ContentType "application/json" -Body '{"pergunta":"oi"}' } catch { $_.Exception.Response.StatusCode.value__; $_.ErrorDetails.Message }
+401
+{"codigo":"nao_autenticado","mensagem":"Token ausente ou inválido."}

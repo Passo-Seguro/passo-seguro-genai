@@ -60,6 +60,17 @@ def test_cache_de_perguntas_repetidas(buscador, config):
         assert a == b  # a 2ª não chamou o LLM (a fila de respostas falsas tinha 1 só)
 
 
+def test_json_declara_charset_utf8(buscador, config):
+    # sem o charset, o Invoke-RestMethod do Windows PowerShell 5.1 lê o corpo como latin-1: "calÃ§ada"
+    with cliente(buscador, config, [{"resposta": "Infração grave.", "fontes": ["ctb-art181-p1"], "confianca": 0.9, "recusou": False}]) as c:
+        respostas = [c.post("/assistente", json={"pergunta": "carro na calçada?"}, headers=CAB),
+                     c.post("/assistente", json={"pergunta": "x"}),
+                     c.post("/assistente", json={"pergunta": ""}, headers=CAB),
+                     c.get("/saude")]
+        for r in respostas:
+            assert r.headers["content-type"] == "application/json; charset=utf-8", r.request.url
+
+
 def test_corpo_fora_de_utf8_vira_400_no_formato_de_erro(buscador, config):
     # é o que o curl.exe do Windows manda quando a pergunta tem acento: "calçada" em latin-1
     with cliente(buscador, config, []) as c:
