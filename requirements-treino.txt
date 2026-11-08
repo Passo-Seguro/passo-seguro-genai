@@ -1,0 +1,7 @@
+# LoRA (Fase 5). ANTES, instale o PyTorch com CUDA (PASSO_A_PASSO.md, passo 1).
+transformers>=4.46
+peft>=0.13
+trl>=0.20
+datasets>=3.0
+accelerate>=1.0
+bitsandbytes>=0.45   # só para --4bit (QLoRA); tem build para Windows

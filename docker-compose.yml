@@ -1,0 +1,22 @@
+# Local: Ollama + assistente.   docker compose up --build
+# Depois, uma vez:  docker compose exec ollama ollama pull qwen2.5:1.5b-instruct
+#                   docker compose exec ollama ollama create passo-seguro-lora -f /modelos/Modelfile.gguf
+services:
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama:/root/.ollama
+      - ./modelos:/modelos:ro
+    ports: ["11434:11434"]
+    # com GPU NVIDIA (Docker Desktop + WSL2): descomente
+    # deploy: { resources: { reservations: { devices: [ { driver: nvidia, count: 1, capabilities: [gpu] } ] } } }
+  assistente:
+    build: { context: ., dockerfile: api/Dockerfile }
+    environment:
+      OLLAMA_URL: http://ollama:11434
+      ASSISTENTE_TOKEN: ${ASSISTENTE_TOKEN:-token-local}
+      CONFIG_VENCEDORA: ${CONFIG_VENCEDORA:-C}
+    ports: ["8002:8000"]
+    depends_on: [ollama]
+volumes:
+  ollama:

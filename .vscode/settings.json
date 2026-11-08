@@ -1,0 +1,13 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+  "python.terminal.activateEnvironment": true,
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": ["tests", "-q"],
+  "python.analysis.extraPaths": ["${workspaceFolder}/src", "${workspaceFolder}/scripts", "${workspaceFolder}"],
+  "terminal.integrated.env.windows": { "PYTHONPATH": "${workspaceFolder}/src;${workspaceFolder}", "PYTHONUTF8": "1" },
+  "terminal.integrated.env.linux": { "PYTHONPATH": "${workspaceFolder}/src:${workspaceFolder}" },
+  "terminal.integrated.env.osx": { "PYTHONPATH": "${workspaceFolder}/src:${workspaceFolder}" },
+  "jupyter.notebookFileRoot": "${workspaceFolder}",
+  "files.exclude": { "**/__pycache__": true, ".pytest_cache": true },
+  "files.watcherExclude": { "**/modelos/**": true }
+}

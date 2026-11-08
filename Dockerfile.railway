@@ -1,0 +1,26 @@
+# Imagem ÚNICA para o Railway (ou qualquer VM): Ollama + modelo GGUF + API /assistente.
+# Precisa de modelos/passo-seguro-lora-q4_K_M.gguf e modelos/Modelfile.gguf (do 09_exportar_ollama.py).
+#   docker build -f Dockerfile.railway -t passo-seguro-assistente .
+#   docker run -p 8000:8000 -e ASSISTENTE_TOKEN=troque passo-seguro-assistente
+# Memória: ~3 GB (modelo 1,5B em q4 ≈ 1 GB + embeddings ≈ 1 GB + API).
+FROM ollama/ollama:latest
+ENV DEBIAN_FRONTEND=noninteractive PYTHONUNBUFFERED=1 HF_HOME=/app/.cache/hf TOKENIZERS_PARALLELISM=false \
+    OLLAMA_HOST=127.0.0.1:11434 OLLAMA_URL=http://127.0.0.1:11434 OLLAMA_KEEP_ALIVE=-1 CONFIG_VENCEDORA=C
+RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-venv && rm -rf /var/lib/apt/lists/*
+RUN python3 -m venv /venv
+ENV PATH=/venv/bin:$PATH
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+COPY api/requirements.txt /tmp/req.txt
+RUN pip install --no-cache-dir -r /tmp/req.txt
+WORKDIR /app
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('intfloat/multilingual-e5-base')"
+COPY modelos/passo-seguro-lora-q4_K_M.gguf modelos/Modelfile.gguf /app/modelos/
+COPY src/ src/
+COPY api/ api/
+COPY base/trechos.jsonl base/trechos.jsonl
+COPY base/indice/ base/indice/
+COPY avaliacao/limiar.json avaliacao/limiar.json
+COPY api/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+EXPOSE 8000
+ENTRYPOINT ["/entrypoint.sh"]
