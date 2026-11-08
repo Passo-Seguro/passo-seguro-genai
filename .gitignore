@@ -233,3 +233,4 @@ modelos/*
 treino/treino_bruto.jsonl.bak
 *.gguf
 *.safetensors
+!modelos/Modelfile.gguf
