@@ -5,7 +5,8 @@ FROM python:3.12-slim AS deps
 ENV PIP_NO_CACHE_DIR=1 PIP_DISABLE_PIP_VERSION_CHECK=1
 RUN pip install --prefix=/install torch --index-url https://download.pytorch.org/whl/cpu
 COPY api/requirements.txt .
-RUN pip install --prefix=/install -r requirements.txt
+# PYTHONPATH faz o pip enxergar o torch CPU de /install; sem ele, o sentence-transformers puxa o torch CUDA (+6 GB)
+RUN PYTHONPATH=/install/lib/python3.12/site-packages pip install --prefix=/install -r requirements.txt
 
 FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 HF_HOME=/app/.cache/hf TOKENIZERS_PARALLELISM=false

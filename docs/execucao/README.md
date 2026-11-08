@@ -102,6 +102,21 @@ Dois pontos para corrigir:
   como 400 `{"detail": ...}`, o formato padrão do FastAPI, e não `{codigo, mensagem}`. O
   `exception_handler` cobre a validação dos campos, mas não o erro de parse do corpo.
 
+### Fase 8: container (`api/Dockerfile`)
+
+O primeiro build gerou uma imagem de **11,7 GB**. Tinha dois problemas, os dois corrigidos:
+
+- No estágio `deps`, o segundo `pip install --prefix=/install` não via o torch CPU já instalado
+  em `/install`. Por isso o `sentence-transformers` puxava o torch com CUDA do PyPI, com 3 GB só
+  de bibliotecas NVIDIA. Agora o comando roda com `PYTHONPATH` apontando para `/install`.
+- Não havia `.dockerignore`, então o `.venv` inteiro ia no contexto do build. O novo
+  `.dockerignore` deixa passar só o que os Dockerfiles copiam.
+
+Depois disso: **3,96 GB**, torch `2.15.0+cpu`, contexto de 2,7 kB. O container rodou com
+`OLLAMA_URL=http://host.docker.internal:11434`. Resultado: `/saude` 200, 401 sem token, resposta
+com CTB art. 70 em 4 s e healthcheck `healthy`
+([`api_assistente_docker.txt`](api_assistente_docker.txt)).
+
 ## O que falta, e por quê não foi rodado aqui
 
 | Fase | Bloqueio |

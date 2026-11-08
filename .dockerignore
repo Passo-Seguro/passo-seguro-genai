@@ -1,0 +1,9 @@
+*
+!src/
+!api/
+!base/trechos.jsonl
+!base/indice/
+!avaliacao/limiar.json
+!modelos/passo-seguro-lora-q4_K_M.gguf
+!modelos/Modelfile.gguf
+**/__pycache__
