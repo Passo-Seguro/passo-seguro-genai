@@ -29,6 +29,7 @@ sys.path.insert(0, str(RAIZ / "src"))
 from fastapi import FastAPI, Request  # noqa: E402
 from fastapi.exceptions import RequestValidationError  # noqa: E402
 from fastapi.responses import JSONResponse, PlainTextResponse  # noqa: E402
+from starlette.exceptions import HTTPException as StarletteHTTPException  # noqa: E402
 
 from passo_genai.avaliacao import normalizar  # noqa: E402
 from passo_genai.config import Config  # noqa: E402
@@ -93,6 +94,14 @@ def criar_app(assistente: Assistente | None = None, token: str | None = None, co
         yield
 
     app = FastAPI(title="Passo Seguro — Assistente", version="1.0.0", lifespan=ciclo, redoc_url=None)
+
+    @app.exception_handler(StarletteHTTPException)
+    async def _http(request, exc):
+        # ex.: corpo que não decodifica (acento fora de UTF-8) -> 400 do FastAPI; mantém o formato {codigo, mensagem}
+        codigos = {400: ("requisicao_invalida", "O corpo da requisição não é um JSON válido em UTF-8."),
+                   404: ("nao_encontrado", "Rota não encontrada."), 405: ("metodo_nao_permitido", "Método não permitido.")}
+        codigo, mensagem = codigos.get(exc.status_code, ("erro_http", str(exc.detail)))
+        return JSONResponse(status_code=exc.status_code, content={"codigo": codigo, "mensagem": mensagem})
 
     @app.exception_handler(RequestValidationError)
     async def _validacao(request, exc):

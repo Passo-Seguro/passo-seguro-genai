@@ -58,3 +58,11 @@ def test_cache_de_perguntas_repetidas(buscador, config):
         a = c.post("/assistente", json={"pergunta": "Estacionar no passeio?"}, headers=CAB).json()
         b = c.post("/assistente", json={"pergunta": "estacionar no   passeio?"}, headers=CAB).json()  # mesma após normalizar
         assert a == b  # a 2ª não chamou o LLM (a fila de respostas falsas tinha 1 só)
+
+
+def test_corpo_fora_de_utf8_vira_400_no_formato_de_erro(buscador, config):
+    # é o que o curl.exe do Windows manda quando a pergunta tem acento: "calçada" em latin-1
+    with cliente(buscador, config, []) as c:
+        r = c.post("/assistente", content='{"pergunta": "calçada"}'.encode("latin-1"),
+                   headers={**CAB, "Content-Type": "application/json"})
+        assert r.status_code == 400 and r.json()["codigo"] == "requisicao_invalida"

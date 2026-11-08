@@ -15,6 +15,7 @@ Saídas:
 
 import argparse
 import json
+import math
 import random
 import sys
 import time
@@ -81,7 +82,8 @@ def main() -> int:
         gradient_accumulation_steps=args.acumulacao,
         learning_rate=args.lr,
         lr_scheduler_type="cosine",
-        warmup_ratio=0.05,
+        # 5% dos passos; inteiro porque o transformers 5 tirou o warmup_ratio
+        warmup_steps=max(1, round(0.05 * math.ceil(len(treino) / (args.batch * args.acumulacao)) * args.epocas)),
         logging_steps=5,
         eval_strategy="epoch",
         save_strategy="epoch",

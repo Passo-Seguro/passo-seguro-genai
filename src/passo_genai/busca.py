@@ -21,7 +21,8 @@ from passo_genai.esquemas import Trecho
 @dataclass
 class Resultado:
     trecho: Trecho
-    score: float
+    score: float  # do reranker, se houver; senão o cosseno do e5
+    score_denso: float | None = None
 
 
 class Embeddings:
@@ -48,11 +49,31 @@ class Embeddings:
                                   batch_size=32).astype(np.float32)
 
 
+class Reranqueador:
+    """Cross-encoder: lê pergunta e trecho juntos e devolve a relevância em 0..1 (sigmoide).
+    Corrige o ponto fraco do e5 nesta base: páginas genéricas sobre calçadas ficavam parecidas
+    com quase toda pergunta e tomavam o top-3 do artigo certo."""
+
+    def __init__(self, nome: str, device: str | None = None):
+        from sentence_transformers import CrossEncoder
+
+        self.nome = nome
+        self.modelo = CrossEncoder(nome, device=device, max_length=512)
+
+    def pontuar(self, pergunta: str, textos: list[str]) -> np.ndarray:
+        logits = np.asarray(self.modelo.predict([(pergunta, t) for t in textos], batch_size=16,
+                                                show_progress_bar=False, activation_fn=None), dtype=np.float32)
+        return 1.0 / (1.0 + np.exp(-logits))
+
+
 class Buscador:
-    def __init__(self, trechos: list[Trecho], vetores: np.ndarray, embeddings: Embeddings):
+    def __init__(self, trechos: list[Trecho], vetores: np.ndarray, embeddings: Embeddings,
+                 reranker: Reranqueador | None = None, candidatos: int = 10):
         self.trechos = trechos
         self.vetores = vetores
         self.emb = embeddings
+        self.reranker = reranker
+        self.candidatos = candidatos
         self.por_id = {t.trecho_id: t for t in trechos}
         self._faiss = None
         try:
@@ -80,7 +101,9 @@ class Buscador:
             "criado_em": datetime.now(timezone.utc).isoformat(timespec="seconds")}, indent=2), encoding="utf-8")
 
     @classmethod
-    def carregar(cls, pasta: Path = INDICE, caminho_trechos: Path = TRECHOS, embeddings: Embeddings | None = None) -> "Buscador":
+    def carregar(cls, pasta: Path = INDICE, caminho_trechos: Path = TRECHOS, embeddings: Embeddings | None = None,
+                 config: Config | None = None) -> "Buscador":
+        config = config or Config()
         info = json.loads((pasta / "info.json").read_text(encoding="utf-8"))
         ids = json.loads((pasta / "ids.json").read_text(encoding="utf-8"))
         por_id = {t.trecho_id: t for t in carregar_trechos(caminho_trechos)}
@@ -88,7 +111,8 @@ class Buscador:
         if faltando:
             raise RuntimeError(f"índice desatualizado: {len(faltando)} trechos sumiram. Rode scripts/03_indexar.py")
         emb = embeddings or Embeddings(info["modelo_embeddings"])
-        return cls([por_id[i] for i in ids], np.load(pasta / "vetores.npy"), emb)
+        reranker = Reranqueador(config.modelo_reranker) if config.modelo_reranker else None
+        return cls([por_id[i] for i in ids], np.load(pasta / "vetores.npy"), emb, reranker, config.candidatos)
 
     # ------------------------------------------------------------------ busca
     def buscar_vetor(self, q: np.ndarray, k: int) -> list[Resultado]:
@@ -100,14 +124,23 @@ class Buscador:
             sims = self.vetores @ q.reshape(-1)
             idx = np.argsort(-sims)[:k]
             pares = zip(idx, sims[idx])
-        return [Resultado(self.trechos[int(i)], float(s)) for i, s in pares]
+        return [Resultado(self.trechos[int(i)], float(s), float(s)) for i, s in pares]
+
+    def _reordenar(self, pergunta: str, q: np.ndarray, k: int) -> list[Resultado]:
+        if self.reranker is None:
+            return self.buscar_vetor(q, k)
+        cands = self.buscar_vetor(q, max(k, self.candidatos))
+        scores = self.reranker.pontuar(pergunta, [c.trecho.texto for c in cands])
+        for c, s in zip(cands, scores):
+            c.score = float(s)
+        return sorted(cands, key=lambda c: -c.score)[:k]
 
     def buscar(self, pergunta: str, k: int = 3) -> list[Resultado]:
-        return self.buscar_vetor(self.emb.consultas([pergunta])[0], k)
+        return self._reordenar(pergunta, self.emb.consultas([pergunta])[0], k)
 
     def buscar_lote(self, perguntas: list[str], k: int = 3) -> list[list[Resultado]]:
         qs = self.emb.consultas(perguntas)
-        return [self.buscar_vetor(q, k) for q in qs]
+        return [self._reordenar(p, q, k) for p, q in zip(perguntas, qs)]
 
 
 def acertou(recuperados: list[str], esperado: str | None) -> bool:

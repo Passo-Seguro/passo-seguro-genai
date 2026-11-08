@@ -14,8 +14,14 @@ Se o seu Ollama não importar safetensors (versão antiga), use o llama.cpp:
     python llama.cpp/convert_hf_to_gguf.py modelos/mesclado --outtype f16 --outfile modelos/mesclado-f16.gguf
     llama.cpp/build/bin/llama-quantize modelos/mesclado-f16.gguf modelos/passo-seguro-lora-q4_K_M.gguf Q4_K_M
 e troque o FROM do Modelfile pelo .gguf. Depois: ollama create passo-seguro-lora -f modelos/Modelfile
+
+O Ollama 0.40+ não aceita mais q4_K_M ao importar safetensors (só int4, int8, nvfp4, mxfp4, mxfp8):
+    python scripts/09_exportar_ollama.py --quantize int4
+int4 também tem 4 bits, mas não é o mesmo esquema do modelo base (Q4_K_M). Registre isso no placar.
 """
 
+import argparse
+import os
 import re
 import shutil
 import subprocess
@@ -37,6 +43,10 @@ def rodar(cmd: list[str]) -> str:
 
 
 def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--quantize", default=os.getenv("QUANTIZACAO_LORA", "q4_K_M"),
+                    help="q4_K_M (Ollama antigo) ou int4 (Ollama 0.40+)")
+    args = ap.parse_args()
     cfg = Config()
     mesclado = MODELOS / "mesclado"
     if not (mesclado / "config.json").exists():
@@ -63,8 +73,8 @@ def main() -> int:
     modelfile.write_text("\n".join(linhas) + "\n", encoding="utf-8")
     print(f"{modelfile} escrito ({len(params)} PARAMETER copiados)")
 
-    titulo("ollama create (quantizando para q4_K_M, alguns minutos)")
-    rodar(["ollama", "create", cfg.modelo_lora, "--quantize", "q4_K_M", "-f", str(modelfile)])
+    titulo(f"ollama create (quantizando para {args.quantize}, alguns minutos)")
+    rodar(["ollama", "create", cfg.modelo_lora, "--quantize", args.quantize, "-f", str(modelfile)])
 
     titulo("Extraindo o GGUF")
     mf_novo = rodar(["ollama", "show", cfg.modelo_lora, "--modelfile"])

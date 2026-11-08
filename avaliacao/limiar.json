@@ -1,7 +1,7 @@
 {
-  "limiar": 0.86,
+  "limiar": 0.17,
   "escolhido_em": "dev",
-  "acerto_respondiveis": 0.2,
+  "acerto_respondiveis": 0.6,
   "recusa_correta_nao_consta": 1.0,
-  "equilibrio": 0.6
+  "equilibrio": 0.8
 }

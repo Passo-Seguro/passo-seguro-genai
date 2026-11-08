@@ -120,8 +120,12 @@ def dividir_artigos(linhas: list[str]) -> list[tuple[str, str]]:
     blocos: list[tuple[str, list[str]]] = []
     atual = None
     for linha in linhas:
+        if linha.startswith("Este texto não substitui"):  # rodapé do portal de legislação
+            atual = None
+            continue
         m = RE_ARTIGO.match(linha)
-        if m:
+        # dentro do anexo, "Art. 1º" é célula da tabela (coluna "Dispositivos violados"), não um artigo novo
+        if m and not (atual is not None and atual[0] == "anexo"):
             num = m.group(1) + (f"-{m.group(2).upper()}" if m.group(2) else "")
             atual = (num, [linha])
             blocos.append(atual)

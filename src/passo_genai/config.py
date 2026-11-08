@@ -51,6 +51,10 @@ class Config:
     # embeddings multilíngues (e5 exige os prefixos "query: " e "passage: ")
     modelo_embeddings: str = field(default_factory=lambda: os.getenv("MODELO_EMBEDDINGS", "intfloat/multilingual-e5-base"))
     top_k: int = field(default_factory=lambda: int(os.getenv("TOP_K", "3")))
+    # reranker (cross-encoder): reordena os CANDIDATOS do e5; o limiar passa a valer sobre o score dele.
+    # MODELO_RERANKER vazio = só a busca densa
+    modelo_reranker: str = field(default_factory=lambda: os.getenv("MODELO_RERANKER", "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"))
+    candidatos: int = field(default_factory=lambda: int(os.getenv("CANDIDATOS", "10")))
     limiar: float = field(default_factory=lambda: float(os.getenv("LIMIAR", _limiar_salvo())))
     # Ollama
     ollama_url: str = field(default_factory=lambda: os.getenv("OLLAMA_URL", "http://localhost:11434"))

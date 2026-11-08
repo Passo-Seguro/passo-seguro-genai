@@ -90,7 +90,7 @@ def main() -> int:
         ax.axvline(melhor["limiar"], color="gray", ls="--")
         ax.annotate(f"limiar = {melhor['limiar']}", (melhor["limiar"], 0.05), xytext=(5, 0), textcoords="offset points")
         ax.set_xlim(min(0.3, lo), max(0.8, hi))
-        ax.set_xlabel("limiar de similaridade (cosseno do melhor trecho)")
+        ax.set_xlabel("limiar (score do melhor trecho: reranker, ou cosseno do e5 sem reranker)")
         ax.set_ylabel("taxa")
         ax.set_title("Acerto × recusa conforme o limiar")
         ax.legend(fontsize=8, loc="lower left")

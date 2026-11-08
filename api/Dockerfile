@@ -11,12 +11,13 @@ RUN PYTHONPATH=/install/lib/python3.12/site-packages pip install --prefix=/insta
 FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 HF_HOME=/app/.cache/hf TOKENIZERS_PARALLELISM=false
 ARG MODELO_EMBEDDINGS=intfloat/multilingual-e5-base
-ENV MODELO_EMBEDDINGS=${MODELO_EMBEDDINGS}
+ARG MODELO_RERANKER=cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
+ENV MODELO_EMBEDDINGS=${MODELO_EMBEDDINGS} MODELO_RERANKER=${MODELO_RERANKER}
 RUN useradd --create-home --uid 10001 assistente
 COPY --from=deps /install /usr/local
 WORKDIR /app
-# o modelo de embeddings entra na imagem: nada é baixado na partida
-RUN python -c "import os; from sentence_transformers import SentenceTransformer; SentenceTransformer(os.environ['MODELO_EMBEDDINGS'])" \
+# embeddings e reranker entram na imagem: nada é baixado na partida
+RUN python -c "import os; from sentence_transformers import SentenceTransformer, CrossEncoder; SentenceTransformer(os.environ['MODELO_EMBEDDINGS']); CrossEncoder(os.environ['MODELO_RERANKER'])" \
     && chown -R assistente /app/.cache
 COPY src/ src/
 COPY api/ api/

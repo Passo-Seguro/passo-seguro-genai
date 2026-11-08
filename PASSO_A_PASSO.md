@@ -50,7 +50,7 @@ copy .env.exemplo .env
 
 ollama pull qwen2.5:1.5b-instruct          # modelo base (configs A e B), ~1 GB
 python scripts/00_verificar_ambiente.py
-python -m pytest -q                        # 22 testes
+python -m pytest -q                        # 27 testes
 ```
 
 **Por que Qwen2.5-1.5B-Instruct:** tem de 1 a 4 bilhões de parâmetros (pedido do guia), a licença
@@ -115,6 +115,12 @@ python scripts/04_avaliar_busca.py
   gráfico `avaliacao/curva_limiar.png`, que vai para o relatório com a justificativa.
 - Com o e5, as similaridades ficam altas (0,75 a 0,9), então a varredura vai além do intervalo
   de 0,3 a 0,8 do guia. Explique isso no relatório.
+- **Reranker:** a busca usa um cross-encoder (`MODELO_RERANKER`, padrão
+  `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1`) que reordena os 10 candidatos do e5. Com ele, o
+  limiar vale sobre o score do reranker (0 a 1). Na execução de 08/11, o recall@3 subiu de 0,60
+  para 0,775. O `BAAI/bge-reranker-v2-m3` acerta um pouco mais, mas leva ~11 s por pergunta em
+  CPU: use só com GPU. `MODELO_RERANKER=` (vazio) volta à busca só com o e5. Trocar o reranker
+  exige rodar o `04` de novo.
 
 ## 5. Fase 4 — Geração fundamentada
 
@@ -173,6 +179,12 @@ python scripts/09_exportar_ollama.py
 O script junta o adapter, quantiza em q4_K_M (a mesma quantização do modelo base, para a
 comparação ser justa) e cria `passo-seguro-lora` no Ollama. Também extrai o
 `modelos/passo-seguro-lora-q4_K_M.gguf` para o container.
+
+**Ollama 0.40 ou mais novo:** a importação de safetensors passa pelo motor MLX, que não aceita
+`q4_K_M` nem a arquitetura Qwen2 (`unsupported MLX architecture`). Converta com o llama.cpp,
+como diz o docstring do `09`: `convert_hf_to_gguf.py modelos/mesclado --outtype f16` e
+`llama-quantize ... Q4_K_M`. Depois crie o modelo a partir do `.gguf` com o template do base.
+Em versões em que a importação funcione, `python scripts/09_exportar_ollama.py --quantize <tipo>`.
 
 **Plano B (se o LoRA não funcionar até 12/11):** veja `docs/plano-b-agente.md`.
 

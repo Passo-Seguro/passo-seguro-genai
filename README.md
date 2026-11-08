@@ -20,8 +20,8 @@ Ficha Técnica: [README do repositório principal](https://github.com/Passo-Segu
 | Tarefa | Responder dúvidas de pedestres de São Paulo sobre calçadas, travessias e como reclamar, citando a fonte, em JSON. |
 | Por que importa | Reclamar de calçada hoje é confuso: o pedestre não sabe se o problema é do dono do imóvel, da Prefeitura ou de uma concessionária, nem qual serviço do 156 usar. |
 | Modelo | Qwen2.5-1.5B-Instruct (Apache 2.0), quantizado em q4_K_M, rodando no Ollama |
-| Especialização | LoRA (rank 16, alpha 32) com cerca de 300 exemplos revisados à mão, 25% deles recusas |
-| Busca | `intfloat/multilingual-e5-base` + FAISS, top-3, limiar de similaridade escolhido pela curva acerto × recusa |
+| Especialização | LoRA (rank 16, alpha 32) com 324 exemplos (28% recusas), revisados exemplo a exemplo (revisão feita por IA, a conferir: ver `treino/revisao_ia.json`) |
+| Busca | `intfloat/multilingual-e5-base` + FAISS (10 candidatos) → reranker `mmarco-mMiniLMv2` → top-3; limiar 0,17 escolhido no dev pela curva acerto × recusa |
 | Saída | JSON validado (Pydantic): `{"resposta", "fontes", "confianca", "recusou"}` |
 | Integração | `POST /assistente`, consumido pelo app (PWA) via API principal |
 | IA responsável | O app sempre mostra as fontes; sem base, recusa e aponta o SP156; as perguntas não são guardadas com dados pessoais; o viés com linguagem informal é medido no placar |
@@ -32,7 +32,8 @@ Ficha Técnica: [README do repositório principal](https://github.com/Passo-Segu
 flowchart LR
     P[Pergunta do pedestre] --> E[Embeddings e5<br/>query]
     E --> F[(FAISS<br/>trechos oficiais)]
-    F --> T{score do melhor<br/>trecho >= limiar?}
+    F --> RR[Reranker cross-encoder<br/>10 candidatos → top-3]
+    RR --> T{score do melhor<br/>trecho >= limiar?}
     T -- não --> R1[Recusa padrão<br/>+ link SP156]
     T -- sim --> L[LLM local + LoRA<br/>Ollama, JSON forçado]
     L --> V{JSON válido?<br/>Pydantic}
@@ -69,13 +70,22 @@ A NBR 9050 fica fora da base: é norma da ABNT, protegida por direito autoral.
 > Preenchido por `avaliacao/avaliar.py` ([`avaliacao/placar.md`](avaliacao/placar.md)), nas 45 perguntas de teste.
 > O critério está em [`avaliacao/criterio.md`](avaliacao/criterio.md).
 
-| Configuração | Exatidão | Alucinação | Recusa correta (não consta) | JSON válido | Latência |
-|---|---|---|---|---|---|
-| A — modelo sem contexto | – | – | – | – | – |
-| B — RAG simples | – | – | – | – | – |
-| C — RAG + LoRA | – | – | – | – | – |
+| Configuração | Exatidão | Alucinação | Recusa correta (não consta) | Recusa indevida | JSON válido | Latência |
+|---|---|---|---|---|---|---|
+| A — modelo sem contexto | 23% | 100% | 0% | 0% | 100% | 0,29 s |
+| B — RAG simples | 50% | 29% | 80% | 20% | 100% | 0,32 s |
+| C — RAG + LoRA | pendente | | | | | |
 
-Formal × informal: [`avaliacao/placar_por_registro.csv`](avaliacao/placar_por_registro.csv).
+C está pendente: o LoRA foi treinado (perda de validação 0,218 → 0,183), mas o Ollama 0.40 não
+importa o modelo Qwen2 em safetensors, e falta a conversão para GGUF com o llama.cpp. Ver
+[`docs/execucao/README.md`](docs/execucao/README.md#5d-exportação-para-o-ollama-09_exportar_ollamapy-bloqueada).
+
+Formal × informal ([`avaliacao/placar_por_registro.csv`](avaliacao/placar_por_registro.csv)):
+na configuração B, 67% de exatidão nas formais e 39% nas informais; as recusas indevidas
+aparecem só nas informais (33%).
+
+> ⚠️ Na configuração B, "carro na calçada pode?" recebe uma resposta **errada** ("Sim, o carro
+> pode estar na calçada…"). Detalhes no [registro de execução](docs/execucao/README.md#8-api).
 Os cinco erros reais estão em [`avaliacao/cinco_erros.md`](avaliacao/cinco_erros.md).
 
 ## Como reproduzir
@@ -107,8 +117,15 @@ src/passo_genai/  base, busca, prompts, gerador, avaliacao, esquemas, professor
 scripts/     00 a 10, na ordem das fases
 api/         FastAPI do POST /assistente, Dockerfile, entrypoint do Railway
 tests/       contrato da API, geração (recusa, JSON, citação), avaliação, fatiamento
-docs/        relatório e plano B (agente)
+docs/        GUIA_DE_USO, TESTES, execucao/ (saídas reais), prints/, relatório e plano B (agente)
 ```
+
+## Documentação
+
+- [Guia de uso da API](docs/GUIA_DE_USO.md): contrato, exemplos em curl, PowerShell, Python e JS, erros e configuração
+- [Testes](docs/TESTES.md): o que cada um dos 27 testes garante e como rodar
+- [Registro de execução](docs/execucao/README.md): tudo o que foi rodado, com números, problemas e correções
+- [Prints](docs/prints/): testes, Swagger, chamadas da API, curva do limiar, perda do LoRA, placar
 
 ## Links
 

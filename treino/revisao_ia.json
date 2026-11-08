@@ -1,0 +1,1624 @@
+{
+ "revisor": "Claude (assistente de IA), em 08/11/2026, a pedido da equipe",
+ "aviso": "Revisão feita por IA, exemplo a exemplo, comparando pergunta, trecho de origem e resposta. Precisa de conferência humana antes da entrega: o guia pede revisão à mão.",
+ "criterios": [
+  "rejeitar: resposta inventada (valor, prazo ou serviço que não está no trecho)",
+  "rejeitar: pergunta fora do domínio do pedestre (competências administrativas do CTB, regras só de motorista, cookies do site)",
+  "rejeitar: duplicata de outro exemplo, pergunta incompreensível ou caracteres quebrados do PDF",
+  "rejeitar recusa: quando a base (ou o próprio contexto) responde a pergunta, porque ensinaria recusa indevida",
+  "editar: resposta certa mas incompleta, truncada, com jargão, tom errado ou sem o nome exato do serviço do 156",
+  "aprovar: resposta fiel ao trecho, curta e útil para o pedestre"
+ ],
+ "decisoes": {
+  "t0000": {
+   "acao": "e",
+   "motivo": "a resposta trocou o inciso: o art. 214, III protege idosos em qualquer situação; 'luz vermelha pra ele' distorce o inciso II",
+   "resposta": "Sim. Deixar de dar preferência de passagem a idosos, assim como a pessoas com deficiência, crianças e gestantes, é infração gravíssima, com multa."
+  },
+  "t0001": {
+   "acao": "a"
+  },
+  "t0002": {
+   "acao": "a"
+  },
+  "t0003": {
+   "acao": "e",
+   "motivo": "frase truncada",
+   "resposta": "A calçada é considerada inexistente quando foi executada em desconformidade com as normas técnicas vigentes na data da sua construção ou reconstrução."
+  },
+  "t0004": {
+   "acao": "e",
+   "motivo": "faltou o nome do serviço",
+   "resposta": "No Portal 156, pelo serviço 'Acessibilidade - Denunciar falta de móveis adequados', na categoria Instalações físicas e equipamentos acessíveis."
+  },
+  "t0005": {
+   "acao": "r",
+   "motivo": "alucinação: 1,50 m não aparece no trecho (tabela sem valores)"
+  },
+  "t0006": {
+   "acao": "a"
+  },
+  "t0007": {
+   "acao": "a"
+  },
+  "t0008": {
+   "acao": "a"
+  },
+  "t0009": {
+   "acao": "a"
+  },
+  "t0010": {
+   "acao": "a"
+  },
+  "t0011": {
+   "acao": "a"
+  },
+  "t0012": {
+   "acao": "e",
+   "motivo": "faltou o nome do serviço",
+   "resposta": "Sim. No Portal 156 existe o serviço 'Solicitar fiscalização de valet'."
+  },
+  "t0013": {
+   "acao": "a"
+  },
+  "t0014": {
+   "acao": "e",
+   "motivo": "jargão ('inciso I, alínea h') que não ajuda o pedestre",
+   "resposta": "Só em calçadas com pelo menos 2,90 m de largura, e desde que fique preservada a faixa livre de 1,20 m para os pedestres."
+  },
+  "t0015": {
+   "acao": "a"
+  },
+  "t0016": {
+   "acao": "r",
+   "motivo": "resposta circular, não informa nada"
+  },
+  "t0017": {
+   "acao": "r",
+   "motivo": "competência administrativa do CTB (art. 24), fora do que o pedestre pergunta"
+  },
+  "t0018": {
+   "acao": "r",
+   "motivo": "fora do domínio (poluentes de veículos) e o trecho mostrado não sustenta a parte do art. 66"
+  },
+  "t0019": {
+   "acao": "a"
+  },
+  "t0020": {
+   "acao": "a"
+  },
+  "t0021": {
+   "acao": "a"
+  },
+  "t0022": {
+   "acao": "a"
+  },
+  "t0023": {
+   "acao": "a"
+  },
+  "t0024": {
+   "acao": "r",
+   "motivo": "texto de cookies do portal, não é informação para o pedestre"
+  },
+  "t0025": {
+   "acao": "a"
+  },
+  "t0026": {
+   "acao": "a"
+  },
+  "t0027": {
+   "acao": "e",
+   "motivo": "redação confusa",
+   "resposta": "A fabricação de veículos de transporte coletivo está entre as atividades sujeitas às regras de acessibilidade da Lei Brasileira de Inclusão."
+  },
+  "t0028": {
+   "acao": "a"
+  },
+  "t0029": {
+   "acao": "a"
+  },
+  "t0030": {
+   "acao": "a"
+  },
+  "t0031": {
+   "acao": "r",
+   "motivo": "regra de ultrapassagem para motorista, não para pedestre; tom errado ('tá legal')"
+  },
+  "t0032": {
+   "acao": "a"
+  },
+  "t0033": {
+   "acao": "a"
+  },
+  "t0034": {
+   "acao": "a"
+  },
+  "t0035": {
+   "acao": "a"
+  },
+  "t0036": {
+   "acao": "a"
+  },
+  "t0037": {
+   "acao": "a"
+  },
+  "t0038": {
+   "acao": "a"
+  },
+  "t0039": {
+   "acao": "e",
+   "motivo": "conferido no trecho (rotação de 180°: 1,50 m); deixei explícito",
+   "resposta": "Para girar 180° sem se deslocar, a cadeira de rodas precisa de 1,50 m."
+  },
+  "t0040": {
+   "acao": "e",
+   "motivo": "conferido no trecho; redação",
+   "resposta": "Pelo telefone 156. As Subprefeituras também informam sobre a sua calçada e os padrões de piso autorizados."
+  },
+  "t0041": {
+   "acao": "e",
+   "motivo": "a resposta inventava que a Subprefeitura verifica a rota acessível",
+   "resposta": "Não. A banca de jornal tem que seguir as regras do decreto de calçadas, preservando a faixa livre. Banca instalada em desacordo é notificada para indicar outro local, e a Subprefeitura verifica se o novo local atende às regras."
+  },
+  "t0042": {
+   "acao": "e",
+   "motivo": "caracteres quebrados do PDF na resposta",
+   "resposta": "O piso tátil de alerta é formado por relevos troncocônicos (círculos). O piso tátil direcional é formado por relevos lineares (barras)."
+  },
+  "t0043": {
+   "acao": "e",
+   "motivo": "caracteres quebrados do PDF na resposta",
+   "resposta": "Quando a mudança de direção formar um ângulo entre 150° e 180°, não é necessário usar sinalização tátil de alerta."
+  },
+  "t0044": {
+   "acao": "e",
+   "motivo": "a segunda frase ('paga na hora que cometer o erro') é inventada",
+   "resposta": "Os valores das multas são atualizados todo ano pela variação do IPCA, ou por outro índice que venha a substituí-lo."
+  },
+  "t0045": {
+   "acao": "r",
+   "motivo": "o trecho são só rótulos de figura; a definição foi inventada"
+  },
+  "t0046": {
+   "acao": "r",
+   "motivo": "o trecho são só rótulos de figura"
+  },
+  "t0047": {
+   "acao": "a"
+  },
+  "t0048": {
+   "acao": "e",
+   "motivo": "a parte da água inverte o sentido do texto",
+   "resposta": "Na cura química, o filme impermeável aplicado logo após o acabamento deve permanecer por no mínimo 7 dias."
+  },
+  "t0049": {
+   "acao": "a"
+  },
+  "t0050": {
+   "acao": "a"
+  },
+  "t0051": {
+   "acao": "a"
+  },
+  "t0052": {
+   "acao": "a"
+  },
+  "t0053": {
+   "acao": "e",
+   "motivo": "resposta sem sentido ('pra refeição')",
+   "resposta": "Nas obras que exigem quebrar a calçada, a faixa livre tem que ser refeita em toda a sua largura, sem emendas ou remendos no sentido do comprimento, respeitando a modulação do piso."
+  },
+  "t0054": {
+   "acao": "e",
+   "motivo": "redação",
+   "resposta": "Quando forem necessárias, as emendas têm que ser transversais, perpendiculares ao sentido em que os pedestres andam."
+  },
+  "t0055": {
+   "acao": "e",
+   "motivo": "conferido no trecho: vale para qualquer largura de calçada",
+   "resposta": "Independentemente da largura da calçada, o piso de alerta deve ter entre 0,40 m e 0,60 m de largura e ficar a 0,50 m do meio-fio."
+  },
+  "t0056": {
+   "acao": "e",
+   "motivo": "faltou o nome do serviço",
+   "resposta": "No Portal 156, pelo serviço 'Árvore em área interna - Solicitar avaliação da Prefeitura'."
+  },
+  "t0057": {
+   "acao": "e",
+   "motivo": "serviço errado; conferido no trecho",
+   "resposta": "No Portal 156, pelo serviço 'Árvore - Denunciar poda ou remoção não autorizada'."
+  },
+  "t0058": {
+   "acao": "e",
+   "motivo": "a pergunta fala em limpar, a regra é sobre executar o passeio",
+   "resposta": "Se o imóvel fica numa via do Plano de Pavimentação Urbana Comunitária (PPUC), o responsável fica excluído da obrigação de executar o passeio."
+  },
+  "t0059": {
+   "acao": "r",
+   "motivo": "resposta inventada ('desde 2015'); o art. 61 não diz isso"
+  },
+  "t0060": {
+   "acao": "a"
+  },
+  "t0061": {
+   "acao": "a"
+  },
+  "t0062": {
+   "acao": "r",
+   "motivo": "pergunta pede espessura, resposta dá o peso por m²"
+  },
+  "t0063": {
+   "acao": "a"
+  },
+  "t0064": {
+   "acao": "r",
+   "motivo": "o trecho mostrado não sustenta 'apenas em serviço de urgência'; regra de motorista"
+  },
+  "t0065": {
+   "acao": "a"
+  },
+  "t0066": {
+   "acao": "a"
+  },
+  "t0067": {
+   "acao": "a"
+  },
+  "t0068": {
+   "acao": "e",
+   "motivo": "a regra é da faixa de serviço, não da calçada; caractere quebrado",
+   "resposta": "A faixa de serviço deve ficar junto à guia. Só em situações atípicas, com autorização da Subprefeitura, ela pode ficar em outra posição."
+  },
+  "t0069": {
+   "acao": "a"
+  },
+  "t0070": {
+   "acao": "r",
+   "motivo": "pergunta confusa e resposta sem sentido ('Tá feio')"
+  },
+  "t0071": {
+   "acao": "e",
+   "motivo": "não respondia a pergunta",
+   "resposta": "A multa vale para quem conduz bicicleta em passeio onde a circulação não é permitida, ou de forma agressiva. É infração média, com multa e remoção da bicicleta."
+  },
+  "t0072": {
+   "acao": "a"
+  },
+  "t0073": {
+   "acao": "a"
+  },
+  "t0074": {
+   "acao": "a"
+  },
+  "t0075": {
+   "acao": "a"
+  },
+  "t0076": {
+   "acao": "a"
+  },
+  "t0077": {
+   "acao": "r",
+   "motivo": "preferência em rotatória é regra de motorista"
+  },
+  "t0078": {
+   "acao": "r",
+   "motivo": "resposta inventada; o trecho é a apresentação da cartilha"
+  },
+  "t0079": {
+   "acao": "r",
+   "motivo": "resposta inventada; o trecho é a apresentação da cartilha"
+  },
+  "t0080": {
+   "acao": "a"
+  },
+  "t0081": {
+   "acao": "e",
+   "motivo": "faltou o nome do serviço",
+   "resposta": "Sim. No Portal 156, pelo serviço 'Guia rebaixada - solicitar fiscalização de rebaixamento irregular'."
+  },
+  "t0082": {
+   "acao": "r",
+   "motivo": "alucinação: 6,00 m não está no trecho"
+  },
+  "t0083": {
+   "acao": "a"
+  },
+  "t0084": {
+   "acao": "a"
+  },
+  "t0085": {
+   "acao": "e",
+   "motivo": "redação",
+   "resposta": "Quando a regularização é comunicada à Subprefeitura, fica sem efeito a multa aplicada nos 60 dias anteriores à comunicação."
+  },
+  "t0086": {
+   "acao": "e",
+   "motivo": "misturou a regra da faixa de acesso com a dica de texturização",
+   "resposta": "Quando a inclinação da calçada for acentuada, o piso deve receber texturização para aumentar o atrito."
+  },
+  "t0087": {
+   "acao": "a"
+  },
+  "t0088": {
+   "acao": "e",
+   "motivo": "redação",
+   "resposta": "Sempre que ficar comprovado que o desenho universal não pode ser aplicado, deve ser adotada uma adaptação razoável."
+  },
+  "t0089": {
+   "acao": "e",
+   "motivo": "faltou o nome do serviço",
+   "resposta": "No Portal 156, pelo serviço 'Solicitar fiscalização de estacionamentos particulares'."
+  },
+  "t0090": {
+   "acao": "a"
+  },
+  "t0091": {
+   "acao": "a"
+  },
+  "t0092": {
+   "acao": "e",
+   "motivo": "jargão",
+   "resposta": "Quando a largura não permite 3 faixas, a calçada pode ser organizada em 2 faixas, com os mesmos elementos exigidos para a faixa livre e para a faixa de serviço."
+  },
+  "t0093": {
+   "acao": "e",
+   "motivo": "redação ('notificado orientativamente')",
+   "resposta": "Antes de aplicar as penalidades, a Prefeitura envia ao responsável uma Notificação Orientativa."
+  },
+  "t0094": {
+   "acao": "r",
+   "motivo": "cargas superdimensionadas: fora do domínio do pedestre"
+  },
+  "t0095": {
+   "acao": "r",
+   "motivo": "poluentes de veículos: fora do domínio do pedestre"
+  },
+  "t0096": {
+   "acao": "r",
+   "motivo": "pergunta confusa e resposta inventada a partir de rótulos de figura"
+  },
+  "t0097": {
+   "acao": "e",
+   "motivo": "não dizia onde reclamar, que é o que o trecho informa",
+   "resposta": "As reclamações sobre a aplicação da Lei 15.442/2011 e do Decreto 59.671/2020 são feitas pelos canais de atendimento ao cidadão da Prefeitura."
+  },
+  "t0098": {
+   "acao": "r",
+   "motivo": "o trecho cortado não traz o valor; resposta vazia"
+  },
+  "t0099": {
+   "acao": "r",
+   "motivo": "pergunta sem utilidade para o pedestre"
+  },
+  "t0100": {
+   "acao": "r",
+   "motivo": "pergunta sobre o próprio texto ('não mencionado no trecho')"
+  },
+  "t0101": {
+   "acao": "a"
+  },
+  "t0102": {
+   "acao": "a"
+  },
+  "t0103": {
+   "acao": "a"
+  },
+  "t0104": {
+   "acao": "e",
+   "motivo": "a resposta inverteu o sentido: até 2017 era em papel",
+   "resposta": "Até 2017, a zeladoria era administrada em papel. Depois disso, a Secretaria implantou o Sistema de Gerenciamento de Zeladoria (SGZ), que reúne as demandas recebidas pelo 156; o texto não informa a data exata de início."
+  },
+  "t0105": {
+   "acao": "r",
+   "motivo": "texto de cookies do portal"
+  },
+  "t0106": {
+   "acao": "a"
+  },
+  "t0107": {
+   "acao": "r",
+   "motivo": "competência administrativa do CTB, fora do domínio"
+  },
+  "t0108": {
+   "acao": "e",
+   "motivo": "a resposta soava como permissão; o artigo é uma proibição",
+   "resposta": "Só para atravessar, nos locais onde a travessia é permitida. Fora isso, o Código de Trânsito proíbe o pedestre de permanecer ou andar nas pistas de rolamento."
+  },
+  "t0109": {
+   "acao": "a"
+  },
+  "t0110": {
+   "acao": "e",
+   "motivo": "ERRO: 70 cm é a faixa de serviço, não a de acesso",
+   "resposta": "O decreto não fixa uma largura mínima para a faixa de acesso: ela só existe em calçadas com mais de 2 m de largura, junto ao imóvel. A largura mínima de 70 cm é da faixa de serviço."
+  },
+  "t0111": {
+   "acao": "r",
+   "motivo": "regra de ultrapassagem para motorista"
+  },
+  "t0112": {
+   "acao": "r",
+   "motivo": "preferência entre veículos, fora do domínio"
+  },
+  "t0113": {
+   "acao": "a"
+  },
+  "t0114": {
+   "acao": "a"
+  },
+  "t0115": {
+   "acao": "r",
+   "motivo": "leu errado a figura: 0,50 m não é distância do piso tátil ao rebaixamento"
+  },
+  "t0116": {
+   "acao": "a"
+  },
+  "t0117": {
+   "acao": "a"
+  },
+  "t0118": {
+   "acao": "r",
+   "motivo": "duplicata do t0039"
+  },
+  "t0119": {
+   "acao": "e",
+   "motivo": "redação vaga",
+   "resposta": "Para todo mundo: as normas existem para que a calçada permita o livre trânsito das pessoas, tenham elas alguma deficiência, mobilidade reduzida ou não."
+  },
+  "t0120": {
+   "acao": "e",
+   "motivo": "redação vaga",
+   "resposta": "Possibilitar o livre trânsito das pessoas, tenham elas alguma deficiência, mobilidade reduzida ou não, de forma segura."
+  },
+  "t0121": {
+   "acao": "e",
+   "motivo": "redação ('tá valendo pra órgão')",
+   "resposta": "Não. Quem tem a obrigação de manter as faixas e passagens de pedestres em boas condições de visibilidade, higiene, segurança e sinalização é o órgão ou entidade responsável pela via."
+  },
+  "t0122": {
+   "acao": "a"
+  },
+  "t0123": {
+   "acao": "a"
+  },
+  "t0124": {
+   "acao": "r",
+   "motivo": "pergunta incompreensível e resposta com caracteres quebrados"
+  },
+  "t0125": {
+   "acao": "a"
+  },
+  "t0126": {
+   "acao": "e",
+   "motivo": "não respondia qual norma",
+   "resposta": "Os valores das multas estão no Anexo Único da própria Lei municipal 15.442/2011."
+  },
+  "t0127": {
+   "acao": "a"
+  },
+  "t0128": {
+   "acao": "a"
+  },
+  "t0129": {
+   "acao": "a"
+  },
+  "t0130": {
+   "acao": "a"
+  },
+  "t0131": {
+   "acao": "a"
+  },
+  "t0132": {
+   "acao": "a"
+  },
+  "t0133": {
+   "acao": "a"
+  },
+  "t0134": {
+   "acao": "a"
+  },
+  "t0135": {
+   "acao": "e",
+   "motivo": "faltou o nome do serviço",
+   "resposta": "No Portal 156, pelo serviço 'Terrenos e imóveis - Denunciar falta de limpeza de terrenos e imóveis particulares'."
+  },
+  "t0136": {
+   "acao": "r",
+   "motivo": "duplicata do t0056"
+  },
+  "t0137": {
+   "acao": "e",
+   "motivo": "ERRO: o PPUC dispensa só de executar o passeio, não de manter",
+   "resposta": "Não exatamente. O imóvel numa via do PPUC fica excluído só da obrigação de executar o passeio; a lei não o dispensa de manter e conservar."
+  },
+  "t0138": {
+   "acao": "a"
+  },
+  "t0139": {
+   "acao": "a"
+  },
+  "t0140": {
+   "acao": "r",
+   "motivo": "alucinação: 1,20 m × 0,40 m não está no trecho"
+  },
+  "t0141": {
+   "acao": "a"
+  },
+  "t0142": {
+   "acao": "r",
+   "motivo": "duplicata do t0063"
+  },
+  "t0143": {
+   "acao": "r",
+   "motivo": "o trecho não sustenta 'serviço de urgência'; regra de motorista"
+  },
+  "t0144": {
+   "acao": "r",
+   "motivo": "duplicata do t0066"
+  },
+  "t0145": {
+   "acao": "a"
+  },
+  "t0146": {
+   "acao": "a"
+  },
+  "t0147": {
+   "acao": "a"
+  },
+  "t0148": {
+   "acao": "e",
+   "motivo": "faltou a remoção",
+   "resposta": "É infração média, com multa e remoção da bicicleta, mediante recibo para o pagamento da multa."
+  },
+  "t0149": {
+   "acao": "a"
+  },
+  "t0150": {
+   "acao": "e",
+   "motivo": "redação",
+   "resposta": "Sim. A pessoa com deficiência tem direito a receber contas em formato acessível, mediante solicitação."
+  },
+  "t0151": {
+   "acao": "e",
+   "motivo": "redação",
+   "resposta": "Sim, mediante solicitação: a pessoa com deficiência tem direito a receber contas, boletos, recibos, extratos e cobranças de tributos em formato acessível."
+  },
+  "t0152": {
+   "acao": "a"
+  },
+  "t0153": {
+   "acao": "a"
+  },
+  "t0154": {
+   "acao": "a"
+  },
+  "t0155": {
+   "acao": "e",
+   "motivo": "ERRO: a resposta dizia 'sim, passar pra esquerda'; é o contrário",
+   "resposta": "Não. Quem dirige tem que deixar livre a faixa da esquerda, indo para a direita da via e parando, se necessário. Se você estiver a pé, aguarde no passeio e só atravesse depois que o veículo passar."
+  },
+  "t0156": {
+   "acao": "r",
+   "motivo": "preferência em rotatória, regra de motorista"
+  },
+  "t0157": {
+   "acao": "e",
+   "motivo": "URL com caracteres quebrados do PDF",
+   "resposta": "Sim. A versão digital da cartilha está em http://bit.ly/livretocalcadassmped_01-20."
+  },
+  "t0158": {
+   "acao": "a"
+  },
+  "t0159": {
+   "acao": "a"
+  },
+  "t0160": {
+   "acao": "a"
+  },
+  "t0161": {
+   "acao": "a"
+  },
+  "t0162": {
+   "acao": "a"
+  },
+  "t0163": {
+   "acao": "a"
+  },
+  "t0164": {
+   "acao": "a"
+  },
+  "t0165": {
+   "acao": "a"
+  },
+  "t0166": {
+   "acao": "r",
+   "motivo": "a base responde parte: estacionar na calçada é proibido (CTB, art. 181); recusar ensinaria recusa indevida"
+  },
+  "t0167": {
+   "acao": "a"
+  },
+  "t0168": {
+   "acao": "a"
+  },
+  "t0169": {
+   "acao": "r",
+   "motivo": "ERRO: é respondível (serviços de calçada no SP156); recusar ensinaria recusa indevida"
+  },
+  "t0170": {
+   "acao": "a"
+  },
+  "t0171": {
+   "acao": "a"
+  },
+  "t0172": {
+   "acao": "a"
+  },
+  "t0173": {
+   "acao": "a"
+  },
+  "t0174": {
+   "acao": "a"
+  },
+  "t0175": {
+   "acao": "a"
+  },
+  "t0176": {
+   "acao": "a"
+  },
+  "t0177": {
+   "acao": "a"
+  },
+  "t0178": {
+   "acao": "a"
+  },
+  "t0179": {
+   "acao": "a"
+  },
+  "t0180": {
+   "acao": "a"
+  },
+  "t0181": {
+   "acao": "a"
+  },
+  "t0182": {
+   "acao": "a"
+  },
+  "t0183": {
+   "acao": "a"
+  },
+  "t0184": {
+   "acao": "a"
+  },
+  "t0185": {
+   "acao": "a"
+  },
+  "t0186": {
+   "acao": "a"
+  },
+  "t0187": {
+   "acao": "a"
+  },
+  "t0188": {
+   "acao": "a"
+  },
+  "t0189": {
+   "acao": "a"
+  },
+  "t0190": {
+   "acao": "a"
+  },
+  "t0191": {
+   "acao": "a"
+  },
+  "t0192": {
+   "acao": "a"
+  },
+  "t0193": {
+   "acao": "a"
+  },
+  "t0194": {
+   "acao": "a"
+  },
+  "t0195": {
+   "acao": "a"
+  },
+  "t0196": {
+   "acao": "a"
+  },
+  "t0197": {
+   "acao": "a"
+  },
+  "t0198": {
+   "acao": "a"
+  },
+  "t0199": {
+   "acao": "a"
+  },
+  "t0200": {
+   "acao": "a"
+  },
+  "t0201": {
+   "acao": "a"
+  },
+  "t0202": {
+   "acao": "a"
+  },
+  "t0203": {
+   "acao": "a"
+  },
+  "t0204": {
+   "acao": "r",
+   "motivo": "pergunta incompreensível"
+  },
+  "t0205": {
+   "acao": "a"
+  },
+  "t0206": {
+   "acao": "a"
+  },
+  "t0207": {
+   "acao": "a"
+  },
+  "t0208": {
+   "acao": "a"
+  },
+  "t0209": {
+   "acao": "a"
+  },
+  "t0210": {
+   "acao": "a"
+  },
+  "u0000": {
+   "acao": "e",
+   "motivo": "redação ('tá valendo pra instalar sem cumprir')",
+   "resposta": "Só em situações atípicas: aí os abrigos de ônibus ficam dispensados das regras do art. 20, mas têm que preservar a faixa livre e a rota acessível."
+  },
+  "u0001": {
+   "acao": "e",
+   "motivo": "o decreto não fixa prazo; a resposta não dizia isso",
+   "resposta": "O decreto não fixa um prazo. A banca instalada em desacordo é notificada para indicar outro local, e a Subprefeitura verifica se o novo local atende às regras."
+  },
+  "u0002": {
+   "acao": "r",
+   "motivo": "a pergunta trata gestante como pessoa com deficiência; a lei a define como mobilidade reduzida"
+  },
+  "u0003": {
+   "acao": "a"
+  },
+  "u0004": {
+   "acao": "a"
+  },
+  "u0005": {
+   "acao": "e",
+   "motivo": "a exclusão é da obrigação de executar, não de manter",
+   "resposta": "Ficam excluídos da obrigação de executar o passeio os imóveis em vias do Plano de Pavimentação Urbana Comunitária (PPUC), nas rotas do Plano Emergencial de Calçadas (PEC) e na Rede Viária Estrutural N1, N2 e N3."
+  },
+  "u0006": {
+   "acao": "a"
+  },
+  "u0007": {
+   "acao": "a"
+  },
+  "u0008": {
+   "acao": "e",
+   "motivo": "ERRO: o texto não obriga a Prefeitura a cortar; dispensa o dono até o corte",
+   "resposta": "O texto não diz que a Prefeitura é obrigada a cortar a árvore. Ele diz que, enquanto o corte ou a supressão não for feito pela Administração, o responsável fica dispensado de consertar o passeio; depois do corte, ele tem 30 dias para regularizar."
+  },
+  "u0009": {
+   "acao": "r",
+   "motivo": "competência administrativa do CTB"
+  },
+  "u0010": {
+   "acao": "r",
+   "motivo": "competência administrativa do CTB"
+  },
+  "u0011": {
+   "acao": "e",
+   "motivo": "faltou o nome do serviço",
+   "resposta": "No Portal 156, pelo serviço 'Denunciar fechamento de ruas e vilas'."
+  },
+  "u0012": {
+   "acao": "e",
+   "motivo": "faltou o nome do serviço",
+   "resposta": "No Portal 156, pelo serviço 'Solicitar remoção de veículo/carcaça abandonado na via pública'."
+  },
+  "u0013": {
+   "acao": "a"
+  },
+  "u0014": {
+   "acao": "e",
+   "motivo": "não respondia 'pode?' diretamente",
+   "resposta": "Não. O Código de Trânsito proíbe o pedestre de usar a via para brincadeiras, esportes ou desfiles, salvo em casos especiais e com licença da autoridade."
+  },
+  "u0015": {
+   "acao": "a"
+  },
+  "u0016": {
+   "acao": "r",
+   "motivo": "duplicata do art. 62 (já há quatro)"
+  },
+  "u0017": {
+   "acao": "r",
+   "motivo": "duplicata do art. 62 (já há quatro)"
+  },
+  "u0018": {
+   "acao": "r",
+   "motivo": "pergunta e resposta com caracteres quebrados e sem sentido"
+  },
+  "u0019": {
+   "acao": "r",
+   "motivo": "leu errado a figura"
+  },
+  "u0020": {
+   "acao": "e",
+   "motivo": "incompleta: não é só o proprietário",
+   "resposta": "O proprietário, o titular do domínio útil ou da nua propriedade, o condomínio ou o possuidor do imóvel, a qualquer título."
+  },
+  "u0021": {
+   "acao": "r",
+   "motivo": "competência administrativa do CTB"
+  },
+  "u0022": {
+   "acao": "r",
+   "motivo": "competência administrativa do CTB"
+  },
+  "u0023": {
+   "acao": "a"
+  },
+  "u0024": {
+   "acao": "r",
+   "motivo": "texto de cookies do portal"
+  },
+  "u0025": {
+   "acao": "r",
+   "motivo": "texto de cookies do portal"
+  },
+  "u0026": {
+   "acao": "r",
+   "motivo": "texto de cookies do portal"
+  },
+  "u0027": {
+   "acao": "e",
+   "motivo": "incompleta",
+   "resposta": "A prestação do serviço de transporte coletivo, assim como a fabricação dos veículos desse transporte."
+  },
+  "u0028": {
+   "acao": "e",
+   "motivo": "misturou as regras da faixa livre e das demais faixas",
+   "resposta": "Nas obras que mexem na calçada, as faixas pavimentadas além da faixa livre têm que ser recompostas em planos regulares, com juntas definidas e sem remendos."
+  },
+  "u0029": {
+   "acao": "r",
+   "motivo": "'24 horas' é inventado"
+  },
+  "u0030": {
+   "acao": "a"
+  },
+  "u0031": {
+   "acao": "a"
+  },
+  "u0032": {
+   "acao": "e",
+   "motivo": "faltou a gravidade",
+   "resposta": "É infração gravíssima, com multa e remoção do veículo. A penalidade é aplicada de preferência depois da remoção."
+  },
+  "u0033": {
+   "acao": "e",
+   "motivo": "tom ('isso é uma ordem') e mistura de incisos",
+   "resposta": "Sim. Deixar de dar preferência de passagem a pessoas com deficiência, crianças, idosos e gestantes é infração gravíssima, com multa."
+  },
+  "u0034": {
+   "acao": "e",
+   "motivo": "ERRO: misturou os incisos IV e V do art. 214",
+   "resposta": "Sim. Ao virar, o motorista tem que dar preferência ao pedestre que está atravessando a via transversal para onde ele vai. Não fazer isso é infração grave, com multa."
+  },
+  "u0035": {
+   "acao": "r",
+   "motivo": "resposta vaga, o trecho é só o cabeçalho do anexo"
+  },
+  "u0036": {
+   "acao": "r",
+   "motivo": "ERRO: o art. 15 não é o dispositivo violado"
+  },
+  "u0037": {
+   "acao": "a"
+  },
+  "u0038": {
+   "acao": "e",
+   "motivo": "redação",
+   "resposta": "A tela soldada é de aço CA-60, Q92, com fio de 4,2 mm e malha de 150 x 150 mm."
+  },
+  "u0039": {
+   "acao": "a"
+  },
+  "u0040": {
+   "acao": "e",
+   "motivo": "redação ('tá permitido a faixa desenhada')",
+   "resposta": "A faixa de acesso, junto ao imóvel. Ela só existe em calçadas com mais de 2,00 m de largura e acomoda as interferências da edificação."
+  },
+  "u0041": {
+   "acao": "a"
+  },
+  "u0042": {
+   "acao": "a"
+  },
+  "u0043": {
+   "acao": "r",
+   "motivo": "a pergunta é 'por quê' e a resposta não responde"
+  },
+  "u0044": {
+   "acao": "e",
+   "motivo": "resposta sem sentido",
+   "resposta": "O desenho universal é a regra geral para projetos de uso público ou coletivo, e as políticas públicas devem considerá-lo desde a concepção."
+  },
+  "u0045": {
+   "acao": "a"
+  },
+  "u0046": {
+   "acao": "a"
+  },
+  "u0047": {
+   "acao": "e",
+   "motivo": "a pergunta pede distância, o texto dá larguras",
+   "resposta": "O texto não fala em distância, e sim na largura do piso tátil de alerta: de 40 a 60 cm nos rebaixamentos, 40 cm nas paradas de ônibus e 25 cm na composição para mudança de direção do piso direcional."
+  },
+  "u0048": {
+   "acao": "a"
+  },
+  "u0049": {
+   "acao": "e",
+   "motivo": "'maior que' vs 'igual ou superior'",
+   "resposta": "A rampa perpendicular à via (tipo A) só é possível em calçadas com largura igual ou superior a 3,00 m."
+  },
+  "u0050": {
+   "acao": "a"
+  },
+  "u0051": {
+   "acao": "e",
+   "motivo": "incompleta",
+   "resposta": "No mínimo 15 m do bordo do alinhamento da via transversal e 50 cm da guia, e só em calçadas com mais de 3,50 m de largura."
+  },
+  "u0052": {
+   "acao": "a"
+  },
+  "u0053": {
+   "acao": "e",
+   "motivo": "omitiu a cura química e trocou 'tingidos' por 'enxertos'",
+   "resposta": "Há duas formas: a cura úmida, com tecidos de algodão não tingidos ou sintéticos mantidos úmidos até o concreto atingir 75% da resistência final; ou a cura química, com um filme impermeável que deve permanecer por no mínimo 7 dias."
+  },
+  "u0054": {
+   "acao": "a"
+  },
+  "u0055": {
+   "acao": "a"
+  },
+  "u0056": {
+   "acao": "a"
+  },
+  "u0057": {
+   "acao": "e",
+   "motivo": "redação ('a a gente')",
+   "resposta": "Nas irregularidades do artigo 8º, o prazo cai de 60 para 20 dias."
+  },
+  "u0058": {
+   "acao": "r",
+   "motivo": "alucinação: 2,50 m não está no trecho"
+  },
+  "u0059": {
+   "acao": "a"
+  },
+  "u0060": {
+   "acao": "a"
+  },
+  "u0061": {
+   "acao": "r",
+   "motivo": "a resposta diz 'pode', mas o trecho só define barreira urbanística"
+  },
+  "u0062": {
+   "acao": "a"
+  },
+  "u0063": {
+   "acao": "a"
+  },
+  "u0064": {
+   "acao": "e",
+   "motivo": "incompleta",
+   "resposta": "Os autos são dirigidos ao responsável ou ao seu representante legal (mandatário, administrador ou gerente), pessoalmente ou pelo correio com aviso de recebimento. O recebimento é presumido quando enviados ao endereço do Cadastro Imobiliário Fiscal."
+  },
+  "u0065": {
+   "acao": "r",
+   "motivo": "duplicata do t0154"
+  },
+  "u0066": {
+   "acao": "r",
+   "motivo": "duplicata do t0025"
+  },
+  "u0067": {
+   "acao": "r",
+   "motivo": "competência administrativa do CTB"
+  },
+  "u0068": {
+   "acao": "r",
+   "motivo": "competência administrativa do CTB"
+  },
+  "u0069": {
+   "acao": "e",
+   "motivo": "faltou o nome dos serviços",
+   "resposta": "Sim. No Portal 156 há os serviços 'Acessibilidade - Denunciar falta de cadeira de rodas em supermercado' e 'Acessibilidade - Denunciar falta de móveis adequados'."
+  },
+  "u0070": {
+   "acao": "e",
+   "motivo": "faltou o nome do serviço",
+   "resposta": "No Portal 156, pelo serviço 'Solicitar fiscalização de feira livre'."
+  },
+  "u0071": {
+   "acao": "a"
+  },
+  "u0072": {
+   "acao": "r",
+   "motivo": "o trecho são só rótulos de figura"
+  },
+  "u0073": {
+   "acao": "r",
+   "motivo": "definição inventada; o trecho são só rótulos"
+  },
+  "u0074": {
+   "acao": "r",
+   "motivo": "pergunta sem utilidade"
+  },
+  "u0075": {
+   "acao": "e",
+   "motivo": "vaga",
+   "resposta": "É o canal da Prefeitura para pedir serviços. Na área de calçadas, por exemplo, dá para denunciar calçada particular danificada ou inexistente e pedir manutenção de guias e sarjetas."
+  },
+  "u0076": {
+   "acao": "a"
+  },
+  "u0077": {
+   "acao": "a"
+  },
+  "u0078": {
+   "acao": "a"
+  },
+  "u0079": {
+   "acao": "e",
+   "motivo": "pergunta confusa; deixei a resposta clara",
+   "resposta": "A atualização anual vale para as multas dos arts. 8º, 11, 14 e § 1º do art. 20 da Lei 15.442/2011, cujos valores estão no Anexo Único."
+  },
+  "u0080": {
+   "acao": "a"
+  },
+  "u0081": {
+   "acao": "e",
+   "motivo": "incompleta, sem a penalidade",
+   "resposta": "O Código de Trânsito proíbe transitar com o veículo em calçadas, passeios, passarelas, ciclovias, ciclofaixas, ilhas, refúgios, canteiros, gramados e jardins públicos, entre outros. É infração gravíssima, com multa multiplicada por três."
+  },
+  "u0082": {
+   "acao": "e",
+   "motivo": "faltou a penalidade",
+   "resposta": "Não. Transitar com o veículo na ciclofaixa é infração gravíssima, com multa multiplicada por três."
+  },
+  "u0083": {
+   "acao": "r",
+   "motivo": "pergunta sem sentido ('travesseiros') e resposta errada"
+  },
+  "u0084": {
+   "acao": "a"
+  },
+  "u0085": {
+   "acao": "a"
+  },
+  "u0086": {
+   "acao": "e",
+   "motivo": "simplificou demais ('feita errada desde o começo')",
+   "resposta": "A calçada é considerada inexistente quando foi feita fora das normas técnicas vigentes na época da sua construção ou reconstrução."
+  },
+  "u0087": {
+   "acao": "r",
+   "motivo": "regra de veículos de socorro, copiada inteira"
+  },
+  "u0088": {
+   "acao": "r",
+   "motivo": "regra de motorista"
+  },
+  "u0089": {
+   "acao": "r",
+   "motivo": "regra de motorista"
+  },
+  "u0090": {
+   "acao": "a"
+  },
+  "u0091": {
+   "acao": "r",
+   "motivo": "ERRO: 8,33% é da rampa de acomodação na faixa de acesso, não de 'rampa em calçada larga'"
+  },
+  "u0092": {
+   "acao": "e",
+   "motivo": "redação",
+   "resposta": "Vale para qualquer passeio, qualquer que seja a largura: tem que ser respeitada a faixa livre mínima de 1,20 m, só para a circulação de pedestres."
+  },
+  "u0093": {
+   "acao": "e",
+   "motivo": "não respondia 'podem?'",
+   "resposta": "Podem, desde que não bloqueiem nem dificultem a circulação dos pedestres, em especial das pessoas com deficiência, nem a visibilidade entre pedestres e motoristas nas esquinas."
+  },
+  "u0094": {
+   "acao": "e",
+   "motivo": "ERRO: inverteu a regra do foco de pedestres",
+   "resposta": "Onde houver foco (semáforo) de pedestres, obedeça às luzes. Onde não houver, espere o semáforo ou o agente de trânsito interromper o fluxo de veículos."
+  },
+  "u0095": {
+   "acao": "e",
+   "motivo": "redação ('continuar a travessia na calçada')",
+   "resposta": "Nas interseções sem faixa, atravesse na continuação da calçada. Só entre na pista depois de ver que dá para passar sem obstruir o trânsito e, depois de começar, não alongue o percurso nem pare sem necessidade."
+  },
+  "u0096": {
+   "acao": "a"
+  },
+  "u0097": {
+   "acao": "r",
+   "motivo": "pergunta confusa"
+  },
+  "u0098": {
+   "acao": "r",
+   "motivo": "generalização errada ('qualquer situação')"
+  },
+  "u0099": {
+   "acao": "r",
+   "motivo": "hidrante não aparece no trecho"
+  },
+  "u0100": {
+   "acao": "a"
+  },
+  "u0101": {
+   "acao": "r",
+   "motivo": "regra de motorista"
+  },
+  "u0102": {
+   "acao": "a"
+  },
+  "u0103": {
+   "acao": "a"
+  },
+  "u0104": {
+   "acao": "e",
+   "motivo": "ERRO: serviço errado",
+   "resposta": "No Portal 156, pelo serviço 'Terrenos e imóveis - Denunciar terreno com muro danificado/inexistente'."
+  },
+  "u0105": {
+   "acao": "e",
+   "motivo": "serviço impreciso",
+   "resposta": "No Portal 156, pelo serviço 'Árvore - Solicitar avaliação em calçadas e praças para fins de poda ou remoção'."
+  },
+  "u0106": {
+   "acao": "e",
+   "motivo": "faltou o canal",
+   "resposta": "No Portal 156, pelo serviço 'Fiscalização de obras - Denunciar janela ou abertura a menos de 1,50 m do vizinho'."
+  },
+  "u0107": {
+   "acao": "a"
+  },
+  "u0108": {
+   "acao": "a"
+  },
+  "u0109": {
+   "acao": "a"
+  },
+  "u0110": {
+   "acao": "e",
+   "motivo": "ERRO: quem autoriza é o órgão responsável pela via, não o prédio",
+   "resposta": "Só onde o órgão de trânsito responsável pela via autorizar e sinalizar a circulação de bicicletas no passeio."
+  },
+  "u0111": {
+   "acao": "a"
+  },
+  "u0112": {
+   "acao": "a"
+  },
+  "u0113": {
+   "acao": "r",
+   "motivo": "duplicata do u0112"
+  },
+  "u0114": {
+   "acao": "a"
+  },
+  "u0115": {
+   "acao": "e",
+   "motivo": "a lei não dá exemplo; a resposta fingia que dava",
+   "resposta": "A lei não dá um exemplo. Ela define adaptação razoável como os ajustes necessários, sem ônus desproporcional, para garantir à pessoa com deficiência os mesmos direitos das demais pessoas."
+  },
+  "u0116": {
+   "acao": "e",
+   "motivo": "quem indica o local é o permissionário, não 'a gente'",
+   "resposta": "Quem indica o novo local é o permissionário da banca, depois de notificado. A Subprefeitura verifica se o local atende às regras."
+  },
+  "u0117": {
+   "acao": "r",
+   "motivo": "duplicata do u0116"
+  },
+  "u0118": {
+   "acao": "e",
+   "motivo": "ERRO: a resposta dizia que pode; o decreto exige preservar a faixa livre",
+   "resposta": "Não. Mesmo em situações atípicas, a instalação de postes tem que preservar a faixa livre e a rota acessível."
+  },
+  "u0119": {
+   "acao": "a"
+  },
+  "u0120": {
+   "acao": "e",
+   "motivo": "a pergunta fala em limpar; a exclusão é só de executar",
+   "resposta": "Não exatamente. Imóveis em vias do PPUC ficam excluídos só da obrigação de executar o passeio."
+  },
+  "u0121": {
+   "acao": "e",
+   "motivo": "redação ('o imóvel deve')",
+   "resposta": "É a Lei municipal 15.442/2011: os responsáveis por imóveis têm que executar, manter e conservar o passeio na extensão da testada. Passeio com buracos, ondulações, desníveis ou obstáculos que impeçam a circulação segura é considerado em mau estado, e o responsável tem que corrigi-lo."
+  },
+  "u0122": {
+   "acao": "a"
+  },
+  "u0123": {
+   "acao": "r",
+   "motivo": "duplicata do u0122"
+  },
+  "u0124": {
+   "acao": "r",
+   "motivo": "duplicata do u0011"
+  },
+  "u0125": {
+   "acao": "e",
+   "motivo": "faltou o canal",
+   "resposta": "No Portal 156, pelo serviço 'Solicitar fiscalização de ausência de vagas reservadas em estabelecimento comercial'."
+  },
+  "u0126": {
+   "acao": "a"
+  },
+  "u0127": {
+   "acao": "e",
+   "motivo": "a resposta dizia 'pra quem pedir'; o direito é da pessoa com deficiência",
+   "resposta": "Sim. O direito de receber contas e boletos em formato acessível é da pessoa com deficiência, mediante solicitação."
+  },
+  "u0128": {
+   "acao": "r",
+   "motivo": "duplicata do art. 62"
+  },
+  "u0129": {
+   "acao": "r",
+   "motivo": "caracteres quebrados"
+  },
+  "u0130": {
+   "acao": "e",
+   "motivo": "ERRO: a ligação ao alinhamento do imóvel é só na falta do piso direcional",
+   "resposta": "Não. O rebaixamento deve ser ligado ao piso tátil direcional do centro da faixa livre; só quando ele não existe é que se liga ao alinhamento do imóvel (linha guia)."
+  },
+  "u0131": {
+   "acao": "r",
+   "motivo": "alucinação: '0,45 a 0,60' e a regra dos 5% não estão no trecho"
+  },
+  "u0132": {
+   "acao": "r",
+   "motivo": "duplicata do u0020, com redação inventada"
+  },
+  "u0133": {
+   "acao": "a"
+  },
+  "u0134": {
+   "acao": "r",
+   "motivo": "competência administrativa do CTB"
+  },
+  "u0135": {
+   "acao": "r",
+   "motivo": "competência administrativa do CTB"
+  },
+  "u0136": {
+   "acao": "r",
+   "motivo": "competência administrativa do CTB"
+  },
+  "u0137": {
+   "acao": "a"
+  },
+  "u0138": {
+   "acao": "r",
+   "motivo": "regra de motorista"
+  },
+  "u0139": {
+   "acao": "r",
+   "motivo": "regra de motorista"
+  },
+  "u0140": {
+   "acao": "r",
+   "motivo": "duplicata do t0014"
+  },
+  "u0141": {
+   "acao": "r",
+   "motivo": "texto de cookies do portal"
+  },
+  "u0142": {
+   "acao": "e",
+   "motivo": "redação ('aprovam projeto')",
+   "resposta": "Sim. A aprovação de projeto arquitetônico e urbanístico com destinação pública ou coletiva tem que cumprir as regras de acessibilidade da Lei Brasileira de Inclusão."
+  },
+  "u0143": {
+   "acao": "r",
+   "motivo": "duplicata do u0142"
+  },
+  "u0144": {
+   "acao": "e",
+   "motivo": "redação",
+   "resposta": "Sim. A aprovação de financiamento de projeto com recursos públicos também está sujeita às regras de acessibilidade."
+  },
+  "u0145": {
+   "acao": "r",
+   "motivo": "duplicata do u0031"
+  },
+  "u0146": {
+   "acao": "e",
+   "motivo": "faltou a gravidade",
+   "resposta": "É infração gravíssima, com multa e remoção do veículo."
+  },
+  "u0147": {
+   "acao": "e",
+   "motivo": "'calçadão' na resposta; ficou a regra correta",
+   "resposta": "Não. Estacionar nas vagas reservadas a pessoas com deficiência ou idosos sem a credencial é infração gravíssima, com multa e remoção do veículo."
+  },
+  "u0148": {
+   "acao": "e",
+   "motivo": "não respondia 'o que faz primeiro'",
+   "resposta": "Primeiro o veículo é removido: a autoridade de trânsito aplica a penalidade de preferência depois da remoção."
+  },
+  "u0149": {
+   "acao": "r",
+   "motivo": "duplicata do t0148"
+  },
+  "u0150": {
+   "acao": "a"
+  },
+  "u0151": {
+   "acao": "a"
+  },
+  "u0152": {
+   "acao": "r",
+   "motivo": "pergunta vaga; o trecho é só o cabeçalho do anexo"
+  },
+  "u0153": {
+   "acao": "r",
+   "motivo": "o trecho é só o cabeçalho do anexo"
+  },
+  "u0154": {
+   "acao": "r",
+   "motivo": "resposta vazia"
+  },
+  "u0155": {
+   "acao": "r",
+   "motivo": "duplicata do t0061"
+  },
+  "u0156": {
+   "acao": "r",
+   "motivo": "duplicata do u0038"
+  },
+  "u0157": {
+   "acao": "e",
+   "motivo": "ligadura quebrada ('superﬁcial')",
+   "resposta": "Uma acabadora superficial a gasolina, conhecida como 'helicóptero' ou 'bambolê'."
+  },
+  "u0158": {
+   "acao": "r",
+   "motivo": "ERRO: 8,33% é da rampa de acomodação, não da calçada"
+  },
+  "u0159": {
+   "acao": "a"
+  },
+  "u0160": {
+   "acao": "e",
+   "motivo": "generalizou para 'tudo que a gente usa'",
+   "resposta": "O desenho universal é a regra geral para projetos, serviços, equipamentos e instalações abertos ao público ou de uso coletivo, tanto na zona urbana como na rural."
+  },
+  "u0161": {
+   "acao": "r",
+   "motivo": "pergunta confusa"
+  },
+  "u0162": {
+   "acao": "a"
+  },
+  "u0163": {
+   "acao": "a"
+  },
+  "u0164": {
+   "acao": "a"
+  },
+  "u0165": {
+   "acao": "a"
+  },
+  "u0166": {
+   "acao": "r",
+   "motivo": "duplicata do u0049"
+  },
+  "u0167": {
+   "acao": "e",
+   "motivo": "caracteres quebrados e cópia literal",
+   "resposta": "O rebaixamento não pode ter nenhum desnível e tem que ser ligado ao piso tátil direcional do centro da faixa livre (ou, na falta dele, ao alinhamento do imóvel). Se houver botoeira, o piso tátil é conduzido até ela; se não houver, liga-se ao piso tátil do rebaixamento."
+  },
+  "u0168": {
+   "acao": "e",
+   "motivo": "redação",
+   "resposta": "Não. Mobiliário urbano, como postes e lixeiras, não pode ficar na faixa livre: fica de preferência na faixa de serviço e, excepcionalmente, na faixa de acesso."
+  },
+  "u0169": {
+   "acao": "a"
+  },
+  "u0170": {
+   "acao": "r",
+   "motivo": "duplicata do u0053 e inverteu a relação entre as curas"
+  },
+  "u0171": {
+   "acao": "r",
+   "motivo": "alucinação: 'juntas de epóxi' não existe no trecho (são juntas serradas)"
+  },
+  "u0172": {
+   "acao": "r",
+   "motivo": "ERRO: 'metade da largura, mínimo 1,20 m' é da faixa livre, não da faixa de acesso"
+  },
+  "u0173": {
+   "acao": "r",
+   "motivo": "duplicata do u0056"
+  },
+  "u0174": {
+   "acao": "r",
+   "motivo": "alucinação: 2,2 m não está no trecho"
+  },
+  "u0175": {
+   "acao": "a"
+  },
+  "u0176": {
+   "acao": "a"
+  },
+  "u0177": {
+   "acao": "a"
+  },
+  "u0178": {
+   "acao": "a"
+  },
+  "u0179": {
+   "acao": "a"
+  },
+  "u0180": {
+   "acao": "a"
+  },
+  "u0181": {
+   "acao": "a"
+  },
+  "u0182": {
+   "acao": "r",
+   "motivo": "duplicata do u0178"
+  },
+  "u0183": {
+   "acao": "a"
+  },
+  "u0184": {
+   "acao": "a"
+  },
+  "u0185": {
+   "acao": "a"
+  },
+  "u0186": {
+   "acao": "a"
+  },
+  "u0187": {
+   "acao": "a"
+  },
+  "u0188": {
+   "acao": "a"
+  },
+  "u0189": {
+   "acao": "a"
+  },
+  "u0190": {
+   "acao": "a"
+  },
+  "u0191": {
+   "acao": "a"
+  },
+  "u0192": {
+   "acao": "a"
+  },
+  "u0193": {
+   "acao": "a"
+  },
+  "u0194": {
+   "acao": "a"
+  },
+  "u0195": {
+   "acao": "a"
+  },
+  "u0196": {
+   "acao": "r",
+   "motivo": "o contexto inclui o art. 7º da Lei 15.442, que responde: recusar ensinaria recusa indevida"
+  },
+  "u0197": {
+   "acao": "a"
+  },
+  "u0198": {
+   "acao": "a"
+  },
+  "u0199": {
+   "acao": "a"
+  },
+  "u0200": {
+   "acao": "a"
+  },
+  "u0201": {
+   "acao": "a"
+  },
+  "u0202": {
+   "acao": "a"
+  },
+  "u0203": {
+   "acao": "a"
+  },
+  "u0204": {
+   "acao": "a"
+  },
+  "u0205": {
+   "acao": "a"
+  },
+  "u0206": {
+   "acao": "a"
+  },
+  "u0207": {
+   "acao": "r",
+   "motivo": "caracteres quebrados"
+  },
+  "u0208": {
+   "acao": "a"
+  },
+  "u0209": {
+   "acao": "a"
+  },
+  "u0210": {
+   "acao": "r",
+   "motivo": "o contexto inclui o art. 55 da LBI, que responde em parte"
+  },
+  "u0211": {
+   "acao": "a"
+  },
+  "u0212": {
+   "acao": "r",
+   "motivo": "contexto pode responder em parte; na dúvida, fora"
+  },
+  "u0213": {
+   "acao": "a"
+  },
+  "u0214": {
+   "acao": "r",
+   "motivo": "pergunta sem sentido"
+  },
+  "u0215": {
+   "acao": "a"
+  },
+  "u0216": {
+   "acao": "a"
+  },
+  "u0217": {
+   "acao": "a"
+  },
+  "u0218": {
+   "acao": "r",
+   "motivo": "pergunta sem sentido"
+  },
+  "u0219": {
+   "acao": "a"
+  },
+  "u0220": {
+   "acao": "a"
+  },
+  "u0221": {
+   "acao": "a"
+  },
+  "u0222": {
+   "acao": "r",
+   "motivo": "caracteres quebrados"
+  },
+  "u0223": {
+   "acao": "a"
+  }
+ }
+}

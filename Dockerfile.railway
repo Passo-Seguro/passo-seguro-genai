@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/wh
 COPY api/requirements.txt /tmp/req.txt
 RUN pip install --no-cache-dir -r /tmp/req.txt
 WORKDIR /app
-RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('intfloat/multilingual-e5-base')"
+RUN python -c "from sentence_transformers import SentenceTransformer, CrossEncoder; SentenceTransformer('intfloat/multilingual-e5-base'); CrossEncoder('cross-encoder/mmarco-mMiniLMv2-L12-H384-v1')"
 COPY modelos/passo-seguro-lora-q4_K_M.gguf modelos/Modelfile.gguf /app/modelos/
 COPY src/ src/
 COPY api/ api/

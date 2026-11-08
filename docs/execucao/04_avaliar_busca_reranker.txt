@@ -1,0 +1,23 @@
+
+
+
+=== Recall da busca (respondíveis) ===
+dev    n=10  recall@1=0.400  recall@3=0.600
+todas  n=40  recall@1=0.475  recall@3=0.775
+ATENÇÃO: recall@3 < 0,8. Revise o fatiamento antes de seguir (ver PASSO_A_PASSO.md, passo 4).
+  errou r01: esperado ctb-art181, veio ['sp-cartilha-calcadas-s04-p1', 'sp-cartilha-calcadas-s01-p1', 'sp-dec59671-art10-p1']  — o carro tá em cima da calçada, pode isso?
+  errou r06: esperado sp-lei15442-anexo|sp-lei15442-art15, veio ['sp-subpref-calcadas-s01-p4', 'sp-subpref-calcadas-s01-p2', 'sp-dec59671-art1-p1']  — se o dono não arrumar a calçada ele leva multa? de quanto?
+  errou r07: esperado sp-lei15442-art11, veio ['sp-dec59671-art32-p1', 'sp-subpref-calcadas-s01-p4', 'sp-lei15442-art14-p1']  — Qual é o prazo para regularizar a calçada depois da intimação?
+  errou r09: esperado sp-dec59671-art4|sp-lei15442-art8, veio ['sp-cartilha-calcadas-s05-p1', 'sp-cartilha-calcadas-s02-p1', 'sp-dec59671-art24-p1']  — quanto de espaço livre tem que ter na calçada pra gente passar?
+  errou r12: esperado sp-dec59671-art32, veio ['sp-dec59671-art34-p1', 'sp-subpref-calcadas-s01-p4', 'sp-dec59671-art1-p1']  — a raiz da árvore levantou a calçada, o dono é obrigado a consertar?
+  errou r17: esperado ctb-art68, veio ['sp-subpref-calcadas-s01-p2', 'sp-subpref-calcadas-s01-p4', 'sp-cartilha-calcadas-s01-p1']  — na minha rua não tem calçada, por onde eu ando?
+  errou r21: esperado ctb-art29, veio ['sp-subpref-calcadas-s01-p2', 'ctb-art68-p1', 'sp-subpref-calcadas-s01-p1']  — de quem é a responsabilidade pela segurança do pedestre no trânsito?
+  errou r26: esperado sp-subpref-servicos156, veio ['sp-subpref-calcadas-s01-p2', 'sp-subpref-calcadas-s01-p4', 'sp-dec59671-art1-p1']  — E se a calçada danificada for de uma praça ou prédio público?
+  errou r34: esperado sp-dec59671-art10, veio ['sp-cartilha-calcadas-s04-p1', 'sp-cartilha-calcadas-s05-p1', 'sp-dec59671-art1-p1']  — a rampa da garagem do vizinho deixou a calçada torta, pode isso?
+
+=== Limiar escolhido (split dev) ===
+{'limiar': 0.17, 'acerto_respondiveis': 0.6, 'recusa_correta_nao_consta': 1.0, 'equilibrio': 0.8}
+faixa de scores observada: 0.000 a 1.000
+gráfico: avaliacao\curva_limiar.png
+
+limiar salvo em avaliacao\limiar.json. Próximo: python scripts/05_testar_geracao.py
