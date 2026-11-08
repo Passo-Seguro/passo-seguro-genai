@@ -1,0 +1,32 @@
+PS> railway status
+Linked service
+
+assistente
+    status:        ● Online
+    url:           https://assistente-production-307b.up.railway.app
+    region:        US East
+    deployment ID: c5c1d42f-e310-4a91-b1e6-a9d2d75a9601
+    service ID:    60b15cdb-a861-467f-ac46-21312a8fc0e2
+
+PS> railway deployment list --service assistente
+Recent Deployments
+  c5c1d42f-e310-4a91-b1e6-a9d2d75a9601 | SUCCESS | 2026-11-08 17:52:55 -03:00
+  4a884edd-6441-4085-b508-8a5a6ae85d73 | REMOVED | 2026-11-08 17:48:10 -03:00
+  ab32565d-7678-4dc8-ac90-b6f3e4c7ca43 | REMOVED | 2026-11-08 17:38:07 -03:00
+
+PS> railway domain list --service assistente
+Domains for service assistente in environment production:
+Domain                                      Type      ID                                     Port   Sync
+assistente-production-307b.up.railway.app   service   195322b9-05b6-4559-be07-736e76b3d2ed   8000   ACTIVE
+
+PS> railway logs --service assistente   # trechos: arranque e as últimas respostas (o log não guarda o texto da pergunta)
+2026-11-08T20:57:02.069187484Z [INFO]  evento="pronto" config="C" limiar=0.17 modelo="passo-seguro-lora"
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+...
+2026-11-08T20:58:33.035786554Z [INFO]  evento="resposta" nivel_recusa=null json_valido=true citacoes_invalidas=0 score_max=0.7460646629333496 ms=10509 recusou=false n_fontes=1
+2026-11-08T20:58:33.845264173Z [INFO]  evento="resposta" nivel_recusa="busca" json_valido=true citacoes_invalidas=0 score_max=0.046904049813747406 ms=676 recusou=true n_fontes=0
+2026-11-08T20:58:34.664444902Z [INFO]  evento="resposta" nivel_recusa="busca" json_valido=true citacoes_invalidas=0 score_max=0.05504160374403 ms=527 recusou=true n_fontes=0
+2026-11-08T20:58:35.919532198Z [INFO]  evento="resposta" nivel_recusa="busca" json_valido=true citacoes_invalidas=0 score_max=0.05074440687894821 ms=668 recusou=true n_fontes=0
+2026-11-08T20:58:36.121939258Z [INFO]  evento="resposta" nivel_recusa="busca" json_valido=true citacoes_invalidas=0 score_max=0.16349996626377106 ms=682 recusou=true n_fontes=0
+2026-11-08T20:58:36.953161517Z [INFO]  evento="resposta" nivel_recusa="busca" json_valido=true citacoes_invalidas=0 score_max=0.1675124317407608 ms=683 recusou=true n_fontes=0

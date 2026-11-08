@@ -201,7 +201,7 @@ copy .env.exemplo .env
 
 ollama pull qwen2.5:1.5b-instruct          # modelo base, ~1 GB
 python scripts/00_verificar_ambiente.py    # confere Python, GPU, pacotes e Ollama
-python -m pytest -q                        # 27 testes
+python -m pytest -q                        # 28 testes
 ```
 
 A base (`base/trechos.jsonl`), o índice (`base/indice/`) e o limiar (`avaliacao/limiar.json`) já
@@ -273,7 +273,7 @@ print(r.json())
 
 **Como se comporta no ar** (medido em 08/11/2026, seção 9.6):
 
-- Latência: mediana de 3,5 s e máxima de 7,0 s quando o LLM responde; menos de 1 s quando a busca
+- Latência: mediana entre 3,5 s e 5,7 s e máxima de 10,6 s quando o LLM responde (a CPU é compartilhada); menos de 1 s quando a busca
   recusa sem chamar o LLM; ~0,1 s quando a pergunta está no cache. Use timeout de 15 s no cliente.
 - O serviço desiste do LLM aos 12 s (`TIMEOUT_LLM_S`) e devolve a recusa de contingência, então
   sempre responde dentro dos 15 s da API principal.
@@ -594,7 +594,7 @@ git status       # .env, modelos/*.gguf e *.safetensors NÃO podem aparecer
 
 ## 8. Testes
 
-**27 testes, todos passando.** Rodam sem rede, sem GPU e sem o Ollama: embeddings e LLM são
+**28 testes, todos passando.** Rodam sem rede, sem GPU e sem o Ollama: embeddings e LLM são
 substituídos por versões falsas e determinísticas ([`tests/conftest.py`](tests/conftest.py)).
 
 ```powershell
@@ -617,6 +617,7 @@ relatório em [`docs/execucao/relatorio_testes.html`](docs/execucao/relatorio_te
 | | `test_log_nao_tem_o_texto_da_pergunta` | **privacidade:** o log nunca contém a pergunta |
 | | `test_cache_de_perguntas_repetidas` | a mesma pergunta (normalizada) não chama o LLM duas vezes |
 | | `test_corpo_fora_de_utf8_vira_400_no_formato_de_erro` | corpo fora de UTF-8 → 400 `{codigo, mensagem}` |
+| | `test_json_declara_charset_utf8` | toda resposta JSON sai com `charset=utf-8` (o PowerShell 5.1 lê os acentos certo) |
 | `test_gerador.py` | `test_recusa_pela_busca_nao_chama_o_modelo` | abaixo do limiar, recusa sem chamar o LLM |
 | | `test_resposta_valida_vira_contrato_com_titulo_e_url` | o `trecho_id` vira `{titulo, url}` com o artigo |
 | | `test_json_invalido_tenta_de_novo_e_depois_recusa` | dois JSONs inválidos → recusa |
@@ -661,7 +662,7 @@ Tudo o que foi rodado na máquina da seção 4, em ordem. As saídas reais estã
 | LoRA | ✅ | treinado e importado no Ollama (Q4_K_M via llama.cpp); revisão dos exemplos feita por IA, a conferir |
 | Placar | ✅ | A 23% · B 43% · C 40% de exatidão; C escolhida (menos alucinação, mais recusas corretas) |
 | Cinco erros | ✅ | causa e correção (configuração B) |
-| API | ✅ | local, Docker e **no ar no Railway** (config C): 11/11 checagens do contrato, máximo de 7 s |
+| API | ✅ | local, Docker e **no ar no Railway** (config C): 11/11 checagens do contrato em duas rodadas, máximo de 10,6 s; prints na seção 9.6 |
 | Notebooks | ✅ | 01 a 05 executados e salvos com as saídas |
 
 ### 9.1 Ambiente
@@ -751,32 +752,86 @@ O conversor precisou de `sentencepiece` e `protobuf` (`pip install sentencepiece
 | Railway, URL pública, ponta a ponta | [`api_railway_e2e.txt`](docs/execucao/api_railway_e2e.txt): ver abaixo |
 
 **Teste de ponta a ponta da API no ar** (`scripts/11_testar_api.py`, 08/11/2026, 8 vCPUs,
-`TIMEOUT_LLM_S=12`, cache vazio depois do deploy):
+`TIMEOUT_LLM_S=12`, cache vazio depois de cada deploy). Rodou em dois deploys seguidos; a saída
+salva é a da 2ª rodada, no deploy final:
 
-| Checagem | Resultado |
-|---|---|
-| `GET /saude` 200 com a base; `GET /docs` 200 | ✅ |
-| Sem token e com token errado → 401 | ✅ |
-| Pergunta vazia e com 501 caracteres → 422; corpo fora de UTF-8 → 400 | ✅ |
-| 15 respostas no contrato `{resposta, fontes, confianca, recusou}` | ✅ |
-| Pergunta repetida (maiúsculas e espaços) sai do cache | ✅ 0,13 s |
-| `GET /metrics` no formato Prometheus; contingências | ✅ 0 contingências |
-| Latência das 15 perguntas dev | mediana 3,5 s · máxima 7,0 s · nenhuma acima de 15 s |
-| Perguntas dev certas pelo critério escrito | **8/15**: as 5 "não consta" recusadas e 3 de 10 respondíveis |
+| Checagem | 1ª rodada (20h42 UTC) | 2ª rodada, deploy final (20h58 UTC) |
+|---|---|---|
+| `GET /saude` 200 com a base; `GET /docs` 200 | ✅ | ✅ |
+| Sem token e com token errado → 401 | ✅ | ✅ |
+| Pergunta vazia e com 501 caracteres → 422; corpo fora de UTF-8 → 400 | ✅ | ✅ |
+| 15 respostas no contrato `{resposta, fontes, confianca, recusou}` | ✅ | ✅ |
+| Pergunta repetida (maiúsculas e espaços) sai do cache | ✅ 0,13 s | ✅ |
+| `GET /metrics` no formato Prometheus; contingências | ✅ 0 | ✅ 0 |
+| Latência das 15 perguntas dev | mediana 3,5 s · máx. 7,0 s | mediana 5,7 s · máx. 10,6 s |
+| Perguntas dev certas pelo critério escrito | **8/15** | **9/15** |
 
-A API cumpre o contrato. Os 7 erros são de **conteúdo**, os mesmos limites de C que o placar já
-mostra (seção 3), e não do deploy:
+**A API cumpre o contrato nas duas rodadas.** O que varia é o conteúdo e o tempo:
+
+- **Tempo:** a CPU do Railway é compartilhada, e a mesma pergunta levou de 3,5 s a 5,7 s de
+  mediana. O pior caso, 10,6 s, ficou abaixo dos 12 s em que o serviço desiste do LLM, mas perto.
+  Se aparecerem contingências no `/metrics`, a saída é dar mais vCPU ao serviço.
+- **Conteúdo:** o modelo usa temperatura 0,1, então a mesma pergunta pode sair diferente. A pergunta
+  das mesas de bar na faixa livre saiu "Sim" na 1ª rodada (errado) e, na 2ª, "Sim. ... são
+  permitidas na faixa de acesso", que passa no critério, mas começa contraditória.
+
+Os erros são de **conteúdo**, os mesmos limites de C que o placar já mostra (seção 3), e não do
+deploy:
 
 - **Busca recusou** (2): "o carro tá em cima da calçada" e "na minha rua não tem calçada"; o trecho
   certo do CTB não chega ao limiar do reranker.
-- **Resposta errada com fonte** (3): o prazo depois da intimação saiu como "30 dias" (o Decreto
-  diz 60); "mesas de bar podem ocupar a faixa livre?" saiu "Sim" (é "Não", vão na faixa de
-  acesso); "quem arruma a calçada" devolveu só "Aqui está o trecho que responde à pergunta:".
+- **Resposta errada com fonte**: o prazo depois da intimação saiu como "30 dias" (o Decreto diz 60);
+  "quem arruma a calçada" devolveu só "Aqui está o trecho que responde à pergunta:".
 - **Incompleta pelo critério** (2): o serviço do 156 saiu genérico ("Solicitar manutenção da
   calçada"), e a definição de mobilidade reduzida veio certa, mas sem os exemplos que o critério
   exige (idoso, gestante…).
 
 ![teste da API no ar](docs/prints/11_api_railway_e2e.png)
+
+#### Prints do uso da API no Railway
+
+Todas as chamadas abaixo foram feitas na URL pública. Nos prints do Swagger, os cabeçalhos da
+resposta (`server: railway-hikari`, `x-railway-edge: grul`, `x-railway-request-id`) mostram que
+quem respondeu foi o Railway. O token foi enviado como cabeçalho e não aparece em nenhum print.
+
+**1. Saúde** (`GET /saude` pelo Swagger): base carregada, config C, modelo `passo-seguro-lora`.
+
+![saude no railway](docs/prints/13_railway_saude.png)
+
+**2. Pergunta respondida** (`POST /assistente` com token): resposta com a fonte oficial e o link.
+
+![resposta no railway](docs/prints/14_railway_assistente_resposta.png)
+
+**3. Pergunta fora do escopo** ("Qual a melhor ação para investir este mês?"): recusa, sem fontes,
+com o caminho do SP156.
+
+![recusa no railway](docs/prints/15_railway_assistente_recusa.png)
+
+**4. Sem token:** 401 `nao_autenticado`.
+
+![401 no railway](docs/prints/16_railway_sem_token_401.png)
+
+**5. Pelo Windows PowerShell 5.1** ([saída](docs/execucao/api_railway_powershell.txt)): saúde, duas
+perguntas com o tempo de cada uma (6,2 s e 4,0 s) e o 401. A 2ª resposta mostra um erro de conteúdo
+já conhecido de C: cita o art. 70 do CTB, que está certo, mas chama a faixa de pedestre de "faixa
+livre", que é a parte da calçada.
+
+![powershell no railway](docs/prints/17_railway_powershell.png)
+
+**6. O serviço no Railway pela CLI** ([saída](docs/execucao/railway_servico.txt)): serviço Online,
+deploy ativo, domínio na porta 8000 e o log de arranque e das respostas. O log não guarda o texto
+da pergunta, só nível de recusa, score, tempo e número de fontes.
+
+![servico no railway](docs/prints/18_railway_servico.png)
+
+**Dois problemas encontrados por esses prints, já corrigidos e publicados:**
+
+- **Acentos quebrados no PowerShell 5.1:** a API respondia `application/json` sem `charset`, e o
+  `Invoke-RestMethod` do Windows PowerShell 5.1 lia o corpo como Latin-1 ("calÃ§ada"). Agora toda
+  resposta JSON sai com `application/json; charset=utf-8`, com teste
+  (`test_json_declara_charset_utf8`).
+- **Todo log aparecia como erro no Railway:** o `logging` escrevia no stderr, que o Railway marca
+  como `[ERRO]`. O log da API agora vai para o stdout e aparece como `[INFO]`.
 
 - **Imagem de 11,7 GB → 3,96 GB:** o `pip --prefix` puxava o torch CUDA; corrigido com
   `PYTHONPATH` e um `.dockerignore` próprio. Com o reranker embutido, a imagem tem 4,83 GB.
@@ -834,6 +889,7 @@ Ollama (`Modelfile`, `Modelfile.gguf`, `passo-seguro-lora-q4_K_M.gguf`).
 | `SFTConfig ... unexpected keyword argument 'warmup_ratio'` | transformers 5.x; já corrigido no `08` |
 | API devolve 400 `requisicao_invalida` com acento | o cliente mandou o corpo fora de UTF-8 (comum no `curl.exe`); use `Invoke-RestMethod` ou `--data-binary @arquivo.json` |
 | Imagem Docker com mais de 10 GB | confira o `deploy/Dockerfile.api.dockerignore` e o `PYTHONPATH` no estágio `deps` do `deploy/Dockerfile.api` |
+| Acentos quebrados ("calÃ§ada") no `Invoke-RestMethod` | API antiga sem `charset` no `Content-Type`; corrigido. Com uma API antiga, use `Invoke-WebRequest` e `[Text.Encoding]::UTF8.GetString($r.RawContentStream.ToArray())` |
 | Toda pergunta cai na contingência | `CONFIG_VENCEDORA=C` sem o modelo `passo-seguro-lora` no Ollama: use B ou importe o modelo |
 
 ## 12. Links
