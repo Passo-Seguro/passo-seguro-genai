@@ -23,7 +23,13 @@ COPY requirements/api.txt /tmp/req.txt
 RUN pip install --no-cache-dir -r /tmp/req.txt
 WORKDIR /app
 RUN python -c "from sentence_transformers import SentenceTransformer, CrossEncoder; SentenceTransformer('intfloat/multilingual-e5-base'); CrossEncoder('cross-encoder/mmarco-mMiniLMv2-L12-H384-v1')"
-COPY modelos/passo-seguro-lora-q4_K_M.gguf modelos/Modelfile.gguf /app/modelos/
+# o .gguf (~1 GB) passa do limite de upload do `railway up`: é baixado de MODELO_GGUF_URL no build.
+# Sem a URL, usa o arquivo local em modelos/ (build com docker na própria máquina).
+ARG MODELO_GGUF_URL=""
+COPY modelos/ /app/modelos/
+RUN if [ -n "$MODELO_GGUF_URL" ]; then \
+        python -c "import sys,urllib.request as u; u.urlretrieve(sys.argv[1], '/app/modelos/passo-seguro-lora-q4_K_M.gguf')" "$MODELO_GGUF_URL"; \
+    fi && test -s /app/modelos/passo-seguro-lora-q4_K_M.gguf
 COPY src/ src/
 COPY api/ api/
 COPY base/trechos.jsonl base/trechos.jsonl

@@ -1,0 +1,18 @@
+# API do assistente no Railway (URL pública), 2026-11-08T20:34Z
+# https://assistente-production-307b.up.railway.app  ·  config C (passo-seguro-lora Q4_K_M) · 8 vCPU · token omitido
+# tempos abaixo: respostas do cache da API (mesma pergunta já feita). 1ª chamada: 6,97 s, 5,98 s e 0,80 s
+
+$ GET /saude
+{"status":"ok","erro":null,"config":"C","modelo":"passo-seguro-lora","limiar":0.17,"trechos":82}  [HTTP 200]
+
+$ POST /assistente  (sem token)
+{"codigo":"nao_autenticado","mensagem":"Token ausente ou inválido."}  [HTTP 401]
+
+$ POST /assistente  Quem é responsável por consertar a calçada em frente à minha casa?
+{"resposta":"A Prefeitura tem que reformar as calçadas das edificações públicas municipais, e depois o cidadão tem que manter a calçada devidamente cuidada.","fontes":[{"titulo":"Subprefeituras — Calçadas: o direito de ir e vir começa na porta da nossa casa","url":"https://prefeitura.sp.gov.br/subprefeituras/w/noticias/36935"}],"confianca":0.84,"recusou":false}  [HTTP 200, 0.195785s]
+
+$ POST /assistente  Qual a multa por não conservar a calçada?
+{"resposta":"Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.","fontes":[],"confianca":0.1,"recusou":true}  [HTTP 200, 0.187740s]
+
+$ POST /assistente  Qual a capital da França?
+{"resposta":"Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.","fontes":[],"confianca":0.0,"recusou":true}  [HTTP 200, 0.191627s]
