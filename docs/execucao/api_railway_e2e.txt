@@ -1,0 +1,105 @@
+# Teste de ponta a ponta da API: https://assistente-production-307b.up.railway.app
+# 2026-11-08 20:42 UTC · token omitido
+
+## Contrato e erros
+[OK] GET /saude → 200 com a base carregada  ({"status":"ok","erro":null,"config":"C","modelo":"passo-seguro-lora","limiar":0.17,"trechos":82})
+[OK] GET /docs (Swagger) → 200
+[OK] sem token → 401 nao_autenticado
+[OK] token errado → 401
+[OK] pergunta vazia → 422 dados_invalidos  ({"codigo":"dados_invalidos","mensagem":"Os dados enviados não são válidos.","detalhes":[{"campo":"pergunta","problema":")
+[OK] pergunta com 501 caracteres → 422
+[OK] corpo fora de UTF-8 → 400 requisicao_invalida
+
+## 15 perguntas dev (critério escrito de avaliacao/criterio.md)
+
+[errada] r01 (respondivel, 0.7 s)
+  P: o carro tá em cima da calçada, pode isso?
+  R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+  fontes: — · confiança 0.0 · recusou True
+
+[errada] r04 (respondivel, 5.8 s)
+  P: quem tem que arrumar a calçada na frente de casa?
+  R: Aqui está o trecho que responde à pergunta:
+  fontes: Subprefeituras — Calçadas: o direito de ir e vir começa na porta da nossa casa · confiança 0.84 · recusou False
+
+[errada] r07 (respondivel, 4.4 s)
+  P: Qual é o prazo para regularizar a calçada depois da intimação?
+  R: O responsável tem 30 dias após o corte ou supressão da espécie arbórea para providenciar a regularização.
+  fontes: Decreto municipal nº 59.671/2020 (padronização das calçadas), Art. 32 · confiança 0.84 · recusou False
+
+[certa] r09 (respondivel, 4.7 s)
+  P: quanto de espaço livre tem que ter na calçada pra gente passar?
+  R: A largura mínima da faixa livre é de 1,20 m (um metro e vinte centímetros).
+  fontes: Cartilha de Calçadas 2023 (SMPED/CPA, Prefeitura de São Paulo) · confiança 0.84 · recusou False
+
+[certa] r13 (respondivel, 3.5 s)
+  P: o pedestre tem prioridade na faixa?
+  R: Sim, os pedestres têm prioridade na faixa delimitada para atravessar a via sobre as faixas.
+  fontes: Código de Trânsito Brasileiro (Lei nº 9.503/1997), Art. 70 · confiança 0.84 · recusou False
+
+[errada] r17 (respondivel, 0.9 s)
+  P: na minha rua não tem calçada, por onde eu ando?
+  R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+  fontes: — · confiança 0.0 · recusou True
+
+[errada] r22 (respondivel, 5.0 s)
+  P: O que é pessoa com mobilidade reduzida segundo a Lei Brasileira de Inclusão?
+  R: Pessoa com mobilidade reduzida é aquela que tem dificuldade de movimentação, permanente ou temporária, gerando redução efetiva da mobilidade, flexibilidade, coordenação motora ou percepção.
+  fontes: Lei Brasileira de Inclusão da Pessoa com Deficiência (Lei nº 13.146/2015), Art. 3 · confiança 0.85 · recusou False
+
+[errada] r25 (respondivel, 4.1 s)
+  P: calçada quebrada na frente de uma casa, qual serviço eu peço no 156?
+  R: Solicitar manutenção da calçada.
+  fontes: Subprefeituras — Serviços do Portal 156 · confiança 0.84 · recusou False
+
+[certa] r29 (respondivel, 4.7 s)
+  P: A Prefeitura reforma alguma calçada?
+  R: Sim, a Prefeitura tem o PEC (Programa Emergencial de Calçadas) para reformar as calçadas nas Rotas Estratégicas e Estruturais.
+  fontes: Subprefeituras — Calçadas: o direito de ir e vir começa na porta da nossa casa · confiança 0.84 · recusou False
+
+[errada] r33 (respondivel, 7.0 s)
+  P: Mesas e cadeiras de bar podem ocupar a faixa livre?
+  R: Sim. Mesas e cadeiras temporárias podem ser instaladas na faixa livre, desde que obedecidas às disposições da Lei nº 12.002/96 e da Lei nº 12.260/96.
+  fontes: Cartilha de Calçadas 2023 (SMPED/CPA, Prefeitura de São Paulo) · confiança 0.85 · recusou False
+
+[certa] n01 (nao_consta, 0.8 s)
+  P: quanto custa reformar minha calçada?
+  R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+  fontes: — · confiança 0.0 · recusou True
+
+[certa] n06 (nao_consta, 0.7 s)
+  P: Qual a melhor ação para investir este mês?
+  R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+  fontes: — · confiança 0.0 · recusou True
+
+[certa] n09 (nao_consta, 0.7 s)
+  P: patinete elétrico pode andar na calçada em SP?
+  R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+  fontes: — · confiança 0.0 · recusou True
+
+[certa] n13 (nao_consta, 0.7 s)
+  P: Qual é o piso mais barato para fazer uma calçada?
+  R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+  fontes: — · confiança 0.0 · recusou True
+
+[certa] n17 (nao_consta, 0.8 s)
+  P: Quanto tempo o 156 demora para responder uma solicitação?
+  R: Não encontrei isso nas fontes oficiais que eu consulto. Para falar com a Prefeitura, ligue 156 ou acesse o SP156: https://sp156.prefeitura.sp.gov.br/ — e você pode registrar o problema aqui no Passo Seguro.
+  fontes: — · confiança 0.0 · recusou True
+[OK] todas as respostas no contrato {resposta, fontes, confianca, recusou}
+
+## Cache e métricas
+[OK] pergunta repetida (maiúsculas e espaços) sai do cache  (0.13 s)
+[OK] GET /metrics → 200 (Prometheus)
+assistente_respostas_total{tipo="total"} 16
+assistente_respostas_total{tipo="recusas"} 7
+assistente_respostas_total{tipo="contingencias"} 0
+assistente_respostas_total{tipo="cache"} 1
+assistente_latencia_segundos{quantil="0.5"} 3.318
+assistente_latencia_segundos{quantil="0.95"} 6.827
+
+## Resumo
+config C · modelo passo-seguro-lora · limiar 0.17 · 82 trechos
+latência: mediana 3.5 s · máxima 7.0 s · 0 acima de 15 s
+perguntas dev certas pelo critério: 8/15
+checagens que falharam: 0

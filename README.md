@@ -214,7 +214,88 @@ os dois têm de ser o mesmo modelo. Cuidado: o Qwen2.5-3B **não** é Apache.
 
 ## 6. Como usar o assistente (API)
 
-### 6.1 Subir o serviço
+### 6.1 API no ar (Railway)
+
+O assistente está publicado, com a configuração C (`passo-seguro-lora`), em
+**https://assistente-production-307b.up.railway.app**.
+
+| Rota | Autenticação | Para quê |
+|---|---|---|
+| `POST /assistente` | `Authorization: Bearer <ASSISTENTE_TOKEN>` | faz a pergunta e devolve `{resposta, fontes, confianca, recusou}` (contrato na seção 6.3) |
+| `GET /saude` | não | `{"status": "ok", "config": "C", "modelo": "passo-seguro-lora", "limiar": 0.17, "trechos": 82}` |
+| `GET /docs` | não | Swagger: [abrir](https://assistente-production-307b.up.railway.app/docs) |
+| `GET /metrics` | não | contadores e latência no formato Prometheus |
+
+**Token:** fica com a equipe, fora do git. Quem tem acesso ao projeto no Railway lê com
+`railway variables --service assistente`. É o mesmo token que a API principal usa
+(`assistente_token` no Terraform).
+
+**Primeira chamada (PowerShell):**
+
+```powershell
+$url = "https://assistente-production-307b.up.railway.app"
+$token = "<ASSISTENTE_TOKEN>"
+Invoke-RestMethod "$url/saude"
+$corpo = @{ pergunta = "o pedestre tem prioridade na faixa?" } | ConvertTo-Json
+Invoke-RestMethod -Method Post -Uri "$url/assistente" -Headers @{ Authorization = "Bearer $token" } `
+  -ContentType "application/json; charset=utf-8" -Body ([Text.Encoding]::UTF8.GetBytes($corpo))
+```
+
+**curl (bash, macOS, Linux):**
+
+```bash
+curl -X POST https://assistente-production-307b.up.railway.app/assistente \
+  -H "Authorization: Bearer $ASSISTENTE_TOKEN" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -d '{"pergunta": "A Prefeitura reforma alguma calçada?"}'
+```
+
+**Python:**
+
+```python
+import httpx
+
+r = httpx.post("https://assistente-production-307b.up.railway.app/assistente",
+               headers={"Authorization": f"Bearer {token}"},
+               json={"pergunta": "o pedestre tem prioridade na faixa?"}, timeout=15)
+r.raise_for_status()
+print(r.json())
+```
+
+**Resposta real** (Railway, 3,5 s):
+
+```json
+{"resposta": "Sim, os pedestres têm prioridade na faixa delimitada para atravessar a via sobre as faixas.",
+ "fontes": [{"titulo": "Código de Trânsito Brasileiro (Lei nº 9.503/1997), Art. 70",
+             "url": "https://www.planalto.gov.br/ccivil_03/leis/l9503compilado.htm"}],
+ "confianca": 0.84, "recusou": false}
+```
+
+**Como se comporta no ar** (medido em 08/11/2026, seção 9.6):
+
+- Latência: mediana de 3,5 s e máxima de 7,0 s quando o LLM responde; menos de 1 s quando a busca
+  recusa sem chamar o LLM; ~0,1 s quando a pergunta está no cache. Use timeout de 15 s no cliente.
+- O serviço desiste do LLM aos 12 s (`TIMEOUT_LLM_S`) e devolve a recusa de contingência, então
+  sempre responde dentro dos 15 s da API principal.
+- Depois de um deploy, a URL devolve **502** por 1 a 2 minutos, enquanto o Ollama carrega o modelo e
+  a API sobe. Espere o `/saude` voltar 200.
+- O cache é em memória: some a cada deploy.
+
+**Testar a API publicada de ponta a ponta** (contrato, erros, as 15 perguntas dev com o critério
+escrito, cache e métricas; o token não aparece na saída):
+
+```powershell
+$env:ASSISTENTE_URL="https://assistente-production-307b.up.railway.app"; $env:ASSISTENTE_TOKEN="<token>"
+python scripts/11_testar_api.py --saida docs/execucao/api_railway_e2e.txt
+```
+
+O mesmo script testa a API local ou no Docker: basta trocar `ASSISTENTE_URL`
+(padrão `http://localhost:8002`). Ele sai com código 1 se alguma checagem do contrato falhar.
+Resultado na seção 9.6.
+
+![swagger no ar](docs/prints/12_swagger_railway.png)
+
+### 6.2 Subir o serviço
 
 > A configuração C precisa do modelo `passo-seguro-lora` no Ollama (seção 7.5). Sem ele, toda
 > pergunta que passa do limiar cai na resposta de contingência; nesse caso, use `CONFIG_VENCEDORA=B`.
@@ -251,8 +332,7 @@ docker build -f deploy/Dockerfile.railway -t passo-seguro-assistente .
 docker run --rm -p 8000:8000 -e ASSISTENTE_TOKEN=troque passo-seguro-assistente
 ```
 
-**No ar:** https://assistente-production-307b.up.railway.app (`GET /saude`, `POST /assistente`
-com `Authorization: Bearer <ASSISTENTE_TOKEN>`; o token fica com a equipe, fora do git).
+**No ar:** https://assistente-production-307b.up.railway.app (como usar: seção 6.1).
 
 Como foi publicado (projeto `passo-seguro-genai`, serviço `assistente`):
 
@@ -260,7 +340,7 @@ Como foi publicado (projeto `passo-seguro-genai`, serviço `assistente`):
 railway login
 railway link                       # projeto passo-seguro-genai, serviço assistente
 railway variables --set "RAILWAY_DOCKERFILE_PATH=deploy/Dockerfile.railway" `
-  --set "ASSISTENTE_TOKEN=<token>" --set "PORT=8000" --set "TIMEOUT_LLM_S=90" `
+  --set "ASSISTENTE_TOKEN=<token>" --set "PORT=8000" --set "TIMEOUT_LLM_S=12" `
   --set "MODELO_GGUF_URL=https://github.com/Passo-Seguro/passo-seguro-genai/releases/download/modelo-v1/passo-seguro-lora-q4_K_M.gguf"
 railway up --detach
 ```
@@ -272,16 +352,18 @@ railway up --detach
 - Threads: o container enxerga os 48 núcleos da máquina física, mas tem cota de 8 vCPUs. Com 48
   threads, torch e llama.cpp se atropelavam e o LLM estourava o timeout (111 s, resposta de
   contingência). O `entrypoint.sh` lê a cota do cgroup e fixa `OMP_NUM_THREADS` e `num_thread`;
-  depois disso, ~6–7 s por resposta. `NUM_THREADS` sobrescreve.
+  depois disso, no máximo 7 s por resposta, e o `TIMEOUT_LLM_S` voltou aos 12 s do contrato.
+  `NUM_THREADS` sobrescreve.
 - RAM: uns 3 GB; se faltar, use `MODELO_EMBEDDINGS` `intfloat/multilingual-e5-small` (exige reindexar).
 
 Passe a URL e o token para a Júlia pôr no `terraform.tfvars`.
 
-A documentação interativa (Swagger) fica em <http://localhost:8002/docs>:
+A documentação interativa (Swagger) fica em <http://localhost:8002/docs> (no ar:
+<https://assistente-production-307b.up.railway.app/docs>):
 
 ![swagger](docs/prints/03_swagger_assistente.png)
 
-### 6.2 Contrato
+### 6.3 Contrato
 
 **Requisição:** `POST /assistente`, `Content-Type: application/json`, cabeçalho
 `Authorization: Bearer <ASSISTENTE_TOKEN>`. O campo `pergunta` é obrigatório e tem de 1 a 500
@@ -319,7 +401,7 @@ problema no próprio Passo Seguro.
  "fontes": [], "confianca": 0.0, "recusou": true}
 ```
 
-### 6.3 Exemplos de chamada
+### 6.4 Exemplos de chamada
 
 **curl (bash):**
 
@@ -372,7 +454,7 @@ Chamadas reais (saúde, 401, 422, 400, respostas, cache, métricas e log):
 
 ![chamadas](docs/prints/04_api_assistente_curl.png)
 
-### 6.4 Erros, saúde e métricas
+### 6.5 Erros, saúde e métricas
 
 | Status | `codigo` | Quando |
 |---|---|---|
@@ -389,7 +471,7 @@ dentro do prazo.
 - **Log:** JSON, uma linha por resposta, **sem o texto da pergunta**:
   `{"evento": "resposta", "nivel_recusa": null, "json_valido": true, "score_max": 0.96, "ms": 2638, "recusou": false, "n_fontes": 3}`.
 
-### 6.5 Configuração
+### 6.6 Configuração
 
 Todas as variáveis podem ir no `.env` (ver [`.env.exemplo`](.env.exemplo)).
 
@@ -407,7 +489,7 @@ Todas as variáveis podem ir no `.env` (ver [`.env.exemplo`](.env.exemplo)).
 | `CACHE_TAMANHO` | 256 | perguntas repetidas guardadas em memória |
 | `NIVEL_LOG` | INFO | nível do log |
 
-### 6.6 Como biblioteca Python e pela linha de comando
+### 6.7 Como biblioteca Python e pela linha de comando
 
 ```python
 import sys; sys.path.insert(0, "src")
@@ -557,7 +639,9 @@ relatório em [`docs/execucao/relatorio_testes.html`](docs/execucao/relatorio_te
 | | `test_janelas_com_sobreposicao` | artigos longos viram janelas de até 500 tokens com sobreposição |
 
 **Testes de ponta a ponta** (com o modelo e a base reais), com as saídas em
-[`docs/execucao/`](docs/execucao/): API local ([`api_assistente_local.txt`](docs/execucao/api_assistente_local.txt)),
+[`docs/execucao/`](docs/execucao/): **API publicada no Railway**
+([`api_railway_e2e.txt`](docs/execucao/api_railway_e2e.txt), pelo `scripts/11_testar_api.py`,
+seção 9.6), API local ([`api_assistente_local.txt`](docs/execucao/api_assistente_local.txt)),
 API no container ([`api_assistente_docker.txt`](docs/execucao/api_assistente_docker.txt)), busca
 ([`04_avaliar_busca_reranker.txt`](docs/execucao/04_avaliar_busca_reranker.txt)), geração no dev
 ([`05_geracao_B_dev.txt`](docs/execucao/05_geracao_B_dev.txt)) e placar
@@ -577,7 +661,7 @@ Tudo o que foi rodado na máquina da seção 4, em ordem. As saídas reais estã
 | LoRA | ✅ | treinado e importado no Ollama (Q4_K_M via llama.cpp); revisão dos exemplos feita por IA, a conferir |
 | Placar | ✅ | A 23% · B 43% · C 40% de exatidão; C escolhida (menos alucinação, mais recusas corretas) |
 | Cinco erros | ✅ | causa e correção (configuração B) |
-| API | ✅ | local, Docker e imagem completa do Railway (config C) |
+| API | ✅ | local, Docker e **no ar no Railway** (config C): 11/11 checagens do contrato, máximo de 7 s |
 | Notebooks | ✅ | 01 a 05 executados e salvos com as saídas |
 
 ### 9.1 Ambiente
@@ -663,7 +747,36 @@ O conversor precisou de `sentencepiece` e `protobuf` (`pip install sentencepiece
 | Local, config B | [`api_assistente_local.txt`](docs/execucao/api_assistente_local.txt) |
 | Docker (`deploy/Dockerfile.api`) | [`api_assistente_docker.txt`](docs/execucao/api_assistente_docker.txt): saúde 200, 401, resposta com CTB art. 70, healthcheck `healthy` |
 | Railway (`deploy/Dockerfile.railway`), config C | [`api_assistente_railway.txt`](docs/execucao/api_assistente_railway.txt): Ollama + `passo-seguro-lora` + API num container só, em CPU; ~4 s por resposta |
-| Railway, URL pública | [`api_assistente_railway_publico.txt`](docs/execucao/api_assistente_railway_publico.txt): saúde 200, 401 sem token, resposta com fonte em ~7 s, recusa fora do escopo |
+| Railway, URL pública (primeiro teste) | [`api_assistente_railway_publico.txt`](docs/execucao/api_assistente_railway_publico.txt): saúde 200, 401 sem token, resposta com fonte em ~7 s, recusa fora do escopo |
+| Railway, URL pública, ponta a ponta | [`api_railway_e2e.txt`](docs/execucao/api_railway_e2e.txt): ver abaixo |
+
+**Teste de ponta a ponta da API no ar** (`scripts/11_testar_api.py`, 08/11/2026, 8 vCPUs,
+`TIMEOUT_LLM_S=12`, cache vazio depois do deploy):
+
+| Checagem | Resultado |
+|---|---|
+| `GET /saude` 200 com a base; `GET /docs` 200 | ✅ |
+| Sem token e com token errado → 401 | ✅ |
+| Pergunta vazia e com 501 caracteres → 422; corpo fora de UTF-8 → 400 | ✅ |
+| 15 respostas no contrato `{resposta, fontes, confianca, recusou}` | ✅ |
+| Pergunta repetida (maiúsculas e espaços) sai do cache | ✅ 0,13 s |
+| `GET /metrics` no formato Prometheus; contingências | ✅ 0 contingências |
+| Latência das 15 perguntas dev | mediana 3,5 s · máxima 7,0 s · nenhuma acima de 15 s |
+| Perguntas dev certas pelo critério escrito | **8/15**: as 5 "não consta" recusadas e 3 de 10 respondíveis |
+
+A API cumpre o contrato. Os 7 erros são de **conteúdo**, os mesmos limites de C que o placar já
+mostra (seção 3), e não do deploy:
+
+- **Busca recusou** (2): "o carro tá em cima da calçada" e "na minha rua não tem calçada"; o trecho
+  certo do CTB não chega ao limiar do reranker.
+- **Resposta errada com fonte** (3): o prazo depois da intimação saiu como "30 dias" (o Decreto
+  diz 60); "mesas de bar podem ocupar a faixa livre?" saiu "Sim" (é "Não", vão na faixa de
+  acesso); "quem arruma a calçada" devolveu só "Aqui está o trecho que responde à pergunta:".
+- **Incompleta pelo critério** (2): o serviço do 156 saiu genérico ("Solicitar manutenção da
+  calçada"), e a definição de mobilidade reduzida veio certa, mas sem os exemplos que o critério
+  exige (idoso, gestante…).
+
+![teste da API no ar](docs/prints/11_api_railway_e2e.png)
 
 - **Imagem de 11,7 GB → 3,96 GB:** o `pip --prefix` puxava o torch CUDA; corrigido com
   `PYTHONPATH` e um `.dockerignore` próprio. Com o reranker embutido, a imagem tem 4,83 GB.
@@ -688,7 +801,7 @@ passo-seguro-genai/
 │
 ├── src/passo_genai/          código: base, busca (e5 + reranker), prompts, gerador, avaliacao, esquemas, professor
 ├── api/                      app.py — FastAPI do POST /assistente
-├── scripts/                  00 a 10, na ordem das fases
+├── scripts/                  00 a 10, na ordem das fases; 11 testa a API publicada pelo HTTP
 ├── notebooks/                01_base, 02_busca, 03_geracao, 04_lora, 05_placar (com saídas salvas)
 ├── tests/                    contrato da API, geração, busca, avaliação, fatiamento
 │
