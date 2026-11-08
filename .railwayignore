@@ -1,0 +1,22 @@
+# O que o `railway up` envia: só o que deploy/Dockerfile.railway usa.
+# O .gguf não vai junto (passa do limite de upload): o build baixa de MODELO_GGUF_URL.
+*
+!src/
+!src/**
+!api/
+!api/**
+!requirements/
+!requirements/api.txt
+!deploy/
+!deploy/Dockerfile.railway
+!deploy/Dockerfile.railway.dockerignore
+!deploy/entrypoint.sh
+!base/
+!base/trechos.jsonl
+!base/indice/
+!base/indice/**
+!avaliacao/
+!avaliacao/limiar.json
+!modelos/
+!modelos/Modelfile.gguf
+**/__pycache__
