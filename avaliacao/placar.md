@@ -16,4 +16,4 @@
   "a gente", que ficam abaixo do limiar. É o viés mais importante a corrigir, porque o pedestre
   fala assim.
 - **C (LoRA):** pendente. O adapter foi treinado, mas não pôde ser importado no Ollama 0.40 (ver
-  `docs/execucao/README.md`, fase 5d).
+  README, seção 9.5).

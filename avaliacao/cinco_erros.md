@@ -3,7 +3,7 @@
 Os erros são da **configuração B** (RAG simples, `qwen2.5:1.5b-instruct`) no placar oficial das 45
 perguntas de teste ([`saidas/B.jsonl`](saidas/B.jsonl)), escolhidos entre os 20 de
 [`erros_candidatos.md`](erros_candidatos.md) para cobrir causas diferentes. A configuração C
-(LoRA) ainda não entrou no placar: ver [`../docs/execucao/README.md`](../docs/execucao/README.md).
+(LoRA) ainda não entrou no placar: ver o [README](../README.md#95-lora), seção 9.5.
 
 O score é o do reranker (`mmarco-mMiniLMv2`), entre 0 e 1. O limiar é 0,17.
 

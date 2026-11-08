@@ -228,7 +228,7 @@ secrets.h
 # --- Passo Seguro / genai ---
 .env
 modelos/*
-!modelos/README.md
+!modelos/.gitkeep
 !modelos/Modelfile.gguf
 treino/treino_bruto.jsonl.bak
 *.gguf

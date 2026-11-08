@@ -45,7 +45,7 @@ def main() -> int:
     from trl import SFTConfig, SFTTrainer
 
     if not torch.cuda.is_available():
-        print("Sem GPU CUDA. Treinar LoRA em CPU leva horas/dias: use o notebook no Colab (PASSO_A_PASSO.md, passo 7).")
+        print("Sem GPU CUDA. Treinar LoRA em CPU leva horas/dias: use o notebook no Colab (README.md, seção 7.5).")
         if input("Continuar mesmo assim? [s/N] ").strip().lower() != "s":
             return 1
 

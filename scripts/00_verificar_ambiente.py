@@ -24,7 +24,7 @@ def main() -> int:
             if vram < 6:
                 print("Com menos de 6 GB, treine o LoRA com --4bit (QLoRA) e --batch 1.")
         else:
-            print("Sem CUDA. O RAG roda em CPU; o LoRA em CPU é inviável (use o Colab, ver PASSO_A_PASSO.md).")
+            print("Sem CUDA. O RAG roda em CPU; o LoRA em CPU é inviável (use o Colab, ver README.md, seção 7.5).")
     except ImportError:
         print("PyTorch não instalado (só é obrigatório para o LoRA). Ver passo 1.")
     titulo("Pacotes")

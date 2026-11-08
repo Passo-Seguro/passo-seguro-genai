@@ -52,7 +52,7 @@ def main() -> int:
         rel[nome] = {"n": len(sel), "recall@1": round(float(r1), 3), "recall@3": round(float(r3), 3)}
         print(f"{nome:6s} n={len(sel):2d}  recall@1={r1:.3f}  recall@3={r3:.3f}")
     if rel["todas"]["recall@3"] < 0.8:
-        print("ATENÇÃO: recall@3 < 0,8. Revise o fatiamento antes de seguir (ver PASSO_A_PASSO.md, passo 4).")
+        print("ATENÇÃO: recall@3 < 0,8. Revise o fatiamento antes de seguir (ver README.md, seção 7.3).")
     falhas = [(i.id, i.pergunta, i.trecho_id, [x.trecho.trecho_id for x in r])
               for i, r in zip(itens, resultados)
               if i.tipo == "respondivel" and not acertou([x.trecho.trecho_id for x in r], i.trecho_id)]
