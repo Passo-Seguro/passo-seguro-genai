@@ -251,11 +251,31 @@ docker build -f deploy/Dockerfile.railway -t passo-seguro-assistente .
 docker run --rm -p 8000:8000 -e ASSISTENTE_TOKEN=troque passo-seguro-assistente
 ```
 
-No Railway, crie um serviço a partir deste repositório, aponte o Dockerfile com a variável
-`RAILWAY_DOCKERFILE_PATH=deploy/Dockerfile.railway` e defina `ASSISTENTE_TOKEN`. Ele precisa de uns 3 GB de RAM; se faltar, use `MODELO_EMBEDDINGS`
-`intfloat/multilingual-e5-small` (exige reindexar). O `.gguf` não vai para o git: faça o build na
-sua máquina com `railway up` ou publique a imagem no GHCR. Passe a URL e o token para a Júlia pôr
-no `terraform.tfvars`.
+**No ar:** https://assistente-production-307b.up.railway.app (`GET /saude`, `POST /assistente`
+com `Authorization: Bearer <ASSISTENTE_TOKEN>`; o token fica com a equipe, fora do git).
+
+Como foi publicado (projeto `passo-seguro-genai`, serviço `assistente`):
+
+```powershell
+railway login
+railway link                       # projeto passo-seguro-genai, serviço assistente
+railway variables --set "RAILWAY_DOCKERFILE_PATH=deploy/Dockerfile.railway" `
+  --set "ASSISTENTE_TOKEN=<token>" --set "PORT=8000" --set "TIMEOUT_LLM_S=90" `
+  --set "MODELO_GGUF_URL=https://github.com/Passo-Seguro/passo-seguro-genai/releases/download/modelo-v1/passo-seguro-lora-q4_K_M.gguf"
+railway up --detach
+```
+
+- O `.gguf` (941 MB) não vai para o git e passa do limite de upload do `railway up` (413): ele fica
+  no release [`modelo-v1`](https://github.com/Passo-Seguro/passo-seguro-genai/releases/tag/modelo-v1)
+  e o build baixa de `MODELO_GGUF_URL`. O [`.railwayignore`](.railwayignore) envia só o que a imagem usa.
+- `PORT=8000`: o Railway injeta `PORT=8080`, e o domínio aponta para a 8000.
+- Threads: o container enxerga os 48 núcleos da máquina física, mas tem cota de 8 vCPUs. Com 48
+  threads, torch e llama.cpp se atropelavam e o LLM estourava o timeout (111 s, resposta de
+  contingência). O `entrypoint.sh` lê a cota do cgroup e fixa `OMP_NUM_THREADS` e `num_thread`;
+  depois disso, ~6–7 s por resposta. `NUM_THREADS` sobrescreve.
+- RAM: uns 3 GB; se faltar, use `MODELO_EMBEDDINGS` `intfloat/multilingual-e5-small` (exige reindexar).
+
+Passe a URL e o token para a Júlia pôr no `terraform.tfvars`.
 
 A documentação interativa (Swagger) fica em <http://localhost:8002/docs>:
 
@@ -643,6 +663,7 @@ O conversor precisou de `sentencepiece` e `protobuf` (`pip install sentencepiece
 | Local, config B | [`api_assistente_local.txt`](docs/execucao/api_assistente_local.txt) |
 | Docker (`deploy/Dockerfile.api`) | [`api_assistente_docker.txt`](docs/execucao/api_assistente_docker.txt): saúde 200, 401, resposta com CTB art. 70, healthcheck `healthy` |
 | Railway (`deploy/Dockerfile.railway`), config C | [`api_assistente_railway.txt`](docs/execucao/api_assistente_railway.txt): Ollama + `passo-seguro-lora` + API num container só, em CPU; ~4 s por resposta |
+| Railway, URL pública | [`api_assistente_railway_publico.txt`](docs/execucao/api_assistente_railway_publico.txt): saúde 200, 401 sem token, resposta com fonte em ~7 s, recusa fora do escopo |
 
 - **Imagem de 11,7 GB → 3,96 GB:** o `pip --prefix` puxava o torch CUDA; corrigido com
   `PYTHONPATH` e um `.dockerignore` próprio. Com o reranker embutido, a imagem tem 4,83 GB.
