@@ -904,6 +904,10 @@ do assunto, que o dev quase não tem; ficou 0,17 ([`04_avaliar_busca_v2.txt`](do
 [`placar_app_v2.txt`](docs/execucao/placar_app_v2.txt). A v1 do modelo fica no release
 `modelo-v1`; a v2, no `modelo-v2`.
 
+**No ar (v2, 09/11):** o Railway baixa o modelo do release `modelo-v2`. O teste de ponta a ponta na URL
+pública ([`api_railway_e2e_v2.txt`](docs/execucao/api_railway_e2e_v2.txt)) passou nas 11 checagens do
+contrato, sem contingências, com mediana de 5,8 s e máximo de 9,0 s; 8 das 15 perguntas dev certas pelo critério.
+
 Os notebooks `01` a `05` guardam as saídas da execução de 08/11 (versão 1); os números da v2 estão
 nas saídas acima e em [`avaliacao/resultados/`](avaliacao/resultados/).
 
