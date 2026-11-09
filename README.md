@@ -37,8 +37,8 @@ Ficha Técnica: [README do repositório principal](https://github.com/Passo-Segu
 | Tarefa | Responder dúvidas de pedestres de São Paulo sobre calçadas, travessias e como reclamar, citando a fonte, em JSON. |
 | Por que importa | Reclamar de calçada hoje é confuso: o pedestre não sabe se o problema é do dono do imóvel, da Prefeitura ou de uma concessionária, nem qual serviço do 156 usar. |
 | Modelo | Qwen2.5-1.5B-Instruct (Apache 2.0), quantizado em Q4_K_M, rodando no Ollama |
-| Especialização | LoRA (rank 16, alpha 32) com 324 exemplos (28% recusas), revisados exemplo a exemplo (revisão feita por IA, a conferir: [`treino/revisao_ia.json`](treino/revisao_ia.json)) |
-| Busca | `intfloat/multilingual-e5-base` + FAISS (10 candidatos) → reranker `mmarco-mMiniLMv2` → top-3; limiar 0,17 escolhido no dev |
+| Especialização | LoRA v2 (rank 16, alpha 32) com 346 exemplos (25% recusas), revisados exemplo a exemplo (revisão feita por IA, a conferir: [`treino/revisao_ia.json`](treino/revisao_ia.json)) |
+| Busca | `intfloat/multilingual-e5-base` + FAISS (10 candidatos) → reranker `mmarco-mMiniLMv2` → top-3; abaixo do limiar 0,17, recusa sem chamar o modelo **só se a pergunta for fora do tema** (`tema.py`) |
 | Saída | JSON validado (Pydantic): `{"resposta", "fontes", "confianca", "recusou"}` |
 | Integração | `POST /assistente`, consumido pelo app (PWA) via API principal |
 | IA responsável | O app sempre mostra as fontes; sem base, recusa e aponta o SP156; as perguntas não são guardadas nem registradas no log; o viés com linguagem informal é medido no placar |
@@ -54,9 +54,10 @@ fora: é norma da ABNT, protegida por direito autoral.
 | Lei Brasileira de Inclusão (Lei 13.146/2015) | HTML | Ato oficial (domínio público) | 11 |
 | Lei municipal 15.442/2011 | HTML | Ato oficial (domínio público) | 11 |
 | Decreto municipal 59.671/2020 | HTML | Ato oficial (domínio público) | 16 |
-| Subprefeituras: calçadas e serviços do 156 | HTML | Publicação oficial da Prefeitura | 10 |
+| Subprefeituras: calçadas e serviços do 156 | HTML | Publicação oficial da Prefeitura | 7 |
+| SP156: carta de serviços (calçada particular, calçada pública, obstáculo) | HTML | Publicação oficial da Prefeitura | 5 |
 | Cartilha de Calçadas 2023 (SMPED) | PDF | Publicação oficial da Prefeitura | 16 |
-| **Total** | | | **82** |
+| **Total** | | | **84** |
 
 ## 2. Como funciona
 
@@ -102,38 +103,51 @@ O placar compara três configurações: **A** (modelo sem contexto), **B** (RAG 
 Gerado pelo notebook `05_placar.ipynb` (`avaliacao/avaliar.py`), em
 [`avaliacao/resultados/placar.md`](avaliacao/resultados/placar.md). O critério de julgamento está
 em [`avaliacao/criterio.md`](avaliacao/criterio.md). As três configurações usam o mesmo
-Qwen2.5-1.5B quantizado em Q4_K_M e o mesmo contexto da busca.
+Qwen2.5-1.5B quantizado em Q4_K_M e o mesmo contexto da busca. Números da versão 2 (09/11/2026:
+base limpa e com o SP156, checagem de tema e LoRA v2, seção 9.7); entre parênteses, a versão 1.
 
-| Configuração | Exatidão | Citação correta | Alucinação | Recusa correta (não consta) | Recusa indevida | JSON válido | Latência |
+| Configuração | Exatidão | Citação correta | Alucinação | Recusa correta (não consta) | Recusa indevida | JSON válido | Latência (GPU) |
 |---|---|---|---|---|---|---|---|
-| A — modelo sem contexto | 23% | 0% | 100% | 0% | 0% | 100% | 0,30 s |
-| B — RAG simples | **43%** | 50% | 36% | 80% | 23% | 98% | 0,35 s |
-| **C — RAG + LoRA (no ar)** | 40% | **53%** | **29%** | **87%** | 23% | **100%** | **0,23 s** |
+| A — modelo sem contexto | 23% (23%) | 0% | 100% | 0% | 0% | 100% | 0,38 s |
+| B — RAG simples | 50% (43%) | **73%** (50%) | 56% (36%) | 47% (80%) | **0%** (23%) | 98% | 0,50 s |
+| **C — RAG + LoRA v2 (no ar)** | **50%** (40%) | 47% (53%) | **33%** (29%) | **80%** (87%) | 10% (23%) | **100%** | **0,36 s** |
 
-| Registro | A exatidão | B exatidão | C exatidão | B alucinação | C alucinação | B recusa indevida | C recusa indevida |
-|---|---|---|---|---|---|---|---|
-| formal (17 perguntas) | 33% | 67% | 67% | 47% | **24%** | 0% | 8% |
-| informal (28 perguntas) | 17% | 28% | 22% | 29% | 32% | 39% | 33% |
+| Registro | B exatidão | C exatidão | B alucinação | C alucinação | B recusa indevida | C recusa indevida |
+|---|---|---|---|---|---|---|
+| formal (17 perguntas) | 67% | 50% | 59% | **24%** | 0% | 25% |
+| informal (28 perguntas) | 39% (28%) | **50%** (22%) | 54% | **39%** | 0% (39%) | **0%** (33%) |
 
-![placar](docs/prints/07_placar_abc.png)
+- **A → B (efeito do RAG):** a exatidão vai de 23% para 50% e a alucinação cai de 100% para
+  56%. Sem contexto, o modelo nunca cita uma fonte válida.
+- **B → C (efeito do LoRA):** mesma exatidão (50%), mas C alucina bem menos (56% → 33%) e recusa
+  80% das perguntas que a base não responde, contra 47% de B. Com a checagem de tema, B passou a
+  responder quase tudo e inventa quando a busca acha pouco ("pode processar a Prefeitura", "a pena
+  por atropelamento é multa"); C recusa esses casos. B variou de 50% a 63% de exatidão entre
+  rodadas com a mesma configuração.
+- **Formal × informal:** o viés contra a linguagem informal, o maior problema da versão 1,
+  praticamente sumiu em C: 50% de exatidão nos dois registros e nenhuma recusa indevida nas
+  informais. A causa era a recusa pelo limiar do reranker, que dava nota baixa a "tá", "pra" e
+  "a gente"; agora pergunta do tema sempre chega ao modelo.
+- **Configuração escolhida: C (LoRA v2)** (`CONFIG_VENCEDORA=C`). Empata com B em exatidão e é a
+  mais segura. O custo: em 10% das respondíveis (todas formais) C ainda recusa com o trecho certo.
 
-- **A → B (efeito do RAG):** a exatidão quase dobra e a alucinação cai de 100% para 36%. Sem
-  contexto, o modelo nunca cita uma fonte válida. O custo são 23% de recusas indevidas.
-- **B → C (efeito do LoRA):** a exatidão fica praticamente igual. A diferença de 3 pontos está
-  dentro da variação entre execuções: B variou de 43% a 50% e C de 37% a 40% em três rodadas.
-  Mas C alucina menos, recusa melhor o que não está na base, devolve JSON válido sempre e é mais
-  rápido. Nas perguntas formais, a alucinação cai à metade. O LoRA ensinou formato, citação e
-  recusa, mas não acrescentou conhecimento: os erros que vêm da busca continuam.
-- **Formal × informal:** as perguntas informais acertam bem menos e concentram as recusas
-  indevidas, porque o reranker dá notas baixas a "tá", "pra" e "a gente". É o maior ponto de
-  melhoria, porque o pedestre fala assim.
-- **Configuração escolhida: C** (`CONFIG_VENCEDORA=C`). Empata com B em exatidão e é mais segura.
+**Perguntas no estilo do app** ([`avaliacao/perguntas_app.jsonl`](avaliacao/perguntas_app.jsonl),
+16 perguntas de "como fazer", escritas depois de ver a base, por isso fora do placar oficial):
 
-> ⚠️ **Falha grave conhecida (B e C):** "carro na calçada pode?" recebe uma resposta errada nas
-> duas configurações. B responde "Sim, o carro pode estar na calçada…"; C responde "Sim" e fala de
-> bicicleta. A busca traz a cartilha e o art. 68 no lugar dos arts. 181 e 193 do CTB, então nenhum
-> dos dois modelos tem o trecho certo. **Corrija a busca para essa pergunta (ex.: expansão de
-> consulta "carro" → "estacionar veículo / transitar com veículo") antes de colocar em produção.**
+| | Exatidão (critério) | Alucinação | Recusa correta (fora do tema) | Recusa indevida |
+|---|---|---|---|---|
+| B | 69% | 25% | 67% | 8% |
+| **C v2** | 62% | **12%** | **100%** | 23% |
+
+Lendo as respostas de C v2, 6 das 13 respondíveis saíram certas e úteis (como pedir conserto,
+prazo, o que informar, telefone, o que acontece se o dono não arrumar, quem é responsável). O
+critério conta 8, porque duas passam por palavra-chave com conteúdo errado. C ainda recusa
+"como reclamar de carro na calçada", "quanto custa denunciar" e "calçada de prédio público".
+
+> **Limite do modelo pequeno (medido):** com os mesmos trechos, o `qwen2.5:7b-instruct` acerta 92%
+> dessas 16 perguntas, sem as invenções. Mas leva 35 s por resposta em CPU (8 threads), contra
+> 7,9 s do 1,5B: não cabe no prazo de 15 s da API principal no Railway, que não tem GPU. Com um
+> servidor com GPU, o 7B é o caminho para melhorar as respostas.
 
 Os cinco erros reais, com causa e correção, estão em
 [`avaliacao/resultados/cinco_erros.md`](avaliacao/resultados/cinco_erros.md).
@@ -143,7 +157,8 @@ Os cinco erros reais, com causa e correção, estão em
 | Configuração | recall@1 (dev) | recall@3 (dev) | recall@1 (40) | recall@3 (40) | s/pergunta em CPU |
 |---|---|---|---|---|---|
 | só e5 | 0,20 | 0,20 | 0,30 | 0,60 | 0,01 |
-| e5 + `mmarco-mMiniLMv2` (**adotado**) | 0,40 | 0,60 | 0,475 | **0,775** | ~1,1 |
+| e5 + `mmarco-mMiniLMv2` (**adotado**, v1) | 0,40 | 0,60 | 0,475 | **0,775** | ~1,1 |
+| idem, base v2 (84 trechos, com o SP156) | 0,30 | 0,50 | 0,425 | **0,775** | ~1,1 |
 | e5 + `bge-reranker-v2-m3` | 0,50 | 0,60 | 0,625 | 0,80 | ~11,5 |
 
 ![limiar](docs/prints/06_curva_limiar_reranker.png)
@@ -152,10 +167,10 @@ Os cinco erros reais, com causa e correção, estão em
 
 | Item | Valor |
 |---|---|
-| Exemplos | 435 gerados (professor `qwen2.5:7b-instruct`), 324 aprovados: 233 respostas, 26 recusas fora de escopo, 65 recusas sem base |
-| Treino / validação | 292 / 32, 3 épocas, batch efetivo 16, lr 2e-4 cosseno, bf16 |
-| Perda de validação | 0,218 → 0,186 → 0,183 (sem sobreajuste) |
-| Duração | 13 min na RTX 4080 |
+| Exemplos (v2) | 484 gerados (professor `qwen2.5:7b-instruct`), 346 aprovados: 258 respostas, 26 recusas fora de escopo, 62 recusas sem base |
+| Treino / validação | 312 / 34, 3 épocas, batch efetivo 16, lr 2e-4 cosseno, bf16 |
+| Perda de validação | v2: 0,277 → 0,254 → 0,250 (sem sobreajuste); v1: 0,218 → 0,186 → 0,183, em outra divisão de validação |
+| Duração | 10,6 min na RTX 4080 (v1: 13 min) |
 
 ![perda](docs/prints/05_lora_perda.png)
 
@@ -201,7 +216,7 @@ copy .env.exemplo .env
 
 ollama pull qwen2.5:1.5b-instruct          # modelo base, ~1 GB
 python scripts/00_verificar_ambiente.py    # confere Python, GPU, pacotes e Ollama
-python -m pytest -q                        # 28 testes
+python -m pytest -q                        # 36 testes
 ```
 
 A base (`base/trechos.jsonl`), o índice (`base/indice/`) e o limiar (`avaliacao/limiar.json`) já
@@ -222,7 +237,7 @@ O assistente está publicado, com a configuração C (`passo-seguro-lora`), em
 | Rota | Autenticação | Para quê |
 |---|---|---|
 | `POST /assistente` | `Authorization: Bearer <ASSISTENTE_TOKEN>` | faz a pergunta e devolve `{resposta, fontes, confianca, recusou}` (contrato na seção 6.3) |
-| `GET /saude` | não | `{"status": "ok", "config": "C", "modelo": "passo-seguro-lora", "limiar": 0.17, "trechos": 82}` |
+| `GET /saude` | não | `{"status": "ok", "config": "C", "modelo": "passo-seguro-lora", "limiar": 0.17, "trechos": 84}` |
 | `GET /docs` | não | Swagger: [abrir](https://assistente-production-307b.up.railway.app/docs) |
 | `GET /metrics` | não | contadores e latência no formato Prometheus |
 
@@ -341,12 +356,12 @@ railway login
 railway link                       # projeto passo-seguro-genai, serviço assistente
 railway variables --set "RAILWAY_DOCKERFILE_PATH=deploy/Dockerfile.railway" `
   --set "ASSISTENTE_TOKEN=<token>" --set "PORT=8000" --set "TIMEOUT_LLM_S=12" `
-  --set "MODELO_GGUF_URL=https://github.com/Passo-Seguro/passo-seguro-genai/releases/download/modelo-v1/passo-seguro-lora-q4_K_M.gguf"
+  --set "MODELO_GGUF_URL=https://github.com/Passo-Seguro/passo-seguro-genai/releases/download/modelo-v2/passo-seguro-lora-q4_K_M.gguf"
 railway up --detach
 ```
 
 - O `.gguf` (941 MB) não vai para o git e passa do limite de upload do `railway up` (413): ele fica
-  no release [`modelo-v1`](https://github.com/Passo-Seguro/passo-seguro-genai/releases/tag/modelo-v1)
+  no release [`modelo-v2`](https://github.com/Passo-Seguro/passo-seguro-genai/releases/tag/modelo-v2)
   e o build baixa de `MODELO_GGUF_URL`. O [`.railwayignore`](.railwayignore) envia só o que a imagem usa.
 - `PORT=8000`: o Railway injeta `PORT=8080`, e o domínio aponta para a 8000.
 - Threads: o container enxerga os 48 núcleos da máquina física, mas tem cota de 8 vCPUs. Com 48
@@ -555,6 +570,7 @@ Mostra, para cada pergunta dev, o top-3 com os scores, o nível da recusa, o JSO
 ```powershell
 ollama pull qwen2.5:7b-instruct                       # professor (~5 GB) ou PROFESSOR_URL no .env
 python scripts/06_gerar_exemplos.py --alvo 300        # ~25% recusas, sem vazamento do teste
+python scripts/06_gerar_exemplos.py --trechos sp156- --alvo 40 --recusas 0 --anexar   # v2: só de trechos novos
 python scripts/07_revisar_exemplos.py                 # revisão: a = aprovar, e = editar, r = rejeitar
 python scripts/07_revisar_exemplos.py --exportar      # treino/treino.jsonl + estatisticas.md
 python scripts/08_treinar_lora.py                     # 8 GB de VRAM ou mais
@@ -575,6 +591,7 @@ python scripts/09_exportar_ollama.py                  # cria passo-seguro-lora n
 python avaliacao/avaliar.py --split dev            # ensaio
 python avaliacao/avaliar.py                        # oficial: 45 perguntas × A, B, C
 python avaliacao/avaliar.py --configs A B          # só algumas configurações
+python avaliacao/avaliar.py --split app --configs B C   # 16 perguntas no estilo do app (fora do placar oficial)
 python scripts/10_erros.py --config B              # candidatos para avaliacao/resultados/cinco_erros.md
 ```
 
@@ -594,7 +611,7 @@ git status       # .env, modelos/*.gguf e *.safetensors NÃO podem aparecer
 
 ## 8. Testes
 
-**28 testes, todos passando.** Rodam sem rede, sem GPU e sem o Ollama: embeddings e LLM são
+**36 testes, todos passando.** Rodam sem rede, sem GPU e sem o Ollama: embeddings e LLM são
 substituídos por versões falsas e determinísticas ([`tests/conftest.py`](tests/conftest.py)).
 
 ```powershell
@@ -638,6 +655,13 @@ relatório em [`docs/execucao/relatorio_testes.html`](docs/execucao/relatorio_te
 | `test_base.py` | `test_divide_por_artigo_e_tira_texto_revogado` | fatia por artigo; texto `<strike>` (revogado) sai |
 | | `test_anexo_em_tabela_nao_e_cortado_pelas_celulas_art` | o anexo de multas não é cortado pela célula "Art. 1º" |
 | | `test_janelas_com_sobreposicao` | artigos longos viram janelas de até 500 tokens com sobreposição |
+| `test_tema.py` | `test_perguntas_do_tema_inclusive_informais` / `test_perguntas_fora_do_tema` | a checagem de tema reconhece "tá", "bike", "156" e não pega previsão do tempo nem investimento |
+| | `test_perguntas_sobre_o_assistente` | "o que você pode me informar?" recebe a resposta fixa |
+| | `test_tira_menu_e_aviso_de_cookies_das_paginas` | o menu do portal e o aviso de cookies não entram na base |
+| | `test_extrai_a_carta_de_servicos_do_sp156` | da página do SP156 entram só "O que é" a "Órgão responsável" |
+| `test_gerador.py` | `test_pergunta_do_tema_abaixo_do_limiar_vai_ao_modelo` | pergunta do tema com score baixo não é recusada antes do modelo |
+| | `test_sem_portao_de_tema_volta_a_recusar_pelo_limiar` | `PORTAO_TEMA=0` volta ao comportamento da v1 |
+| `test_api.py` | `test_pergunta_sobre_o_assistente_tem_resposta_fixa_com_as_fontes` | a resposta fixa lista os assuntos e as fontes, sem chamar o LLM |
 
 **Testes de ponta a ponta** (com o modelo e a base reais), com as saídas em
 [`docs/execucao/`](docs/execucao/): **API publicada no Railway**
@@ -656,11 +680,12 @@ Tudo o que foi rodado na máquina da seção 4, em ordem. As saídas reais estã
 | Fase | Situação | Resultado |
 |---|---|---|
 | Ambiente | ✅ | PyTorch + CUDA 13, RTX 4080, Ollama 0.40.15 |
-| Base | ✅ | 82 trechos; bug do Anexo Único corrigido |
+| Base | ✅ | 84 trechos (v2: sem menus e cookies, com 3 páginas do SP156); bug do Anexo Único corrigido |
 | Busca | ⚠️ | recall@3 0,775 (meta 0,8) |
 | Geração | ✅ | JSON válido em 100% |
 | LoRA | ✅ | treinado e importado no Ollama (Q4_K_M via llama.cpp); revisão dos exemplos feita por IA, a conferir |
-| Placar | ✅ | A 23% · B 43% · C 40% de exatidão; C escolhida (menos alucinação, mais recusas corretas) |
+| Placar | ✅ | v2: A 23% · B 50% · C 50% de exatidão; C (LoRA v2) escolhida (menos alucinação, mais recusas corretas) |
+| Correção v2 | ✅ | recusava perguntas do tema: base limpa + SP156, checagem de tema, LoRA v2 (seção 9.7) |
 | Cinco erros | ✅ | causa e correção (configuração B) |
 | API | ✅ | local, Docker e **no ar no Railway** (config C): 11/11 checagens do contrato em duas rodadas, máximo de 10,6 s; prints na seção 9.6 |
 | Notebooks | ✅ | 01 a 05 executados e salvos com as saídas |
@@ -847,6 +872,41 @@ No teste do container do Railway, as respostas mostram os limites atuais de C: n
 de pedestre, ele misturou a "faixa livre" da calçada com a faixa de travessia; na da moto, acertou
 a resposta, mas citou o art. 68 em vez do 193.
 
+### 9.7 Correção de 09/11: o assistente recusava perguntas do tema
+
+**O problema (relatado no app):** "Como peço o conserto de um buraco na calçada?" e "Como reclamar
+de um carro estacionado na calçada?" recebiam a recusa padrão. Os logs do Railway mostraram três
+causas: recusa pela busca (score do reranker abaixo de 0,17, o modelo nem era chamado), recusa
+pelo próprio LoRA com o trecho certo no contexto e respostas que passavam dos 12 s.
+
+**Diagnóstico** (as mesmas perguntas, na mesma base, em B e C):
+
+| Causa | Evidência | Correção |
+|---|---|---|
+| A base não tinha o "como pedir" | as 4 páginas de serviço do SP156 previstas no `fontes.yaml` estavam com `ativo: false` e URL "PREENCHER"; a lista de serviços do 156 só tinha nomes soltos | 3 páginas da carta de serviços do SP156 (calçada particular, calçada pública, obstáculo), com o que é, quando pedir, prazo (60 e 120 dias), canais e etapas; novo tipo `servico_sp156` em `base.py` |
+| A base tinha lixo | menus do portal e o aviso de cookies dentro dos trechos das Subprefeituras | `_sem_ruido` em `base.py` (com teste); 82 → 84 trechos |
+| O limiar recusava pergunta do tema | "tem um vaso enorme bloqueando a calçada, quem eu chamo?": score 0,03 com o trecho certo em 1º | checagem de tema (`tema.py`): abaixo do limiar, só recusa sem o modelo se a pergunta for fora do assunto; `PORTAO_TEMA=0` desliga |
+| O LoRA recusava com o trecho na mão e respondia curto | 3 recusas de treino com rótulo errado (o contexto respondia: reranker 0,67 a 1,00) e nenhum exemplo de "como pedir" | LoRA v2: sem os 3 rótulos errados, sem 8 respostas que vinham de ruído do portal, com 33 exemplos novos do SP156 revisados ([`treino/revisao_ia.json`](treino/revisao_ia.json), `rodada: v2`) |
+| "O que você sabe?" era recusada | pergunta sobre o assistente, não sobre calçada | resposta fixa com os assuntos e as fontes (`resposta_sobre_o_assistente`) |
+
+Os ids de contexto dos exemplos antigos foram remapeados para os trechos limpos pelo conteúdo
+(cobertura de palavras ≥ 0,5), para nenhum exemplo ficar com um contexto que não traz a resposta.
+O gabarito da r26 passou a aceitar também a página do serviço de calçada pública
+(`sp156-calcada-publica`), que é o serviço da resposta esperada. A n03 ("quantos dias a Prefeitura
+leva para consertar calçada pública?") continua "não consta" no gabarito, embora a página nova
+traga o prazo máximo de 120 dias; B e C respondem isso e contam como alucinação.
+
+**Limiar:** o `04_avaliar_busca.py` recalibrado na base v2 sugeriu 0,89, mas esse cálculo supõe o
+fluxo antigo, em que o limiar recusa tudo. Com a checagem de tema, ele só filtra perguntas fora
+do assunto, que o dev quase não tem; ficou 0,17 ([`04_avaliar_busca_v2.txt`](docs/execucao/04_avaliar_busca_v2.txt)).
+
+**Resultado:** placar na seção 3; saídas em [`placar_v2.txt`](docs/execucao/placar_v2.txt) e
+[`placar_app_v2.txt`](docs/execucao/placar_app_v2.txt). A v1 do modelo fica no release
+`modelo-v1`; a v2, no `modelo-v2`.
+
+Os notebooks `01` a `05` guardam as saídas da execução de 08/11 (versão 1); os números da v2 estão
+nas saídas acima e em [`avaliacao/resultados/`](avaliacao/resultados/).
+
 ## 10. Estrutura do repositório
 
 ```
@@ -862,7 +922,7 @@ passo-seguro-genai/
 │
 ├── base/                     base de conhecimento: fontes.yaml, brutos/, trechos.jsonl, indice/
 ├── treino/                   exemplos do LoRA: treino_bruto, treino, revisao_ia.json, estatisticas
-├── avaliacao/                teste.jsonl (60 perguntas), criterio.md, avaliar.py, limiar.json
+├── avaliacao/                teste.jsonl (60 perguntas), perguntas_app.jsonl (16), criterio.md, avaliar.py, limiar.json
 │   └── resultados/           gerados: placar.*, saidas/, cinco_erros.md, erros_candidatos.md, busca.json, curva_limiar.png
 ├── modelos/                  fora do git: lora-adapter/, mesclado/, *.gguf, Modelfile (só o Modelfile.gguf vai para o git)
 │
@@ -896,7 +956,7 @@ Ollama (`Modelfile`, `Modelfile.gguf`, `passo-seguro-lora-q4_K_M.gguf`).
 
 - Relatório: [`docs/relatorio.md`](docs/relatorio.md)
 - API no ar: https://assistente-production-307b.up.railway.app (seção 6.1)
-- Modelo (GGUF Q4_K_M): [release `modelo-v1`](https://github.com/Passo-Seguro/passo-seguro-genai/releases/tag/modelo-v1)
+- Modelo (GGUF Q4_K_M): [release `modelo-v2`](https://github.com/Passo-Seguro/passo-seguro-genai/releases/tag/modelo-v2) (a v1 fica no release `modelo-v1`)
 - Vídeo: _link (pode ser o do pitch)_
 
 ### Repositórios do projeto

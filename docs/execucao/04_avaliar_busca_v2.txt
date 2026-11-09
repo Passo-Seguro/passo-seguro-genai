@@ -1,0 +1,25 @@
+W1108 22:04:08.492000 12360 .venv\Lib\site-packages\torch\utils\flop_counter.py:113] triton not found; flop counting will not work for triton kernels
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:  29%|██▊       | 57/199 [00:00<00:00, 557.72it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 1516.68it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 6164.76it/s]
+
+=== Recall da busca (respondíveis) ===
+dev    n=10  recall@1=0.300  recall@3=0.500
+todas  n=40  recall@1=0.425  recall@3=0.775
+ATENÇÃO: recall@3 < 0,8. Revise o fatiamento antes de seguir (ver README.md, seção 7.3).
+  errou r01: esperado ctb-art181, veio ['ctb-art68-p1', 'sp-cartilha-calcadas-s04-p1', 'sp-cartilha-calcadas-s01-p1']  — o carro tá em cima da calçada, pode isso?
+  errou r04: esperado sp-lei15442-art7|sp-dec59671-art34|sp-dec59671-art1, veio ['sp-subpref-calcadas-s01-p1', 'sp-subpref-calcadas-s01-p3', 'sp-subpref-calcadas-s01-p4']  — quem tem que arrumar a calçada na frente de casa?
+  errou r06: esperado sp-lei15442-anexo|sp-lei15442-art15, veio ['sp-subpref-calcadas-s01-p4', 'sp156-calcada-particular-p2', 'sp-subpref-calcadas-s01-p2']  — se o dono não arrumar a calçada ele leva multa? de quanto?
+  errou r07: esperado sp-lei15442-art11, veio ['sp-dec59671-art32-p1', 'sp156-calcada-particular-p1', 'sp156-calcada-particular-p2']  — Qual é o prazo para regularizar a calçada depois da intimação?
+  errou r09: esperado sp-dec59671-art4|sp-lei15442-art8, veio ['sp-cartilha-calcadas-s05-p1', 'sp-subpref-calcadas-s01-p4', 'sp-cartilha-calcadas-s02-p1']  — quanto de espaço livre tem que ter na calçada pra gente passar?
+  errou r12: esperado sp-dec59671-art32, veio ['sp-dec59671-art34-p1', 'sp-dec59671-art1-p1', 'sp-subpref-calcadas-s01-p1']  — a raiz da árvore levantou a calçada, o dono é obrigado a consertar?
+  errou r17: esperado ctb-art68, veio ['sp156-calcada-particular-p1', 'sp156-calcada-publica-p1', 'sp-subpref-calcadas-s01-p1']  — na minha rua não tem calçada, por onde eu ando?
+  errou r21: esperado ctb-art29, veio ['ctb-art68-p1', 'sp-subpref-calcadas-s01-p1', 'ctb-art71-p1']  — de quem é a responsabilidade pela segurança do pedestre no trânsito?
+  errou r34: esperado sp-dec59671-art10, veio ['sp-cartilha-calcadas-s04-p1', 'sp-cartilha-calcadas-s05-p1', 'sp-dec59671-art1-p1']  — a rampa da garagem do vizinho deixou a calçada torta, pode isso?
+
+=== Limiar escolhido (split dev) ===
+{'limiar': 0.89, 'acerto_respondiveis': 0.4, 'recusa_correta_nao_consta': 1.0, 'equilibrio': 0.7}
+faixa de scores observada: 0.000 a 1.000
+gráfico: C:\Users\Gusma\OneDrive\Documentos\Estudos\passo-seguro\passo-seguro-genai\avaliacao\resultados\curva_limiar.png
+
+limiar salvo em C:\Users\Gusma\OneDrive\Documentos\Estudos\passo-seguro\passo-seguro-genai\avaliacao\limiar.json. Próximo: python scripts/05_testar_geracao.py

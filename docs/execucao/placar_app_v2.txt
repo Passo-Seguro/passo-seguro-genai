@@ -1,0 +1,24 @@
+W1108 22:05:49.859000 42144 Lib\site-packages\torch\utils\flop_counter.py:113] triton not found; flop counting will not work for triton kernels
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:  17%|█▋        | 33/199 [00:00<00:00, 307.85it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 1456.45it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 3670.34it/s]
+16 perguntas (app); limiar=0.17; top_k=3; base=qwen2.5:1.5b-instruct; lora=passo-seguro-lora
+
+--- B — RAG simples ---
+   1/16 a01 ok   2.8s   2/16 a02 --   0.5s   3/16 a03 ok   0.7s   4/16 a04 --   0.3s   5/16 a05 ok   1.0s   6/16 a06 ok   0.3s   7/16 a07 --   0.5s   8/16 a08 ok   2.1s   9/16 a09 ok   0.6s  10/16 a10 ok   0.6s  11/16 a11 ok   0.3s  12/16 a12 ok   0.6s  13/16 a13 --   0.4s  14/16 a14 ok   0.0s  15/16 a15 ok   0.0s  16/16 a16 --   0.4s
+{"n": 16, "exatidao": 0.692, "citacao_correta": 0.846, "recusa_indevida": 0.077, "taxa_alucinacao": 0.25, "recusa_correta_nao_consta": 0.667, "json_valido": 1.0, "latencia_media_s": 0.7}
+
+--- C — RAG + LoRA ---
+   1/16 a01 ok   0.3s   2/16 a02 --   0.4s   3/16 a03 --   0.5s   4/16 a04 ok   0.3s   5/16 a05 --   0.4s   6/16 a06 ok   0.3s   7/16 a07 --   0.4s   8/16 a08 ok   0.4s   9/16 a09 ok   0.3s  10/16 a10 ok   0.5s  11/16 a11 ok   0.4s  12/16 a12 ok   0.4s  13/16 a13 --   0.4s  14/16 a14 ok   0.0s  15/16 a15 ok   0.0s  16/16 a16 ok   0.5s
+{"n": 16, "exatidao": 0.615, "citacao_correta": 0.769, "recusa_indevida": 0.231, "taxa_alucinacao": 0.125, "recusa_correta_nao_consta": 1.0, "json_valido": 1.0, "latencia_media_s": 0.33}
+
+| Configuração | Exatidão | Citação correta | Alucinação | Recusa correta (não consta) | Recusa indevida | JSON válido | Latência média (s) |
+|---|---|---|---|---|---|---|---|
+| B — RAG simples | 69% | 85% | 25% | 67% | 8% | 100% | 0.7 |
+| C — RAG + LoRA | 62% | 77% | 12% | 100% | 23% | 100% | 0.33 |
+
+16 perguntas do split `app`; limiar 0.17; top-3; 0 julgamentos corrigidos à mão.
+
+Interpretação (2–3 frases por diferença): onde o LoRA ganhou, onde não ganhou e por quê; o efeito do RAG sobre a alucinação; o custo em recusas indevidas; formal × informal (ver placar_por_registro_app.csv).
+
+Saídas em C:\Users\Gusma\OneDrive\Documentos\Estudos\passo-seguro\passo-seguro-genai\avaliacao\resultados. Próximo: python scripts/10_erros.py

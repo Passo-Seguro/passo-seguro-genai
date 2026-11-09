@@ -1,0 +1,3 @@
+config,n,exatidao,citacao_correta,taxa_alucinacao,recusa_correta_nao_consta,recusa_indevida,json_valido,latencia_media_s
+B — RAG simples,16,0.692,0.846,0.25,0.667,0.077,1.0,0.7
+C — RAG + LoRA,16,0.615,0.769,0.125,1.0,0.231,1.0,0.33

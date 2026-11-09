@@ -6,7 +6,8 @@ Três configurações (Fase 6):
     C = RAG + LoRA (modelo ajustado + busca)
 
 Recusa em dois níveis:
-    1. similaridade do melhor trecho abaixo do limiar -> recusa SEM chamar o modelo;
+    1. similaridade do melhor trecho abaixo do limiar E pergunta fora do tema (tema.py) -> recusa
+       SEM chamar o modelo; pergunta do tema vai ao modelo mesmo com score baixo;
     2. o modelo também pode recusar (recusou: true).
 JSON inválido: tenta de novo uma vez; se falhar de novo, recusa.
 Checagem de citação: fonte citada que não está entre os trechos recuperados = alucinação.
@@ -25,6 +26,7 @@ from passo_genai.busca import Buscador, Resultado
 from passo_genai.config import MENSAGEM_RECUSA, Config
 from passo_genai.esquemas import SCHEMA_SAIDA, FonteCitada, RespostaAssistente, SaidaModelo
 from passo_genai.prompts import mensagens_rag, mensagens_sem_contexto
+from passo_genai.tema import sobre_o_tema
 
 
 class LLMIndisponivel(Exception):
@@ -106,7 +108,7 @@ class Assistente:
             if recuperados is None:
                 recuperados = self.buscador.buscar(pergunta, self.config.top_k)
             score = recuperados[0].score if recuperados else 0.0
-            if score < limiar:
+            if score < limiar and not (self.config.portao_tema and sobre_o_tema(pergunta)):
                 return RespostaGerada(recusa_padrao(), config, recuperados, score, nivel_recusa="busca",
                                   latencia_s=time.perf_counter() - inicio)
             mensagens = mensagens_rag(pergunta, [r.trecho for r in recuperados])
@@ -132,6 +134,21 @@ class Assistente:
             res.citacoes_invalidas = [f for f in saida.fontes if f not in ids]
         res.latencia_s = time.perf_counter() - inicio
         return res
+
+
+def resposta_sobre_o_assistente(por_id: dict) -> RespostaAssistente:
+    """Resposta fixa para "o que você sabe?": os assuntos que a base cobre e as fontes (uma por documento)."""
+    fontes, vistos = [], set()
+    for t in por_id.values():
+        if t.fonte not in vistos:
+            vistos.add(t.fonte)
+            fontes.append(FonteCitada(titulo=t.titulo, url=t.url))
+    texto = ("Eu respondo dúvidas de pedestres de São Paulo com base em leis e páginas oficiais: quem é "
+             "responsável pela calçada, como pedir conserto ou denunciar calçada danificada ou com obstáculo "
+             "no SP156 (prazos, canais e o que informar), regras de largura e acessibilidade das calçadas, "
+             "prioridade do pedestre na faixa, veículo e bicicleta na calçada, e as multas para quem não "
+             "conserva o passeio. Pergunte, por exemplo: \"Como peço o conserto de um buraco na calçada?\"")
+    return RespostaAssistente(resposta=texto, fontes=fontes, confianca=1.0, recusou=False)
 
 
 def para_contrato(res: RespostaGerada, por_id: dict) -> RespostaAssistente:

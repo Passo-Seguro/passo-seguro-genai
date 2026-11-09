@@ -1,6 +1,7 @@
 """Fase 5 — gera os ~300 exemplos de treino do LoRA a partir da base, com um modelo professor maior.
 
     python scripts/06_gerar_exemplos.py [--alvo 300] [--recusas 0.25]
+    python scripts/06_gerar_exemplos.py --trechos sp156- --alvo 40 --recusas 0 --anexar   # só trechos novos, acrescenta
 
 Cada exemplo é: pergunta + os 3 trechos que a BUSCA recuperaria -> JSON correto.
 - respostas: o professor lê UM trecho e escreve 1–2 perguntas que ele responde, como pedestre
@@ -60,6 +61,8 @@ def main() -> int:
     ap.add_argument("--recusas", type=float, default=0.25)
     ap.add_argument("--por-trecho", type=int, default=2)
     ap.add_argument("--semente", type=int, default=42)
+    ap.add_argument("--trechos", nargs="+", help="só trechos cujo id começa com estes prefixos")
+    ap.add_argument("--anexar", action="store_true", help="acrescenta ao treino_bruto.jsonl (ids v####) em vez de sobrescrever")
     args = ap.parse_args()
     rnd = random.Random(args.semente)
 
@@ -79,7 +82,7 @@ def main() -> int:
     n_recusa = int(args.alvo * args.recusas)
     n_resp = args.alvo - n_recusa
     exemplos, descartes = [], 0
-    trechos = buscador.trechos[:]
+    trechos = [t for t in buscador.trechos if not args.trechos or t.trecho_id.startswith(tuple(args.trechos))]
     rnd.shuffle(trechos)
 
     titulo(f"Gerando {n_resp} respostas")
@@ -143,6 +146,12 @@ def main() -> int:
 
     TREINO.mkdir(exist_ok=True)
     destino = TREINO / "treino_bruto.jsonl"
+    if args.anexar:
+        existentes = [json.loads(l) for l in open(destino, encoding="utf-8") if l.strip()]
+        n0 = sum(e["id"].startswith("v") for e in existentes)
+        for k, e in enumerate(exemplos):
+            e["id"] = f"v{n0 + k:04d}"
+        exemplos = existentes + exemplos
     with open(destino, "w", encoding="utf-8") as f:
         for e in exemplos:
             f.write(json.dumps(e, ensure_ascii=False) + "\n")

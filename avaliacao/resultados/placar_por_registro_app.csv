@@ -1,0 +1,5 @@
+config,registro,n,exatidao,citacao_correta,taxa_alucinacao,recusa_correta_nao_consta,recusa_indevida,json_valido,latencia_media_s
+B — RAG simples,formal,8,0.833,0.833,0.125,0.5,0.167,1.0,0.88
+B — RAG simples,informal,8,0.571,0.857,0.375,1.0,0.0,1.0,0.52
+C — RAG + LoRA,formal,8,0.833,0.833,0.0,1.0,0.167,1.0,0.34
+C — RAG + LoRA,informal,8,0.429,0.714,0.25,1.0,0.286,1.0,0.33
