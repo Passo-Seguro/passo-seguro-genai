@@ -3,6 +3,7 @@
     python avaliacao/avaliar.py                 # A, B e C no split teste
     python avaliacao/avaliar.py --split dev     # ensaio nas 15 de desenvolvimento
     python avaliacao/avaliar.py --configs B C   # só algumas
+    python avaliacao/avaliar.py --split app     # 16 perguntas no estilo do app (perguntas_app.jsonl)
 
     A = modelo base sem contexto      B = RAG simples (base + busca)      C = RAG + LoRA
 
@@ -27,7 +28,7 @@ sys.path.insert(0, str(RAIZ / "src"))
 
 from passo_genai.avaliacao import carregar_teste, julgar, resumir, salvar_jsonl  # noqa: E402
 from passo_genai.busca import Buscador  # noqa: E402
-from passo_genai.config import RESULTADOS, Config  # noqa: E402
+from passo_genai.config import AVALIACAO, RESULTADOS, Config  # noqa: E402
 from passo_genai.gerador import Assistente, LLMIndisponivel  # noqa: E402
 
 NOMES = {"A": "A — modelo sem contexto", "B": "B — RAG simples", "C": "C — RAG + LoRA"}
@@ -45,12 +46,15 @@ def ler_revisao() -> dict:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--split", default="teste", choices=["teste", "dev"])
+    ap.add_argument("--split", default="teste", choices=["teste", "dev", "app"])
     ap.add_argument("--configs", nargs="+", default=["A", "B", "C"])
     args = ap.parse_args()
 
     cfg = Config()
-    itens = carregar_teste(split=args.split)
+    if args.split == "app":  # perguntas de "como fazer" que o app recebe; fora do teste oficial de 60
+        itens = carregar_teste(AVALIACAO / "perguntas_app.jsonl", split="app")
+    else:
+        itens = carregar_teste(split=args.split)
     buscador = Buscador.carregar()
     assistente = Assistente(buscador, cfg)
     print(f"{len(itens)} perguntas ({args.split}); limiar={cfg.limiar}; top_k={cfg.top_k}; "
@@ -87,7 +91,7 @@ def main() -> int:
         except LLMIndisponivel as e:
             print(f"\n{NOMES[c]}: Ollama indisponível ou modelo ausente ({e}). Pulando.")
             continue
-        salvar_jsonl(RESULTADOS / "saidas" / f"{c}{'_dev' if args.split == 'dev' else ''}.jsonl", linhas)
+        salvar_jsonl(RESULTADOS / "saidas" / f"{c}{'' if args.split == 'teste' else '_' + args.split}.jsonl", linhas)
         res = resumir(linhas)
         placar.append({"config": NOMES[c], **res})
         print(f"\n{json.dumps(res, ensure_ascii=False)}")
@@ -95,7 +99,7 @@ def main() -> int:
 
     if not placar:
         return 1
-    sufixo = "" if args.split == "teste" else "_dev"
+    sufixo = "" if args.split == "teste" else f"_{args.split}"
     with open(RESULTADOS / f"placar{sufixo}.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=["config", "n", *METRICAS])
         w.writeheader()

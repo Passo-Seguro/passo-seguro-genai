@@ -38,7 +38,7 @@ def main() -> int:
         print(f"{f['id']}: {len(ts)} trechos, tokens mediana {statistics.median(tokens) if ts else 0:.0f}, "
               f"máx {max(tokens) if ts else 0}")
         trechos += ts
-        formato = {"lei_html": "HTML (lei/decreto)", "pagina": "HTML (página)", "pdf": "PDF"}[f["tipo"]]
+        formato = {"lei_html": "HTML (lei/decreto)", "pagina": "HTML (página)", "servico_sp156": "HTML (carta de serviços SP156)", "pdf": "PDF"}[f["tipo"]]
         linhas_tabela.append(f"| {f['titulo']} | {formato} | {f['licenca']} | {len(ts)} | {meta['data_acesso']} | {f['url']} |")
     ids = [t.trecho_id for t in trechos]
     dup = {i for i in ids if ids.count(i) > 1}

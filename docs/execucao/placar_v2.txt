@@ -1,0 +1,29 @@
+W1108 22:04:36.533000 9224 Lib\site-packages\torch\utils\flop_counter.py:113] triton not found; flop counting will not work for triton kernels
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:  43%|████▎     | 85/199 [00:00<00:00, 826.81it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 1896.89it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 5804.17it/s]
+45 perguntas (teste); limiar=0.17; top_k=3; base=qwen2.5:1.5b-instruct; lora=passo-seguro-lora
+
+--- A — modelo sem contexto ---
+   1/45 r02 --   4.2s   2/45 r03 --   0.3s   3/45 r05 ok   1.2s   4/45 r06 --   0.4s   5/45 r08 --   0.2s   6/45 r10 ok   0.2s   7/45 r11 ok   0.3s   8/45 r12 --   0.4s   9/45 r14 --   0.4s  10/45 r15 --   0.2s  11/45 r16 --   0.3s  12/45 r18 ok   0.2s  13/45 r19 --   0.2s  14/45 r20 --   0.2s  15/45 r21 --   0.3s  16/45 r23 --   0.2s  17/45 r24 --   0.3s  18/45 r26 --   0.3s  19/45 r27 --   0.2s  20/45 r28 --   0.4s  21/45 r30 --   0.2s  22/45 r31 ok   0.2s  23/45 r32 ok   0.1s  24/45 r34 --   0.3s  25/45 r35 --   0.3s  26/45 r36 --   0.2s  27/45 r37 --   0.2s  28/45 r38 --   0.3s  29/45 r39 --   0.2s  30/45 r40 ok   0.1s  31/45 n02 --   0.2s  32/45 n03 --   0.3s  33/45 n04 --   0.2s  34/45 n05 --   0.2s  35/45 n07 --   0.3s  36/45 n08 --   0.2s  37/45 n10 --   0.4s  38/45 n11 --   0.2s  39/45 n12 --   0.3s  40/45 n14 --   0.2s  41/45 n15 --   0.2s  42/45 n16 --   0.2s  43/45 n18 --   0.2s  44/45 n19 --   0.1s  45/45 n20 --   1.4s
+{"n": 45, "exatidao": 0.233, "citacao_correta": 0.0, "recusa_indevida": 0.0, "taxa_alucinacao": 1.0, "recusa_correta_nao_consta": 0.0, "json_valido": 1.0, "latencia_media_s": 0.38}
+
+--- B — RAG simples ---
+   1/45 r02 ok   0.3s   2/45 r03 --   0.4s   3/45 r05 ok   0.3s   4/45 r06 --   0.5s   5/45 r08 ok   0.5s   6/45 r10 ok   0.6s   7/45 r11 --   0.6s   8/45 r12 --   0.8s   9/45 r14 ok   0.2s  10/45 r15 --   0.5s  11/45 r16 --   0.5s  12/45 r18 ok   0.3s  13/45 r19 ok   0.6s  14/45 r20 ok   0.5s  15/45 r21 --   0.3s  16/45 r23 ok   0.3s  17/45 r24 ok   0.5s  18/45 r26 --   0.7s  19/45 r27 --   0.4s  20/45 r28 --   0.5s  21/45 r30 ok   0.6s  22/45 r31 ok   0.9s  23/45 r32 --   0.6s  24/45 r34 --   0.7s  25/45 r35 --   0.5s  26/45 r36 --   0.4s  27/45 r37 ok   0.5s  28/45 r38 ok   0.6s  29/45 r39 --   0.4s  30/45 r40 ok   0.5s  31/45 n02 --   0.3s  32/45 n03 --   0.3s  33/45 n04 --   0.6s  34/45 n05 ok   0.5s  35/45 n07 ok   2.1s  36/45 n08 --   0.5s  37/45 n10 ok   0.0s  38/45 n11 ok   0.5s  39/45 n12 --   0.9s  40/45 n14 ok   0.0s  41/45 n15 ok   0.0s  42/45 n16 --   0.3s  43/45 n18 --   0.6s  44/45 n19 ok   0.0s  45/45 n20 --   0.7s
+{"n": 45, "exatidao": 0.5, "citacao_correta": 0.733, "recusa_indevida": 0.0, "taxa_alucinacao": 0.556, "recusa_correta_nao_consta": 0.467, "json_valido": 0.978, "latencia_media_s": 0.5}
+
+--- C — RAG + LoRA ---
+   1/45 r02 ok   1.4s   2/45 r03 ok   0.4s   3/45 r05 --   0.5s   4/45 r06 --   0.4s   5/45 r08 ok   0.4s   6/45 r10 --   0.4s   7/45 r11 --   0.3s   8/45 r12 --   0.4s   9/45 r14 ok   0.2s  10/45 r15 --   0.3s  11/45 r16 ok   0.3s  12/45 r18 ok   0.3s  13/45 r19 --   0.3s  14/45 r20 --   0.4s  15/45 r21 --   0.4s  16/45 r23 ok   0.3s  17/45 r24 ok   0.3s  18/45 r26 --   0.4s  19/45 r27 --   0.3s  20/45 r28 ok   0.3s  21/45 r30 ok   0.4s  22/45 r31 ok   0.3s  23/45 r32 --   0.4s  24/45 r34 ok   0.4s  25/45 r35 ok   0.3s  26/45 r36 --   0.4s  27/45 r37 ok   0.5s  28/45 r38 --   0.3s  29/45 r39 --   0.3s  30/45 r40 ok   0.4s  31/45 n02 --   0.3s  32/45 n03 --   0.3s  33/45 n04 ok   0.4s  34/45 n05 ok   0.4s  35/45 n07 ok   0.4s  36/45 n08 ok   0.4s  37/45 n10 ok   0.0s  38/45 n11 ok   0.4s  39/45 n12 --   0.3s  40/45 n14 ok   0.0s  41/45 n15 ok   0.0s  42/45 n16 ok   0.4s  43/45 n18 ok   0.4s  44/45 n19 ok   0.0s  45/45 n20 ok   0.4s
+{"n": 45, "exatidao": 0.5, "citacao_correta": 0.467, "recusa_indevida": 0.1, "taxa_alucinacao": 0.333, "recusa_correta_nao_consta": 0.8, "json_valido": 1.0, "latencia_media_s": 0.36}
+
+| Configuração | Exatidão | Citação correta | Alucinação | Recusa correta (não consta) | Recusa indevida | JSON válido | Latência média (s) |
+|---|---|---|---|---|---|---|---|
+| A — modelo sem contexto | 23% | 0% | 100% | 0% | 0% | 100% | 0.38 |
+| B — RAG simples | 50% | 73% | 56% | 47% | 0% | 98% | 0.5 |
+| C — RAG + LoRA | 50% | 47% | 33% | 80% | 10% | 100% | 0.36 |
+
+45 perguntas do split `teste`; limiar 0.17; top-3; 0 julgamentos corrigidos à mão.
+
+Interpretação (2–3 frases por diferença): onde o LoRA ganhou, onde não ganhou e por quê; o efeito do RAG sobre a alucinação; o custo em recusas indevidas; formal × informal (ver placar_por_registro.csv).
+
+Saídas em C:\Users\Gusma\OneDrive\Documentos\Estudos\passo-seguro\passo-seguro-genai\avaliacao\resultados. Próximo: python scripts/10_erros.py

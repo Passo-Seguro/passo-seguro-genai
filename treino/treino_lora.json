@@ -6,14 +6,14 @@
   "lr": 0.0002,
   "batch_efetivo": 16,
   "qlora_4bit": false,
-  "n_treino": 292,
-  "n_validacao": 32,
-  "perda_treino_final": 0.15464303493499756,
+  "n_treino": 312,
+  "n_validacao": 34,
+  "perda_treino_final": 0.14543452262878417,
   "perda_validacao_por_epoca": [
-    0.21849969029426575,
-    0.18601424992084503,
-    0.1826254427433014
+    0.27715829014778137,
+    0.25439387559890747,
+    0.25016918778419495
   ],
-  "duracao_min": 13.0,
+  "duracao_min": 10.6,
   "gpu": "NVIDIA GeForce RTX 4080"
 }

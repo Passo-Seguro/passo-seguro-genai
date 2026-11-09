@@ -77,3 +77,11 @@ def test_corpo_fora_de_utf8_vira_400_no_formato_de_erro(buscador, config):
         r = c.post("/assistente", content='{"pergunta": "calçada"}'.encode("latin-1"),
                    headers={**CAB, "Content-Type": "application/json"})
         assert r.status_code == 400 and r.json()["codigo"] == "requisicao_invalida"
+
+
+def test_pergunta_sobre_o_assistente_tem_resposta_fixa_com_as_fontes(buscador, config):
+    with cliente(buscador, config, []) as c:  # sem respostas falsas: não pode chamar o LLM
+        r = c.post("/assistente", json={"pergunta": "Oque voce pode me informar que tem na sua base?"}, headers=CAB)
+        corpo = r.json()
+        assert r.status_code == 200 and corpo["recusou"] is False
+        assert "SP156" in corpo["resposta"] and corpo["fontes"] and all(f["url"] for f in corpo["fontes"])

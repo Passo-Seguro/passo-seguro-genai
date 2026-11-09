@@ -48,7 +48,7 @@ def contar_tokens(texto: str) -> int:
 
 # --------------------------------------------------------------------------- download
 def caminho_bruto(fonte: dict) -> Path:
-    ext = {"lei_html": ".html", "pagina": ".html", "pdf": ".pdf"}[fonte["tipo"]]
+    ext = {"lei_html": ".html", "pagina": ".html", "servico_sp156": ".html", "pdf": ".pdf"}[fonte["tipo"]]
     return BRUTOS / f"{fonte['id']}{ext}"
 
 
@@ -147,8 +147,20 @@ def dividir_artigos(linhas: list[str]) -> list[tuple[str, str]]:
     return saida
 
 
+# aviso de cookies, plugin de Libras e botões que o portal da Prefeitura repete em toda página
+RE_RUIDO = re.compile(r"(?i)cookies|valoriza sua privacidade|aceitar todos|rejeitar todos|hand ?talk|"
+                      r"configurações do plugin|política de privacidade|^saiba mais$|^compartilh")
+
+
+def _sem_ruido(linhas: list[str]) -> list[str]:
+    """Tira o ruído do portal: as linhas de aviso e o menu do topo (linhas curtas antes do 1º parágrafo)."""
+    linhas = [l for l in linhas if not RE_RUIDO.search(l)]
+    inicio = next((i for i, l in enumerate(linhas) if len(l) >= 60), len(linhas))
+    return linhas[inicio:]
+
+
 def pagina_para_secoes(html: str) -> list[tuple[str, str]]:
-    """[(título da seção, texto)] de uma página de serviço."""
+    """[(título da seção, texto)] de uma página de serviço, sem menu, aviso de cookies nem plugins."""
     from bs4 import BeautifulSoup
 
     sopa = BeautifulSoup(html, "html.parser")
@@ -168,7 +180,42 @@ def pagina_para_secoes(html: str) -> list[tuple[str, str]]:
             buffer.append(texto)
     if buffer:
         secoes.append((titulo, "\n".join(buffer)))
-    return [(t, x) for t, x in secoes if len(x) > 40]
+    limpas = [(t, "\n".join(_sem_ruido(x.split("\n")))) for t, x in secoes if not RE_RUIDO.search(t)]
+    return [(t, x) for t, x in limpas if len(x) > 40]
+
+
+# seções da carta de serviços do SP156; o resto da página (menu, rodapé, FAQ do portal) fica de fora
+SECOES_SP156 = ["O QUE É", "QUANDO SOLICITAR", "PÚBLICO-ALVO", "REQUISITOS, DOCUMENTOS E INFORMAÇÕES",
+                "PRAZO MÁXIMO", "TAXAS OU PREÇO PÚBLICO", "CANAIS PARA SOLICITAR", "PRINCIPAIS ETAPAS",
+                "LEGISLAÇÃO", "OBSERVAÇÕES", "ÓRGÃO RESPONSÁVEL"]
+
+
+def servico_sp156_para_texto(html: str) -> tuple[str, str]:
+    """(nome do serviço, texto) de uma página de serviço do portal SP156, de "O QUE É" a "ÓRGÃO
+    RESPONSÁVEL". Junta os itens quebrados em várias linhas ("Eletrônico\\n:\\n- Portal...")."""
+    from bs4 import BeautifulSoup
+
+    sopa = BeautifulSoup(html, "html.parser")
+    for tag in sopa(["script", "style", "noscript", "header", "footer", "nav", "form", "aside"]):
+        tag.decompose()
+    nome = _limpar_espacos((sopa.find("h1") or sopa.find("title")).get_text(" "))
+    linhas = [l.strip() for l in _limpar_espacos(sopa.get_text("\n")).split("\n") if l.strip()]
+    try:
+        ini = linhas.index("O QUE É")
+    except ValueError as e:
+        raise RuntimeError("página do SP156 sem a seção 'O QUE É' (layout mudou?)") from e
+    fim = next((i for i in range(ini, len(linhas)) if linhas[i].startswith("MANIFESTAÇÃO SOBRE")), len(linhas))
+    blocos: list[str] = []
+    for l in linhas[ini:fim]:
+        if l in SECOES_SP156:
+            blocos.append(f"\n{l.capitalize()}:")
+        elif blocos and (l in (":", ";", ".", ")", "-") or l.startswith((":", ";", ")")) or blocos[-1].endswith(("(", ":", "-"))):
+            blocos[-1] += " " + l
+        else:
+            blocos.append(l)
+    texto = re.sub(r"\s+([:;.,)])", r"\1", "\n".join(blocos)).strip()
+    texto = re.sub(r"\(\s*(link direciona[^)]*|endereços[^)]*)\)", "", texto)
+    return nome, re.sub(r"\n{2,}", "\n", texto)
 
 
 def pdf_para_secoes(caminho: Path) -> list[tuple[str, str]]:
@@ -257,6 +304,11 @@ def fatiar_fonte(fonte: dict, meta: dict) -> list[Trecho]:
         faltando = filtro - {n.lower() for n, _ in artigos}
         if faltando:
             print(f"  AVISO {fonte['id']}: artigos pedidos e não encontrados: {sorted(faltando)}")
+    elif fonte["tipo"] == "servico_sp156":
+        nome, texto = servico_sp156_para_texto(_decodificar(bruto.read_bytes()))
+        for k, parte in enumerate(janelas(texto), 1):
+            trechos.append(Trecho(trecho_id=f"{fonte['id']}-p{k}", artigo="Carta de serviços",
+                                  texto=f"{fonte['titulo']}\n{parte}", **comum))
     else:
         if fonte["tipo"] == "pagina":
             secoes = pagina_para_secoes(_decodificar(bruto.read_bytes()))

@@ -39,7 +39,9 @@ class JSONResponse(_JSONResponse):
 from passo_genai.avaliacao import normalizar  # noqa: E402
 from passo_genai.config import Config  # noqa: E402
 from passo_genai.esquemas import PerguntaAssistente, RespostaAssistente  # noqa: E402
-from passo_genai.gerador import Assistente, ClienteOllama, LLMIndisponivel, para_contrato, recusa_padrao  # noqa: E402
+from passo_genai.gerador import (Assistente, ClienteOllama, LLMIndisponivel, para_contrato, recusa_padrao,  # noqa: E402
+                                  resposta_sobre_o_assistente)
+from passo_genai.tema import sobre_o_assistente  # noqa: E402
 
 log = logging.getLogger("passo_seguro.assistente")
 
@@ -155,6 +157,9 @@ def criar_app(assistente: Assistente | None = None, token: str | None = None, co
             resposta = contingencia()
             contadores["contingencias"] += 1
             evento["contingencia"] = "sem_base"
+        elif sobre_o_assistente(corpo.pergunta):
+            resposta = resposta_sobre_o_assistente(a.buscador.por_id)
+            evento["tipo"] = "sobre_o_assistente"
         else:
             try:
                 r = a.responder(corpo.pergunta, config_vencedora)

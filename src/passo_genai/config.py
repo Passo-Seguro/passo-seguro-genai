@@ -57,6 +57,9 @@ class Config:
     modelo_reranker: str = field(default_factory=lambda: os.getenv("MODELO_RERANKER", "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"))
     candidatos: int = field(default_factory=lambda: int(os.getenv("CANDIDATOS", "10")))
     limiar: float = field(default_factory=lambda: float(os.getenv("LIMIAR", _limiar_salvo())))
+    # checagem de tema (tema.py): abaixo do limiar, só recusa sem chamar o modelo se a pergunta for
+    # FORA do tema. PORTAO_TEMA=0 volta ao comportamento antigo (recusa por limiar para tudo)
+    portao_tema: bool = field(default_factory=lambda: os.getenv("PORTAO_TEMA", "1") != "0")
     # Ollama
     ollama_url: str = field(default_factory=lambda: os.getenv("OLLAMA_URL", "http://localhost:11434"))
     modelo_base: str = field(default_factory=lambda: os.getenv("OLLAMA_MODELO_BASE", "qwen2.5:1.5b-instruct"))

@@ -73,32 +73,28 @@ fontes:
     licenca: Publicação oficial da Prefeitura de São Paulo — conferir termos de uso; citar a fonte
     ativo: true
 
-  # Páginas do SP156 (carta de serviços) — abra https://sp156.prefeitura.sp.gov.br, busque o
-  # serviço, copie a URL da página de informação e troque `ativo` para true.
+  # Carta de serviços do SP156: COMO pedir (o que é, quando pedir, prazo, canais, etapas).
+  # Links tirados da página "Rua e bairro" da Secretaria das Subprefeituras.
   - id: sp156-calcada-particular
     titulo: "SP156 — Calçada particular: denunciar calçada danificada ou inexistente"
-    url: PREENCHER
-    tipo: pagina
+    url: https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?servico=906
+    tipo: servico_sp156
     licenca: Publicação oficial da Prefeitura de São Paulo — conferir termos de uso; citar a fonte
-    ativo: false
+    ativo: true
+
+  - id: sp156-calcada-publica
+    titulo: "SP156 — Calçada pública: solicitar manutenção"
+    url: https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?servico=931
+    tipo: servico_sp156
+    licenca: Publicação oficial da Prefeitura de São Paulo — conferir termos de uso; citar a fonte
+    ativo: true
 
   - id: sp156-obstaculo
     titulo: "SP156 — Acessibilidade: solicitar avaliação de obstáculo na calçada"
-    url: PREENCHER
-    tipo: pagina
+    url: https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?servico=2634
+    tipo: servico_sp156
     licenca: Publicação oficial da Prefeitura de São Paulo — conferir termos de uso; citar a fonte
-    ativo: false
+    ativo: true
 
-  - id: sp156-entulho
-    titulo: "SP156 — Denunciar material de construção depositado em vias públicas"
-    url: PREENCHER
-    tipo: pagina
-    licenca: Publicação oficial da Prefeitura de São Paulo — conferir termos de uso; citar a fonte
-    ativo: false
-
-  - id: sp156-veiculo-calcada
-    titulo: "SP156 — Estacionamento irregular / veículo sobre a calçada (fiscalização)"
-    url: PREENCHER
-    tipo: pagina
-    licenca: Publicação oficial da Prefeitura de São Paulo — conferir termos de uso; citar a fonte
-    ativo: false
+  # A conferir: a página do serviço de veículo estacionado sobre a calçada (CET) não foi
+  # encontrada na carta de serviços; a base responde com o CTB (art. 181) e o Decreto (art. 37).

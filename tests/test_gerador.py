@@ -47,3 +47,18 @@ def test_config_c_usa_o_modelo_lora_e_a_sem_contexto(buscador, config):
     assert llm.chamadas[0]["modelo"] == config.modelo_lora
     assert llm.chamadas[1]["modelo"] == config.modelo_base
     assert "TRECHOS" not in llm.chamadas[1]["mensagens"][1]["content"]
+
+
+def test_pergunta_do_tema_abaixo_do_limiar_vai_ao_modelo(buscador, config):
+    # o reranker dá nota baixa a pergunta informal do tema; ela não pode ser recusada antes do modelo
+    config.limiar = 0.99
+    llm = LLMFalso([{"resposta": "Peça no SP156.", "fontes": ["ctb-art181-p1"], "confianca": 0.8, "recusou": False}])
+    r = Assistente(buscador, config, llm).responder("tem um vaso enorme bloqueando a calçada, quem eu chamo?", "B")
+    assert r.nivel_recusa is None and len(llm.chamadas) == 1
+
+
+def test_sem_portao_de_tema_volta_a_recusar_pelo_limiar(buscador, config):
+    config.limiar, config.portao_tema = 0.99, False
+    llm = LLMFalso([])
+    r = Assistente(buscador, config, llm).responder("tem um vaso bloqueando a calçada", "B")
+    assert r.nivel_recusa == "busca" and llm.chamadas == []

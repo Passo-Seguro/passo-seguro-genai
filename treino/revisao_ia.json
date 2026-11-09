@@ -51,12 +51,16 @@
    "acao": "a"
   },
   "t0011": {
-   "acao": "a"
+   "acao": "a",
+   "acao_v2": "r",
+   "motivo_v2": "trecho de origem era ruído do portal (menu/cookies), removido na limpeza da base"
   },
   "t0012": {
    "acao": "e",
    "motivo": "faltou o nome do serviço",
-   "resposta": "Sim. No Portal 156 existe o serviço 'Solicitar fiscalização de valet'."
+   "resposta": "Sim. No Portal 156 existe o serviço 'Solicitar fiscalização de valet'.",
+   "acao_v2": "r",
+   "motivo_v2": "trecho de origem era ruído do portal (menu/cookies), removido na limpeza da base"
   },
   "t0013": {
    "acao": "a"
@@ -94,7 +98,9 @@
    "acao": "a"
   },
   "t0023": {
-   "acao": "a"
+   "acao": "a",
+   "acao_v2": "r",
+   "motivo_v2": "trecho de origem era ruído do portal (menu/cookies), removido na limpeza da base"
   },
   "t0024": {
    "acao": "r",
@@ -346,10 +352,14 @@
   "t0089": {
    "acao": "e",
    "motivo": "faltou o nome do serviço",
-   "resposta": "No Portal 156, pelo serviço 'Solicitar fiscalização de estacionamentos particulares'."
+   "resposta": "No Portal 156, pelo serviço 'Solicitar fiscalização de estacionamentos particulares'.",
+   "acao_v2": "r",
+   "motivo_v2": "trecho de origem era ruído do portal (menu/cookies), removido na limpeza da base"
   },
   "t0090": {
-   "acao": "a"
+   "acao": "a",
+   "acao_v2": "r",
+   "motivo_v2": "trecho de origem era ruído do portal (menu/cookies), removido na limpeza da base"
   },
   "t0091": {
    "acao": "a"
@@ -707,7 +717,9 @@
    "acao": "a"
   },
   "t0191": {
-   "acao": "a"
+   "acao": "a",
+   "acao_v2": "r",
+   "motivo_v2": "rótulo errado: o contexto responde a pergunta (reranker 1.00); ensinava a recusar com a resposta na mão"
   },
   "t0192": {
    "acao": "a"
@@ -743,7 +755,9 @@
    "acao": "a"
   },
   "t0203": {
-   "acao": "a"
+   "acao": "a",
+   "acao_v2": "r",
+   "motivo_v2": "rótulo errado: o contexto responde a pergunta (reranker 0.81); ensinava a recusar com a resposta na mão"
   },
   "t0204": {
    "acao": "r",
@@ -814,12 +828,16 @@
   "u0011": {
    "acao": "e",
    "motivo": "faltou o nome do serviço",
-   "resposta": "No Portal 156, pelo serviço 'Denunciar fechamento de ruas e vilas'."
+   "resposta": "No Portal 156, pelo serviço 'Denunciar fechamento de ruas e vilas'.",
+   "acao_v2": "r",
+   "motivo_v2": "trecho de origem era ruído do portal (menu/cookies), removido na limpeza da base"
   },
   "u0012": {
    "acao": "e",
    "motivo": "faltou o nome do serviço",
-   "resposta": "No Portal 156, pelo serviço 'Solicitar remoção de veículo/carcaça abandonado na via pública'."
+   "resposta": "No Portal 156, pelo serviço 'Solicitar remoção de veículo/carcaça abandonado na via pública'.",
+   "acao_v2": "r",
+   "motivo_v2": "trecho de origem era ruído do portal (menu/cookies), removido na limpeza da base"
   },
   "u0013": {
    "acao": "a"
@@ -1267,7 +1285,9 @@
   "u0125": {
    "acao": "e",
    "motivo": "faltou o canal",
-   "resposta": "No Portal 156, pelo serviço 'Solicitar fiscalização de ausência de vagas reservadas em estabelecimento comercial'."
+   "resposta": "No Portal 156, pelo serviço 'Solicitar fiscalização de ausência de vagas reservadas em estabelecimento comercial'.",
+   "acao_v2": "r",
+   "motivo_v2": "trecho de origem era ruído do portal (menu/cookies), removido na limpeza da base"
   },
   "u0126": {
    "acao": "a"
@@ -1527,7 +1547,9 @@
    "acao": "a"
   },
   "u0195": {
-   "acao": "a"
+   "acao": "a",
+   "acao_v2": "r",
+   "motivo_v2": "rótulo errado: o contexto responde a pergunta (reranker 0.67); ensinava a recusar com a resposta na mão"
   },
   "u0196": {
    "acao": "r",
@@ -1619,6 +1641,266 @@
   },
   "u0223": {
    "acao": "a"
+  },
+  "v0000": {
+   "acao": "e",
+   "motivo": "resposta em lista solta; virou frase completa, só com o que o trecho diz",
+   "resposta": "Buracos, inclinações, degraus e obstáculos (como vasos, barras de ferro, correntes e portão avançando na calçada) que dificultem a circulação dos pedestres.",
+   "rodada": "v2"
+  },
+  "v0001": {
+   "acao": "r",
+   "motivo": "fora do domínio do pedestre/calçada (serviço do 156 de outro tema): feira livre",
+   "rodada": "v2"
+  },
+  "v0002": {
+   "acao": "r",
+   "motivo": "fora do domínio do pedestre/calçada (serviço do 156 de outro tema): barulho (PSIU)",
+   "rodada": "v2"
+  },
+  "v0003": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0004": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0005": {
+   "acao": "e",
+   "motivo": "linguagem informal na resposta ('a gente tem q'); a resposta deve ser em português claro",
+   "resposta": "Informe o endereço completo e um ponto de referência, diga se você tem alguma deficiência relacionada à calçada e se há obstáculos para a acessibilidade, e descreva o problema no campo \"Descrição\".",
+   "rodada": "v2"
+  },
+  "v0006": {
+   "acao": "e",
+   "motivo": "linguagem informal na resposta; mesmo conteúdo do trecho",
+   "resposta": "Você pode acompanhar o andamento do protocolo pelos canais do SP156: o Portal de Atendimento SP156, as Praças de Atendimento das Subprefeituras ou a Central Telefônica 156.",
+   "rodada": "v2"
+  },
+  "v0007": {
+   "acao": "r",
+   "motivo": "fora do domínio do pedestre/calçada (serviço do 156 de outro tema): córrego",
+   "rodada": "v2"
+  },
+  "v0008": {
+   "acao": "r",
+   "motivo": "fora do domínio do pedestre/calçada (serviço do 156 de outro tema): janela do vizinho (obras)",
+   "rodada": "v2"
+  },
+  "v0009": {
+   "acao": "r",
+   "motivo": "buraco no ASFALTO é outro serviço e a pergunta parecida (n12) está no teste como 'não consta': evita contaminar o placar",
+   "rodada": "v2"
+  },
+  "v0010": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0011": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0012": {
+   "acao": "r",
+   "motivo": "sistema interno da Prefeitura (SGZ), fora do que o pedestre pergunta",
+   "rodada": "v2"
+  },
+  "v0013": {
+   "acao": "r",
+   "motivo": "fora do domínio do pedestre/calçada (serviço do 156 de outro tema): cadeira de rodas em supermercado",
+   "rodada": "v2"
+  },
+  "v0014": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0015": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0016": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0017": {
+   "acao": "r",
+   "motivo": "fora do domínio do pedestre/calçada (serviço do 156 de outro tema): muro; e a resposta mistura dois serviços",
+   "rodada": "v2"
+  },
+  "v0018": {
+   "acao": "r",
+   "motivo": "fora do domínio do pedestre/calçada (serviço do 156 de outro tema): terreno com mato",
+   "rodada": "v2"
+  },
+  "v0019": {
+   "acao": "r",
+   "motivo": "fora do domínio do pedestre/calçada (serviço do 156 de outro tema): árvore em área interna",
+   "rodada": "v2"
+  },
+  "v0020": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0021": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0022": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0023": {
+   "acao": "r",
+   "motivo": "enganosa: o serviço é gratuito em todos os canais, não só no Portal",
+   "rodada": "v2"
+  },
+  "v0024": {
+   "acao": "r",
+   "motivo": "fora do domínio do pedestre/calçada (serviço do 156 de outro tema): esgoto",
+   "rodada": "v2"
+  },
+  "v0025": {
+   "acao": "r",
+   "motivo": "fora do domínio do pedestre/calçada (serviço do 156 de outro tema): janela do vizinho; duplicata de v0008",
+   "rodada": "v2"
+  },
+  "v0026": {
+   "acao": "e",
+   "motivo": "linguagem informal na resposta",
+   "resposta": "Pelo Portal de Atendimento SP156, nas Praças de Atendimento das Subprefeituras, no Descomplica SP ou pela Central Telefônica 156. O serviço é \"Acessibilidade - solicitar avaliação de obstáculo na calçada\".",
+   "rodada": "v2"
+  },
+  "v0027": {
+   "acao": "r",
+   "motivo": "sistema interno da Prefeitura (SGZ); duplicata de v0012",
+   "rodada": "v2"
+  },
+  "v0028": {
+   "acao": "r",
+   "motivo": "fora do domínio do pedestre/calçada (serviço do 156 de outro tema): cadeira de rodas em supermercado; duplicata de v0013",
+   "rodada": "v2"
+  },
+  "v0029": {
+   "acao": "e",
+   "motivo": "o trecho fala do objetivo de MANTER as calçadas, não da finalidade delas",
+   "resposta": "Segundo a Prefeitura, manter e conservar as calçadas é um dever e um direito de cada cidadão, com o objetivo de tornar a cidade mais democrática, humana e acessível a todos.",
+   "rodada": "v2"
+  },
+  "v0030": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0031": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0032": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0033": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0034": {
+   "acao": "e",
+   "motivo": "repetitiva",
+   "resposta": "Pelo Portal SP156 ou pelos outros canais do SP156, como as Praças de Atendimento das Subprefeituras.",
+   "rodada": "v2"
+  },
+  "v0035": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0036": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0037": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0038": {
+   "acao": "e",
+   "motivo": "completa com o que o trecho diz: o serviço de calçada pública não atende esse caso",
+   "resposta": "Problemas com tampas de poços de visita de concessionárias na calçada não são atendidos pelo serviço de manutenção de calçada pública: deve ser acionada diretamente a concessionária responsável.",
+   "rodada": "v2"
+  },
+  "v0039": {
+   "acao": "e",
+   "motivo": "resposta com 'tá' e sem sentido",
+   "resposta": "Quando há obstáculos na calçada, como vasos ou barras de ferro, prejudicando a circulação das pessoas.",
+   "rodada": "v2"
+  },
+  "v0040": {
+   "acao": "e",
+   "motivo": "resposta com 'tá'",
+   "resposta": "O proprietário tem 60 dias para remover o obstáculo depois de notificado pelo fiscal da Subprefeitura.",
+   "rodada": "v2"
+  },
+  "v0041": {
+   "acao": "e",
+   "motivo": "resposta com 'tá'",
+   "resposta": "Sim, pelo Portal SP156 ou pelos outros canais do SP156.",
+   "rodada": "v2"
+  },
+  "v0042": {
+   "acao": "e",
+   "motivo": "linguagem informal na resposta",
+   "resposta": "Pelo Portal SP156, pela Central Telefônica 156 ou nas Praças de Atendimento das Subprefeituras.",
+   "rodada": "v2"
+  },
+  "v0043": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
+  },
+  "v0044": {
+   "acao": "r",
+   "motivo": "enganosa: a SMSUB é responsável pelo serviço de calçada PÚBLICA; calçada em frente a imóvel é do proprietário",
+   "rodada": "v2"
+  },
+  "v0045": {
+   "acao": "e",
+   "motivo": "resposta confusa ('quem tira a multa')",
+   "resposta": "A calçada ao lado de um prédio é considerada calçada particular. Se ela não for regularizada no prazo, o responsável leva multa mensal, e a Subprefeitura pode fazer o serviço e cobrar dele.",
+   "rodada": "v2"
+  },
+  "v0046": {
+   "acao": "e",
+   "motivo": "inverteu a definição: praças e grandes avenidas sem imóveis são calçada PÚBLICA",
+   "resposta": "Sim, pelo Portal SP156. Calçada pública é só a de praças e de grandes avenidas com canteiros e sem imóveis; o restante, mesmo em frente a um equipamento público, é calçada particular.",
+   "rodada": "v2"
+  },
+  "v0047": {
+   "acao": "e",
+   "motivo": "resposta de uma palavra",
+   "resposta": "O serviço é gratuito.",
+   "rodada": "v2"
+  },
+  "v0048": {
+   "acao": "a",
+   "motivo": "",
+   "rodada": "v2"
   }
- }
+ },
+ "v2": "Rodada v2 (09/11/2026): 30 exemplos novos gerados das páginas do SP156 e das páginas da Prefeitura já limpas; 3 recusas 'sem base' com rótulo errado e 8 respostas que vinham de ruído do portal foram tiradas."
 }

@@ -104,3 +104,16 @@ limiar (erros 3 e 5) nem a mistura de dois trechos parecidos (erro 4).
 | 3 | limiar | recusa indevida |
 | 4 | limiar + geração | alucinação em "não consta" |
 | 5 | busca (vocabulário) | recusa indevida |
+
+## Versão 2 (09/11/2026): o que mudou nesses erros
+
+Com a base v2 (carta de serviços do SP156, sem menus e cookies), a checagem de tema e o LoRA v2
+(placar em [`placar.md`](placar.md); saídas em [`saidas/C.jsonl`](saidas/C.jsonl)):
+
+| Erro | C v1 | C v2 |
+|---|---|---|
+| 1 (r03) | correta, art. 193 | igual: correta, art. 193 |
+| 2 (r06) | não inventou valor, não disse "de quanto" | igual |
+| 3 (r08) | recusa pelo limiar | **correta**: a pergunta do tema chega ao modelo, que responde com o art. 1 do Decreto |
+| 4 (n03) | inventou prazo de 30 dias | responde "120 dias", que agora está na base (prazo máximo do serviço de calçada pública no SP156); o gabarito continua "não consta" |
+| 5 (r11) | recusa pelo limiar | chega ao modelo, mas erra: "a Subprefeitura é responsável pelas calçadas públicas" (o trecho das concessionárias não vem no top-3) |
